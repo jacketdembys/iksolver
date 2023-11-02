@@ -71,8 +71,8 @@ if __name__ == '__main__':
     
     print("==> Running based on configuration...")
     #device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
-    device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
-
+    #device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
+    device = torch.device('cpu')
     
     # set input and output size based on robot
     if robot_choice == "6DoF-6R-Puma260":
