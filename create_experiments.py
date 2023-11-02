@@ -1,5 +1,6 @@
 import yaml
 import os
+import sys
 import argparse
 
 
@@ -21,18 +22,25 @@ parser.add_argument("--scale",
                     default=1,
                     help="Scale of the joints limits.")
 
+
+if not len(sys.argv) > 1:
+    #raise argparse.ArgumentError("Please, provide all arguments!")
+    parser.print_help(sys.stderr)
+    sys.exit(1)
+
 args = parser.parse_args()
 
 
-if len(args) < 3:
-    raise argparse.ArgumentError("Please, provide all arguments!")
+
+
+
         
 
 # important parameters
 gpu_id = 0
-layers = 1
-neurons = 1000
-scale = 2 # 2 - 10
+layers = args.layers
+neurons = args.neurons
+scale = args.scale # 2 - 10
 robot_choice = '7DoF-7R-Panda'
 
 # read from path script
@@ -80,7 +88,7 @@ config_info = {
 }
 
 
-save_path = "configs/"+robot_choice+"/config_layers_"+str(int(layers))+"_neurons_"+str(int(neurons))
+save_path = "configs/"+robot_choice+"/config_layers_"+str(int(layers))+"_neurons_"+str(int(neurons))+"_scale_"+str(int(scale))
 if not os.path.exists(save_path):
             os.makedirs(save_path)
 
