@@ -24,6 +24,10 @@ parser.add_argument("--scale",
 args = parser.parse_args()
 
 
+if len(args) < 3:
+    raise argparse.ArgumentError("Please, provide all arguments!")
+        
+
 # important parameters
 gpu_id = 0
 layers = 1
