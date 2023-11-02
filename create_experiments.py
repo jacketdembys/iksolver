@@ -15,11 +15,11 @@ parser.add_argument("--layers",
                     help="Number of hidden layers.")
 parser.add_argument("--neurons",
                     type=int,
-                    default=1,
+                    default=100,
                     help="Number of neurons on each hidden layer.")
 parser.add_argument("--scale",
                     type=int,
-                    default=1,
+                    default=2,
                     help="Scale of the joints limits.")
 
 
@@ -88,11 +88,11 @@ config_info = {
 }
 
 
-save_path = "configs/"+robot_choice+"/config_layers_"+str(int(layers))+"_neurons_"+str(int(neurons))+"_scale_"+str(int(scale))
-if not os.path.exists(save_path):
-            os.makedirs(save_path)
+#save_path = "configs/"+robot_choice+"/config_layers_"+str(int(layers))+"_neurons_"+str(int(neurons))+"_scale_"+str(int(scale))
+#if not os.path.exists(save_path):
+#            os.makedirs(save_path)
 
 # open a yaml file and dump the content of the dictionary 
-with open(save_path+"/train_scale_"+str(int(scale))+".yaml", 'w') as yamlfile:
+with open("train.yaml", 'w') as yamlfile:
     data = yaml.dump(config_info, yamlfile)
-    print("Successfully created config files in {}!".format(save_path))
+    print("Successfully created the config file!")
