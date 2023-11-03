@@ -119,8 +119,10 @@ if __name__ == '__main__':
     hidden_layer_sizes[:,:] = neurons
     hidden_layer_sizes = hidden_layer_sizes.squeeze(0).astype(int).tolist()
 
-    #for experiment_number in range(experiments):
     
+    #for experiment_number in range(experiments):
+    experiment_number = experiments
+
     # ensure reproducibilities if seed is set to true
     if seed_choice:   
         random.seed(seed_number)
@@ -199,30 +201,27 @@ if __name__ == '__main__':
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
+ 
+
+    # save test sets        
+    df = pd.DataFrame(X_test)
+    df.to_csv(save_path+"/X_test_"+robot_choice+"_"+str(dataset_samples)+".csv",
+        index=False,
+        header=pose_header)   
+
+    df = pd.DataFrame(y_test)
+    df.to_csv(save_path+"/y_test_"+robot_choice+"_"+str(dataset_samples)+".csv",
+        index=False,
+        header=joint_header)
 
 
+    run = wandb.init(
+        project = "iksolver-experiments",                # set the project name this run will be logged
+        name = "Model_"+robot_choice+"_" \
+                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale))
+    )
 
-    if save_option == "local":
-
-        # save test sets        
-        df = pd.DataFrame(X_test)
-        df.to_csv(save_path+"/X_test_"+robot_choice+"_"+str(dataset_samples)+".csv",
-            index=False,
-            header=pose_header)   
-
-        df = pd.DataFrame(y_test)
-        df.to_csv(save_path+"/y_test_"+robot_choice+"_"+str(dataset_samples)+".csv",
-            index=False,
-            header=joint_header)
-    
-    elif save_option == "cloud":    
-        run = wandb.init(
-            project = "iksolver-experiments",                # set the project name this run will be logged
-            name = "Model_"+robot_choice+"_" \
-                    +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                    +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale))
-        )
-    
 
 
     
@@ -251,17 +250,15 @@ if __name__ == '__main__':
             best_valid_loss = valid_loss
             best_epoch = epoch
 
-            if save_option == "local":
-                torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-            elif save_option == "cloud":
-                #torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-                torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-                artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
-                                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
-                                            type='model')
-                artifact.add_file(save_path+'/best_epoch.pth')
-                run.log_artifact(artifact)
+
+            #torch.save(model.state_dict(), save_path+'/best_epoch.pth')
+            torch.save(model.state_dict(), save_path+'/best_epoch.pth')
+            artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
+                                            +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                                            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
+                                        type='model')
+            artifact.add_file(save_path+'/best_epoch.pth')
+            run.log_artifact(artifact)
 
         
         
