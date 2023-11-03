@@ -1,0 +1,21 @@
+Epoch: 0/5 | Epoch Time: 0m 1s
+	Train Loss: 0.1629000415559858
+	Valid Loss: 0.1555240504126996
+	Best Epoch Occurred [0/5]
+Epoch: 1/5 | Epoch Time: 0m 1s
+	Train Loss: 0.15552153112366796
+	Valid Loss: 0.14849507968500256
+	Best Epoch Occurred [1/5]
+Epoch: 2/5 | Epoch Time: 0m 2s
+	Train Loss: 0.14873048872686923
+	Valid Loss: 0.14216444953437896
+	Best Epoch Occurred [2/5]
+Epoch: 3/5 | Epoch Time: 0m 2s
+	Train Loss: 0.1426042637322098
+	Valid Loss: 0.1364518931051716
+	Best Epoch Occurred [3/5]
+Epoch: 4/5 | Epoch Time: 0m 3s
+	Train Loss: 0.1370664774440229
+	Valid Loss: 0.13128603954054416
+	Best Epoch Occurred [4/5]
+End of Training for MLP [6, 32, 7] - Elapsed Time: 0m 3s

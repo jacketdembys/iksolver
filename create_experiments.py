@@ -31,11 +31,6 @@ if not len(sys.argv) > 1:
 args = parser.parse_args()
 
 
-
-
-
-        
-
 # important parameters
 gpu_id = 0
 layers = args.layers
@@ -64,11 +59,12 @@ config_info = {
                 'JOINT_LIMIT_SCALE': int(scale)
             },
             'CHECKPOINT': {
+                'SAVE_OPTIONS': 'cloud',
                 'PRETRAINED_G_MODEL': "",
                 'RESUMED_G_MODEL': "",
             },
             'HYPERPARAMETERS': {
-                'EPOCHS': 10000,
+                'EPOCHS': 5,
                 'BATCH_SIZE': 128,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
