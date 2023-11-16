@@ -50,11 +50,14 @@ def get_DH(robot_choice, t):
                            [t[3],  203.2/1000,          0,        -torch.pi/2],
                            [t[4],           0,          0,         torch.pi/2],
                            [t[5],   63.5/1000,          0,                  0]])
-    elif robot_choice == "7DoF-7R":
-        DH = torch.tensor([[t[0], 400/1000, 250/1000, 0],
-                           [t[1],        0, 150/1000, torch.pi],
-                           [   0,     t[2],        0, 0],
-                           [t[3], 150/1000,        0, 0]])
+    elif robot_choice == "7DoF-7R-Panda":
+        DH = torch.tensor([[t[0],    0.333,      0.0,           0],
+                           [t[1],      0.0,      0.0, -torch.pi/2],
+                           [t[2],    0.316,      0.0,  torch.pi/2],
+                           [t[3],      0.0,   0.0825,  torch.pi/2],
+                           [t[4],    0.384,  -0.0825, -torch.pi/2],
+                           [t[5],      0.0,      0.0,  torch.pi/2],
+                           [t[6],    0.107,    0.088,  torch.pi/2]])
     return DH
 
 # A matrix

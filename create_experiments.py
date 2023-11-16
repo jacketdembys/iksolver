@@ -59,7 +59,7 @@ config_info = {
                 'JOINT_LIMIT_SCALE': int(scale)
             },
             'CHECKPOINT': {
-                'SAVE_OPTIONS': 'cloud',
+                'SAVE_OPTIONS': 'local',
                 'PRETRAINED_G_MODEL': "",
                 'RESUMED_G_MODEL': "",
             },

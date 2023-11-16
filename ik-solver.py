@@ -62,16 +62,20 @@ if __name__ == '__main__':
     loss_choice =  config["TRAIN"]["HYPERPARAMETERS"]["LOSS"]                     # l2, l1, lfk
     network_type =  config["MODEL"]["NAME"]     
     dataset_samples = config["TRAIN"]["DATASET"]["NUM_SAMPLES"]                   # MLP, ResMLP, DenseMLP, FouierMLP 
-    scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
     print_steps = config["TRAIN"]["PRINT_STEPS"] 
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
+
+    scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
     EPOCHS = config["TRAIN"]["HYPERPARAMETERS"]["EPOCHS"]                         # total training epochs
 
     
 
     
-    print('==> Log into wandb to send out metrids ...')
-    wandb.login()                                        # login to the Weights and Biases    
+    #print('==> Log into wandb to send out metrids ...')
+    wandb.login()                                        # login to the Weights and Biases   
+
+    
+     
 
         
     
@@ -105,9 +109,13 @@ if __name__ == '__main__':
 
 
     # number of times the experiments needs to be repeated 
+    # read these variabkkes from outside the configuration file
     experiments = config["NUM_EXPERIMENT_REPETITIONS"]
     layers = config["MODEL"]["NUM_HIDDEN_LAYERS"]
     neurons = config["MODEL"]["NUM_HIDDEN_NEURONS"]   
+    #layers = args.neurons
+    #neurons = args.layers   
+    #scale = args.scale
 
 
     # set the hidden layer array to initialize the architecture
