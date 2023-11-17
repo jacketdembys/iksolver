@@ -55,7 +55,7 @@ config_info = {
         },             
         'TRAIN': {
             'DATASET': {
-                'NUM_SAMPLES': 10000,
+                'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale)
             },
             'CHECKPOINT': {

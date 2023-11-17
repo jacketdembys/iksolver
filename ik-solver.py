@@ -407,6 +407,8 @@ if __name__ == '__main__':
         "neurons": neurons,
         "optimizer": optimizer_choice,
         "loss": loss_choice,
+        "completed_epochs": epoch,
+        "best_epoch": best_epoch,
         "min_x(mm)": X_errors_r[0,0],
         "avg_x(mm)": X_errors_r[1,0],
         "max_x(mm)": X_errors_r[2,0],
