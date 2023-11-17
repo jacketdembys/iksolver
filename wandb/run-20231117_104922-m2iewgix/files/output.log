@@ -1,0 +1,33 @@
+Epoch: 0/5 | Epoch Time: 0m 0s
+	Train Loss: 0.06655935739399865
+	Valid Loss: 0.04902591889817268
+	Best Epoch Occurred [0/5]
+Epoch: 1/5 | Epoch Time: 0m 1s
+	Train Loss: 0.043556482531130314
+	Valid Loss: 0.039864988713059574
+	Best Epoch Occurred [1/5]
+Epoch: 2/5 | Epoch Time: 0m 2s
+	Train Loss: 0.03801339719211683
+	Valid Loss: 0.035670541872736064
+	Best Epoch Occurred [2/5]
+Epoch: 3/5 | Epoch Time: 0m 2s
+	Train Loss: 0.034590746014146134
+	Valid Loss: 0.03285145185841248
+	Best Epoch Occurred [3/5]
+Epoch: 4/5 | Epoch Time: 0m 3s
+	Train Loss: 0.03258710974478163
+	Valid Loss: 0.031205529420403763
+	Best Epoch Occurred [4/5]
+End of Training for MLP [6, 100, 100, 7] - Elapsed Time: 0m 3s
+Testing the trained model ...
+==> Shape X_test:  (900, 6)
+==> Shape y_test:  (900, 7)
+(4, 6)
+[[1.8097460e-02 1.1831522e-02 7.6293945e-03 1.9534340e-03 2.0934530e-03
+  6.9702077e-03]
+ [1.1589607e+01 8.8392391e+00 1.1888363e+01 2.4101368e+01 2.3489575e+00
+  3.6821496e+00]
+ [7.5701797e+01 5.3346119e+01 7.1956245e+01 3.5971970e+02 2.6290243e+01
+  3.7037216e+01]
+ [1.0166515e+01 7.5460329e+00 1.0181883e+01 7.9351982e+01 2.7895203e+00
+  3.6896570e+00]]

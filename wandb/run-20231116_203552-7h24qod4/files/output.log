@@ -1,0 +1,12 @@
+Epoch: 0/5 | Epoch Time: 0m 10s
+	Train Loss: 0.14205845911055803
+	Valid Loss: 0.13318859619274737
+	Best Epoch Occurred [0/5]
+Traceback (most recent call last):
+  File "/home/retina/dembysj/Dropbox/WCCI2024/iksolver/ik-solver.py", line 307, in <module>
+    artifact.add_file(save_path+'/epoch_'+str(epoch)+'.pth')
+  File "/home/retina/dembysj/.conda/envs/wcci_24/lib/python3.11/site-packages/wandb/sdk/artifacts/artifact.py", line 1181, in add_file
+    self._ensure_can_add()
+  File "/home/retina/dembysj/.conda/envs/wcci_24/lib/python3.11/site-packages/wandb/sdk/artifacts/artifact.py", line 701, in _ensure_can_add
+    raise ArtifactFinalizedError(artifact=self)
+wandb.sdk.artifacts.exceptions.ArtifactFinalizedError: 'Artifact' used on logged artifact. Can't modify finalized artifact.

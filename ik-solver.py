@@ -83,6 +83,7 @@ if __name__ == '__main__':
     print("==> Running based on configuration...")
     #device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
     device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
+    device_name = torch.cuda.get_device_name(device)
     #device = torch.device('cpu')
     
     # set input and output size based on robot
@@ -102,6 +103,7 @@ if __name__ == '__main__':
     # load dataset from file
     if save_option == "cloud":
         data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     elif save_option == "local":
         data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     data_a = np.array(data) 
@@ -205,7 +207,7 @@ if __name__ == '__main__':
     # create a directory to save weights
     save_path = "results/"+robot_choice+"/"+robot_choice+"_" \
                 +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale))
+                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -226,15 +228,19 @@ if __name__ == '__main__':
 
     if save_option == "cloud":
         run = wandb.init(
-            project = "iksolver-experiments",                # set the project name this run will be logged
+            project = "iksolver-experiments",                
+            group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
                     +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                    +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale))
+                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
         )
 
 
 
-    
+    ##############################################################################################################
+    # Training and Validation
+    ##############################################################################################################   
+    patience = 0.1*EPOCHS
     train_losses = []
     valid_losses = []
     all_losses = []
@@ -261,24 +267,34 @@ if __name__ == '__main__':
         if valid_loss < best_valid_loss:
             best_valid_loss = valid_loss
             best_epoch = epoch
+            counter = 0
+
 
 
             #torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-            torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-            artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
-                                            +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                                            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
-                                        type='model')
-            artifact.add_file(save_path+'/best_epoch.pth')
-            run.log_artifact(artifact)
+            if save_option == "local":
+                torch.save(model.state_dict(), save_path+'/best_epoch.pth')
+            
+            elif save_option == "cloud":
+                torch.save(model.state_dict(), save_path+'/best_epoch.pth')
+                artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
+                                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
+                                            type='model')
+                artifact.add_file(save_path+'/best_epoch.pth')
+                run.log_artifact(artifact)
 
         
-        
-        if save_option == "cloud":
-            val_metrics = {
-                "val/val_loss": valid_loss,
-            }
-            wandb.log({**train_metrics, **val_metrics})
+                val_metrics = {
+                    "val/val_loss": valid_loss,
+                }
+                wandb.log({**train_metrics, **val_metrics})
+                wandb.watch(model, criterion, log="all")
+        else:
+            counter += 1
+            if counter >= patience:
+                print("Early stopping at epoch {}, best epoch: {}".format(epoch, best_epoch))
+                break
 
 
 
@@ -296,7 +312,14 @@ if __name__ == '__main__':
             if save_option == "local":   
                 torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
             elif save_option == "cloud":
-                torch.save(model.state_dict(), os.path.join(wandb.run.dir, "epoch_"+str(epoch)+".pth"))
+                torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
+                artifact2 = wandb.Artifact(name="Model_"+robot_choice+"_" \
+                                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
+                                            type='model')
+                artifact2.add_file(save_path+'/epoch_'+str(epoch)+'.pth')
+                run.log_artifact(artifact2)
+                #torch.save(model.state_dict(), os.path.join(wandb.run.dir, "epoch_"+str(epoch)+".pth"))
 
             # save the histories of losses
             header = ["train loss", "valid loss"]
@@ -305,6 +328,7 @@ if __name__ == '__main__':
             df.to_csv(save_path+"/losses_"+robot_choice+"_"+str(dataset_samples)+".csv",
                 index=False,
                 header=header)
+                      
             
             end_time_train = time.monotonic()
             epoch_mins, epoch_secs = epoch_time(start_time_train, end_time_train)
@@ -314,8 +338,138 @@ if __name__ == '__main__':
 
     
 
-    #print("Resetting the architecture ...\n\n")
-    #hidden_layer_sizes = np.zeros((1,layers))
+
+    ##############################################################################################################
+    # Inference
+    ##############################################################################################################
+    # training is done, let's run inferences and record the evaluation metrics
+    print("Testing the trained model ...\n\n")
+    test_data_loader = load_test_dataset(X_test, y_test)
+    weights_file = save_path+"/best_epoch.pth"
+    if network_type == "MLP":
+        model = MLP(input_dim, hidden_layer_sizes, output_dim).to(device)
+        #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim).to(device)
+    elif network_type == "ResMLP":
+        model = ResMLP(input_dim, hidden_layer_sizes, output_dim).to(device)
+    elif network_type == "DenseMLP":
+        model = DenseMLP(input_dim, hidden_layer_sizes, output_dim).to(device)
+    
+    state_dict = model.state_dict()
+    for n, p in torch.load(weights_file, map_location=lambda storage, loc: storage).items():
+        if n in state_dict.keys():
+            state_dict[n].copy_(p)
+        else:
+            raise KeyError(n)
+    
+    # get the results from training    
+    with torch.no_grad():
+        results = inference(model, test_data_loader, criterion, device, robot_choice)
+    X_errors = results["X_errors"]
+    
+    # get some inference stats
+    X_errors_r = X_errors[:,:6]
+    X_errors_r[:,:3] = X_errors_r[:,:3] * 1000
+    X_errors_r[:,3:] = np.rad2deg(X_errors_r[:,3:]) 
+    avg_position_error = X_errors_r[1,:3].mean()
+    avg_orientation_error = X_errors_r[1,3:].mean()
+
+
+    X_preds = results["X_preds"]
+    X_desireds = results["X_desireds"]
+    X_errors_p = np.abs(X_preds - X_desireds)
+    X_errors_p[:,:3] = X_errors_p[:,:3] * 1000
+    X_errors_p[:,3:] = np.rad2deg(X_errors_p[:,3:]) 
+    X_percentile = stats.percentileofscore(X_errors_p[:,0], [1,5,10,15,20], kind='rank')
+    Y_percentile = stats.percentileofscore(X_errors_p[:,1], [1,5,10,15,20], kind='rank')
+    Z_percentile = stats.percentileofscore(X_errors_p[:,2], [1,5,10,15,20], kind='rank')
+    Ro_percentile = stats.percentileofscore(X_errors_p[:,3], [1,2,3,4,5], kind='rank')
+    Pi_percentile = stats.percentileofscore(X_errors_p[:,4], [1,2,3,4,5], kind='rank')
+    Ya_percentile = stats.percentileofscore(X_errors_p[:,5], [1,2,3,4,5], kind='rank')
+
+    #print(X_errors_p.shape)
+    #print(X_errors_r.shape)
+    #print(X_errors_r)
+    #print(model.name)
+
+
+
+
+    # log this dataframe to wandb
+    #columns = ["trainLoss", "validLoss"]
+    #df2 = pd.DataFrame(np.array(all_losses))
+    inference_results = {
+        "device_name": device_name,
+        "data_size": dataset_samples,
+        "joints_scale": scale,
+        "architecture": model.name,
+        "network": network_type,
+        "layers": layers,
+        "neurons": neurons,
+        "optimizer": optimizer_choice,
+        "loss": loss_choice,
+        "min_x(mm)": X_errors_r[0,0],
+        "avg_x(mm)": X_errors_r[1,0],
+        "max_x(mm)": X_errors_r[2,0],
+        "std_x(mm)": X_errors_r[3,0],
+        "x_percent_1(mm)": X_percentile[0],
+        "x_percent_5(mm)": X_percentile[1],
+        "x_percent_10(mm)": X_percentile[2],
+        "x_percent_15(mm)": X_percentile[3],
+        "x_percent_20(mm)": X_percentile[4],
+        "min_y(mm)": X_errors_r[0,1],
+        "avg_y(mm)": X_errors_r[1,1],
+        "max_y(mm)": X_errors_r[2,1],
+        "std_y(mm)": X_errors_r[3,1],
+        "y_percent_1(mm)": Y_percentile[0],
+        "y_percent_5(mm)": Y_percentile[1],
+        "y_percent_10(mm)": Y_percentile[2],
+        "y_percent_15(mm)": Y_percentile[3],
+        "y_percent_20(mm)": Y_percentile[4],
+        "min_z(mm)": X_errors_r[0,2],
+        "avg_z(mm)": X_errors_r[1,2],
+        "max_z(mm)": X_errors_r[2,2],
+        "std_z(mm)": X_errors_r[3,2],
+        "Z_percent_1(mm)": Z_percentile[0],
+        "Z_percent_5(mm)": Z_percentile[1],
+        "Z_percent_10(mm)": Z_percentile[2],
+        "Z_percent_15(mm)": Z_percentile[3],
+        "Z_percent_20(mm)": Z_percentile[4],
+        "min_ro(deg)": X_errors_r[0,3],
+        "avg_ro(deg)": X_errors_r[1,3],
+        "max_ro(deg)": X_errors_r[2,3],
+        "std_ro(deg)": X_errors_r[3,3],
+        "ro_percent_1(deg)": Ro_percentile[0],
+        "ro_percent_2(deg)": Ro_percentile[1],
+        "ro_percent_3(deg)": Ro_percentile[2],
+        "ro_percent_4(deg)": Ro_percentile[3],
+        "ro_percent_5(deg)": Ro_percentile[4],
+        "min_pi(deg)": X_errors_r[0,4],
+        "avg_pi(deg)": X_errors_r[1,4],
+        "max_pi(deg)": X_errors_r[2,4],
+        "std_pi(deg)": X_errors_r[3,4],
+        "pi_percent_1(deg)": Pi_percentile[0],
+        "pi_percent_2(deg)": Pi_percentile[1],
+        "pi_percent_3(deg)": Pi_percentile[2],
+        "pi_percent_4(deg)": Pi_percentile[3],
+        "pi_percent_5(deg)": Pi_percentile[4],
+        "min_ya(deg)": X_errors_r[0,5],
+        "avg_ya(deg)": X_errors_r[1,5],
+        "max_ya(deg)": X_errors_r[2,5],
+        "std_ya(deg)": X_errors_r[3,5],
+        "ya_percent_1(deg)": Ya_percentile[0],
+        "ya_percent_2(deg)": Ya_percentile[1],
+        "ya_percent_3(deg)": Ya_percentile[2],
+        "ya_percent_4(deg)": Ya_percentile[3],
+        "ya_percent_5(deg)": Ya_percentile[4],
+    }
+    inference_results = pd.DataFrame(inference_results, index=[0])
+    inference_results_table = wandb.Table(data=inference_results)
+
+    #df2 = np.array(all_losses)
+    #print(df2[0,0], df2[0,1])
+    #test_metrics_table = wandb.Table(columns=columns)
+    #test_metrics_table.add_data(df2[0,0], df2[0,1])
+    wandb.log({"inferences": inference_results_table})
 
     if save_option == "cloud":
         wandb.finish()

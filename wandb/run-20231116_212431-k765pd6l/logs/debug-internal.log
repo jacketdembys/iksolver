@@ -1,0 +1,331 @@
+2023-11-16 21:24:31,791 INFO    StreamThr :573768 [internal.py:wandb_internal():86] W&B internal server running at pid: 573768, started at: 2023-11-16 21:24:31.791375
+2023-11-16 21:24:31,792 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: status
+2023-11-16 21:24:31,793 INFO    WriterThread:573768 [datastore.py:open_for_write():85] open: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/run-k765pd6l.wandb
+2023-11-16 21:24:31,794 DEBUG   SenderThread:573768 [sender.py:send():380] send: header
+2023-11-16 21:24:31,795 DEBUG   SenderThread:573768 [sender.py:send():380] send: run
+2023-11-16 21:24:32,160 INFO    SenderThread:573768 [dir_watcher.py:__init__():211] watching files in: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files
+2023-11-16 21:24:32,160 INFO    SenderThread:573768 [sender.py:_start_run_threads():1122] run started: k765pd6l with start time 1700191471.791308
+2023-11-16 21:24:32,169 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: check_version
+2023-11-16 21:24:32,169 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: check_version
+2023-11-16 21:24:32,333 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: run_start
+2023-11-16 21:24:32,387 DEBUG   HandlerThread:573768 [system_info.py:__init__():32] System info init
+2023-11-16 21:24:32,387 DEBUG   HandlerThread:573768 [system_info.py:__init__():47] System info init done
+2023-11-16 21:24:32,387 INFO    HandlerThread:573768 [system_monitor.py:start():194] Starting system monitor
+2023-11-16 21:24:32,387 INFO    SystemMonitor:573768 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-16 21:24:32,388 INFO    HandlerThread:573768 [system_monitor.py:probe():214] Collecting system info
+2023-11-16 21:24:32,390 INFO    SystemMonitor:573768 [interfaces.py:start():190] Started cpu monitoring
+2023-11-16 21:24:32,390 INFO    SystemMonitor:573768 [interfaces.py:start():190] Started disk monitoring
+2023-11-16 21:24:32,392 INFO    SystemMonitor:573768 [interfaces.py:start():190] Started gpu monitoring
+2023-11-16 21:24:32,393 INFO    SystemMonitor:573768 [interfaces.py:start():190] Started memory monitoring
+2023-11-16 21:24:32,394 INFO    SystemMonitor:573768 [interfaces.py:start():190] Started network monitoring
+2023-11-16 21:24:32,418 DEBUG   HandlerThread:573768 [system_info.py:probe():196] Probing system
+2023-11-16 21:24:32,420 DEBUG   HandlerThread:573768 [system_info.py:_probe_git():181] Probing git
+2023-11-16 21:24:32,427 DEBUG   HandlerThread:573768 [system_info.py:_probe_git():189] Probing git done
+2023-11-16 21:24:32,427 DEBUG   HandlerThread:573768 [system_info.py:probe():244] Probing system done
+2023-11-16 21:24:32,427 DEBUG   HandlerThread:573768 [system_monitor.py:probe():223] {'os': 'Linux-5.15.0-88-generic-x86_64-with-glibc2.35', 'python': '3.11.5', 'heartbeatAt': '2023-11-17T03:24:32.418986', 'startedAt': '2023-11-17T03:24:31.788918', 'docker': None, 'cuda': '10.2.89', 'args': (), 'state': 'running', 'program': '/home/retina/dembysj/Dropbox/WCCI2024/iksolver/ik-solver.py', 'codePathLocal': 'ik-solver.py', 'codePath': 'ik-solver.py', 'git': {'remote': 'https://github.com/jacketdembys/iksolver.git', 'commit': 'eed66bb5c0586826a0a9036b8f7221712d6c7de6'}, 'email': 'jacketdembys@yahoo.fr', 'root': '/home/retina/dembysj/Dropbox/WCCI2024/iksolver', 'host': 'retina', 'username': 'dembysj', 'executable': '/home/retina/dembysj/.conda/envs/wcci_24/bin/python', 'cpu_count': 6, 'cpu_count_logical': 12, 'cpu_freq': {'current': 2901.514416666667, 'min': 800.0, 'max': 4600.0}, 'cpu_freq_per_core': [{'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 2216.87, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 2586.703, 'min': 800.0, 'max': 4600.0}, {'current': 2159.264, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}, {'current': 3200.0, 'min': 800.0, 'max': 4600.0}], 'disk': {'/': {'total': 23.990325927734375, 'used': 20.488628387451172}}, 'gpu': 'NVIDIA GeForce RTX 2060', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 2060', 'memory_total': 6442450944}], 'memory': {'total': 31.277503967285156}}
+2023-11-16 21:24:32,427 INFO    HandlerThread:573768 [system_monitor.py:probe():224] Finished collecting system info
+2023-11-16 21:24:32,427 INFO    HandlerThread:573768 [system_monitor.py:probe():227] Publishing system info
+2023-11-16 21:24:32,427 DEBUG   HandlerThread:573768 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2023-11-16 21:24:32,427 DEBUG   HandlerThread:573768 [system_info.py:_save_pip():68] Saving pip packages done
+2023-11-16 21:24:32,427 DEBUG   HandlerThread:573768 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2023-11-16 21:24:33,161 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/requirements.txt
+2023-11-16 21:24:33,161 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/conda-environment.yaml
+2023-11-16 21:24:36,350 DEBUG   HandlerThread:573768 [system_info.py:_save_conda():87] Saving conda packages done
+2023-11-16 21:24:36,350 INFO    HandlerThread:573768 [system_monitor.py:probe():229] Finished publishing system info
+2023-11-16 21:24:36,352 DEBUG   SenderThread:573768 [sender.py:send():380] send: files
+2023-11-16 21:24:36,352 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-metadata.json with policy now
+2023-11-16 21:24:36,354 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-16 21:24:36,354 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: stop_status
+2023-11-16 21:24:36,356 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-16 21:24:36,535 DEBUG   SenderThread:573768 [sender.py:send():380] send: telemetry
+2023-11-16 21:24:36,732 INFO    wandb-upload_0:573768 [upload_job.py:push():131] Uploaded file /tmp/tmp3e5h57v_wandb/jtyqj9o8-wandb-metadata.json
+2023-11-16 21:24:37,084 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:37,084 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:37,126 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,161 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/conda-environment.yaml
+2023-11-16 21:24:37,162 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-metadata.json
+2023-11-16 21:24:37,206 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:37,562 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,562 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,562 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,563 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,563 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,564 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,564 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,705 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:37,708 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:37,833 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:37,877 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmppjdm6uyp
+2023-11-16 21:24:38,143 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,144 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,144 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,144 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,145 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,145 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,146 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,164 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,164 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,164 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,165 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,165 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,165 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,166 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,294 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:38,296 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,375 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMDQ1', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': None}}
+2023-11-16 21:24:38,375 DEBUG   SenderThread:573768 [sender.py:send():380] send: history
+2023-11-16 21:24:38,375 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: summary_record
+2023-11-16 21:24:38,375 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: status_report
+2023-11-16 21:24:38,376 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-16 21:24:38,377 DEBUG   SenderThread:573768 [sender.py:send():380] send: telemetry
+2023-11-16 21:24:38,377 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:38,435 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:38,776 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,776 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,777 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,777 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,777 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,777 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,778 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,791 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,791 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,792 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,792 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,792 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,792 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,793 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,806 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,806 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,807 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,807 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,807 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,807 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,808 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:38,957 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:38,960 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,121 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:39,162 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:39,162 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json
+2023-11-16 21:24:39,200 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpk9pvi5dd
+2023-11-16 21:24:39,413 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,413 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,414 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,414 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,414 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,414 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,415 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,429 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,429 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,430 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,430 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,430 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,431 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,431 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,445 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,446 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,446 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,446 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,446 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,447 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,447 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,465 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,465 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,465 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,466 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,466 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,466 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,467 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,629 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:39,634 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-16 21:24:39,773 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMDY2', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMDQ1', 'versionIndex': 0}}}
+2023-11-16 21:24:39,773 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:39,792 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: log_artifact
+2023-11-16 21:24:40,653 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpw2febtu6
+2023-11-16 21:24:40,798 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-16 21:24:41,163 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:41,804 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMDc3', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMDY2', 'versionIndex': 1}}}
+2023-11-16 21:24:41,805 DEBUG   SenderThread:573768 [sender.py:send():380] send: history
+2023-11-16 21:24:41,807 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: summary_record
+2023-11-16 21:24:41,810 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-16 21:24:41,811 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:42,163 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json
+2023-11-16 21:24:43,164 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:43,480 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmp35jftp12
+2023-11-16 21:24:44,179 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTAx', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMDc3', 'versionIndex': 2}}}
+2023-11-16 21:24:44,179 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:44,183 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: status_report
+2023-11-16 21:24:45,799 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: keepalive
+2023-11-16 21:24:46,030 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpj1nxbiyz
+2023-11-16 21:24:46,618 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTE5', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTAx', 'versionIndex': 3}}}
+2023-11-16 21:24:46,619 DEBUG   SenderThread:573768 [sender.py:send():380] send: history
+2023-11-16 21:24:46,622 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: summary_record
+2023-11-16 21:24:46,630 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-16 21:24:46,632 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:47,170 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json
+2023-11-16 21:24:47,533 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpneafd_sy
+2023-11-16 21:24:48,288 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTQx', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTE5', 'versionIndex': 4}}}
+2023-11-16 21:24:48,288 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:49,170 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:49,220 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpeoztq_77
+2023-11-16 21:24:49,969 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTYx', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTQx', 'versionIndex': 5}}}
+2023-11-16 21:24:49,969 DEBUG   SenderThread:573768 [sender.py:send():380] send: history
+2023-11-16 21:24:49,979 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: status_report
+2023-11-16 21:24:49,980 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: summary_record
+2023-11-16 21:24:49,990 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-16 21:24:49,991 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:50,171 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json
+2023-11-16 21:24:50,800 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: keepalive
+2023-11-16 21:24:51,064 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpln4407rr
+2023-11-16 21:24:51,172 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:51,633 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTc0', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTYx', 'versionIndex': 6}}}
+2023-11-16 21:24:51,633 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:52,575 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpjswhuaih
+2023-11-16 21:24:53,269 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTg2', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTc0', 'versionIndex': 7}}}
+2023-11-16 21:24:53,269 DEBUG   SenderThread:573768 [sender.py:send():380] send: history
+2023-11-16 21:24:53,278 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: summary_record
+2023-11-16 21:24:53,283 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-16 21:24:53,284 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: log_artifact
+2023-11-16 21:24:54,174 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json
+2023-11-16 21:24:54,259 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmp_15h96_i
+2023-11-16 21:24:54,906 INFO    SenderThread:573768 [sender.py:send_request_log_artifact():1444] logged artifact Model_7DoF-7R-Panda_MLP_6-100-7_Adam_l2_2_qlim_scale_4 - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMjA0', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQzMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6NjQxMTAzMTg2', 'versionIndex': 8}}}
+2023-11-16 21:24:54,907 DEBUG   SenderThread:573768 [sender.py:send():380] send: telemetry
+2023-11-16 21:24:54,907 DEBUG   SenderThread:573768 [sender.py:send():380] send: exit
+2023-11-16 21:24:54,907 INFO    SenderThread:573768 [sender.py:send_exit():585] handling exit code: 0
+2023-11-16 21:24:54,907 INFO    SenderThread:573768 [sender.py:send_exit():587] handling runtime: 7
+2023-11-16 21:24:54,919 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-16 21:24:54,919 INFO    SenderThread:573768 [sender.py:send_exit():593] send defer
+2023-11-16 21:24:54,920 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: poll_exit
+2023-11-16 21:24:54,921 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:54,921 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 0
+2023-11-16 21:24:54,922 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:54,922 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 0
+2023-11-16 21:24:54,922 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 1
+2023-11-16 21:24:54,923 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:54,923 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 1
+2023-11-16 21:24:54,923 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:54,924 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 1
+2023-11-16 21:24:54,924 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 2
+2023-11-16 21:24:54,924 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:54,924 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 2
+2023-11-16 21:24:54,924 INFO    HandlerThread:573768 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-16 21:24:54,925 DEBUG   SystemMonitor:573768 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-16 21:24:54,926 INFO    HandlerThread:573768 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-16 21:24:54,927 DEBUG   SystemMonitor:573768 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-16 21:24:54,928 INFO    HandlerThread:573768 [interfaces.py:finish():202] Joined disk monitor
+2023-11-16 21:24:54,928 DEBUG   SystemMonitor:573768 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-16 21:24:55,030 INFO    HandlerThread:573768 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-16 21:24:55,030 INFO    HandlerThread:573768 [interfaces.py:finish():202] Joined memory monitor
+2023-11-16 21:24:55,030 INFO    HandlerThread:573768 [interfaces.py:finish():202] Joined network monitor
+2023-11-16 21:24:55,031 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:55,031 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 2
+2023-11-16 21:24:55,031 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 3
+2023-11-16 21:24:55,031 DEBUG   SenderThread:573768 [sender.py:send():380] send: stats
+2023-11-16 21:24:55,031 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:55,031 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 3
+2023-11-16 21:24:55,031 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: status_report
+2023-11-16 21:24:55,032 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:55,032 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 3
+2023-11-16 21:24:55,032 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 4
+2023-11-16 21:24:55,032 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:55,032 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 4
+2023-11-16 21:24:55,032 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:55,032 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 4
+2023-11-16 21:24:55,032 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 5
+2023-11-16 21:24:55,032 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:55,032 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 5
+2023-11-16 21:24:55,135 DEBUG   SenderThread:573768 [sender.py:send():380] send: summary
+2023-11-16 21:24:55,145 INFO    SenderThread:573768 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-16 21:24:55,146 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:55,146 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 5
+2023-11-16 21:24:55,146 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 6
+2023-11-16 21:24:55,147 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:55,147 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 6
+2023-11-16 21:24:55,148 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:55,148 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 6
+2023-11-16 21:24:55,153 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: status_report
+2023-11-16 21:24:55,174 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:55,174 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json
+2023-11-16 21:24:55,801 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: keepalive
+2023-11-16 21:24:56,382 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 7
+2023-11-16 21:24:56,383 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:56,383 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 7
+2023-11-16 21:24:56,383 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:56,383 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 7
+2023-11-16 21:24:56,392 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 8
+2023-11-16 21:24:56,392 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:56,392 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 8
+2023-11-16 21:24:56,392 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:56,392 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 8
+2023-11-16 21:24:56,392 INFO    SenderThread:573768 [job_builder.py:build():281] Attempting to build job artifact
+2023-11-16 21:24:56,397 INFO    SenderThread:573768 [job_builder.py:_get_source_type():393] is repo sourced job
+2023-11-16 21:24:56,398 INFO    SenderThread:573768 [job_builder.py:build():369] adding wandb-job metadata file
+2023-11-16 21:24:56,456 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 9
+2023-11-16 21:24:56,457 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:56,457 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 9
+2023-11-16 21:24:56,457 DEBUG   SenderThread:573768 [sender.py:send():380] send: artifact
+2023-11-16 21:24:57,175 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/config.yaml
+2023-11-16 21:24:57,176 INFO    Thread-12 :573768 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:57,303 INFO    wandb-upload_0:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmp6ivngdw4
+2023-11-16 21:24:57,340 INFO    wandb-upload_1:573768 [upload_job.py:push():89] Uploaded file /home/retina/dembysj/.local/share/wandb/artifacts/staging/tmpae08eyk1
+2023-11-16 21:24:58,043 INFO    SenderThread:573768 [sender.py:send_artifact():1456] sent artifact job-https___github.com_jacketdembys_iksolver.git_ik-solver.py - {'id': 'QXJ0aWZhY3Q6NjQxMTAzMjM0', 'state': 'PENDING', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjExNjUyODQ2Ng==', 'latestArtifact': None}}
+2023-11-16 21:24:58,044 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:58,044 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 9
+2023-11-16 21:24:58,044 INFO    SenderThread:573768 [dir_watcher.py:finish():358] shutting down directory watcher
+2023-11-16 21:24:58,177 INFO    SenderThread:573768 [dir_watcher.py:finish():388] scan: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files
+2023-11-16 21:24:58,178 INFO    SenderThread:573768 [dir_watcher.py:finish():402] scan save: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/conda-environment.yaml conda-environment.yaml
+2023-11-16 21:24:58,178 INFO    SenderThread:573768 [dir_watcher.py:finish():402] scan save: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/requirements.txt requirements.txt
+2023-11-16 21:24:58,184 INFO    SenderThread:573768 [dir_watcher.py:finish():402] scan save: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/config.yaml config.yaml
+2023-11-16 21:24:58,194 INFO    SenderThread:573768 [dir_watcher.py:finish():402] scan save: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log output.log
+2023-11-16 21:24:58,195 INFO    SenderThread:573768 [dir_watcher.py:finish():402] scan save: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-metadata.json wandb-metadata.json
+2023-11-16 21:24:58,195 INFO    SenderThread:573768 [dir_watcher.py:finish():402] scan save: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json wandb-summary.json
+2023-11-16 21:24:58,196 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 10
+2023-11-16 21:24:58,196 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:58,196 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 10
+2023-11-16 21:24:58,198 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:58,198 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 10
+2023-11-16 21:24:58,198 INFO    SenderThread:573768 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-16 21:24:58,423 INFO    wandb-upload_0:573768 [upload_job.py:push():131] Uploaded file /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/conda-environment.yaml
+2023-11-16 21:24:58,551 INFO    wandb-upload_1:573768 [upload_job.py:push():131] Uploaded file /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/requirements.txt
+2023-11-16 21:24:58,640 INFO    wandb-upload_3:573768 [upload_job.py:push():131] Uploaded file /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/output.log
+2023-11-16 21:24:58,775 INFO    wandb-upload_2:573768 [upload_job.py:push():131] Uploaded file /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/config.yaml
+2023-11-16 21:24:58,791 INFO    wandb-upload_4:573768 [upload_job.py:push():131] Uploaded file /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/files/wandb-summary.json
+2023-11-16 21:24:58,994 INFO    Thread-11 (_thread_body):573768 [sender.py:transition_state():613] send defer: 11
+2023-11-16 21:24:58,995 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:58,995 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 11
+2023-11-16 21:24:58,996 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:58,997 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 11
+2023-11-16 21:24:58,997 INFO    SenderThread:573768 [file_pusher.py:join():181] waiting for file pusher
+2023-11-16 21:24:58,997 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 12
+2023-11-16 21:24:58,998 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:58,998 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 12
+2023-11-16 21:24:58,999 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:58,999 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 12
+2023-11-16 21:24:58,999 INFO    SenderThread:573768 [file_stream.py:finish():595] file stream finish called
+2023-11-16 21:24:59,109 INFO    SenderThread:573768 [file_stream.py:finish():599] file stream finish is done
+2023-11-16 21:24:59,109 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 13
+2023-11-16 21:24:59,109 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:59,109 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 13
+2023-11-16 21:24:59,109 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:59,109 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 13
+2023-11-16 21:24:59,110 INFO    SenderThread:573768 [sender.py:transition_state():613] send defer: 14
+2023-11-16 21:24:59,110 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: defer
+2023-11-16 21:24:59,110 INFO    HandlerThread:573768 [handler.py:handle_request_defer():172] handle defer: 14
+2023-11-16 21:24:59,110 DEBUG   SenderThread:573768 [sender.py:send():380] send: final
+2023-11-16 21:24:59,111 DEBUG   SenderThread:573768 [sender.py:send():380] send: footer
+2023-11-16 21:24:59,111 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: defer
+2023-11-16 21:24:59,111 INFO    SenderThread:573768 [sender.py:send_request_defer():609] handle sender defer: 14
+2023-11-16 21:24:59,112 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-16 21:24:59,112 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-16 21:24:59,113 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: poll_exit
+2023-11-16 21:24:59,114 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: server_info
+2023-11-16 21:24:59,114 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: get_summary
+2023-11-16 21:24:59,119 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: sampled_history
+2023-11-16 21:24:59,119 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: job_info
+2023-11-16 21:24:59,120 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: server_info
+2023-11-16 21:24:59,168 DEBUG   SenderThread:573768 [sender.py:send_request():407] send_request: job_info
+2023-11-16 21:24:59,169 DEBUG   HandlerThread:573768 [handler.py:handle_request():146] handle_request: shutdown
+2023-11-16 21:24:59,169 INFO    HandlerThread:573768 [handler.py:finish():866] shutting down handler
+2023-11-16 21:25:00,120 INFO    WriterThread:573768 [datastore.py:close():294] close: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231116_212431-k765pd6l/run-k765pd6l.wandb
+2023-11-16 21:25:00,168 INFO    SenderThread:573768 [sender.py:finish():1534] shutting down sender
+2023-11-16 21:25:00,169 INFO    SenderThread:573768 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-16 21:25:00,169 INFO    SenderThread:573768 [file_pusher.py:join():181] waiting for file pusher

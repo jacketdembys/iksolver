@@ -70,7 +70,7 @@ config_info = {
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': True,
                 'PERSISTENT_WORKERS': True,
-                'OPTIMIZER_NAME': 'SGD',
+                'OPTIMIZER_NAME': 'Adam',
                 'LEARNING_RATE': 0.0001,
                 'BETAS': [0.9, 0.999],
                 'EPS': 0.0001,
