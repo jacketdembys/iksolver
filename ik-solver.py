@@ -40,7 +40,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--config-path",
                         type=str,
-                        default="./configs/train.yaml",
+                        default="train.yaml",
                         help="Path to train config file.")
     args = parser.parse_args()
 
@@ -71,8 +71,9 @@ if __name__ == '__main__':
     
 
     
-    #print('==> Log into wandb to send out metrids ...')
-    wandb.login()                                        # login to the Weights and Biases   
+    if save_option == "cloud":
+        print('==> Log into wandb to send out metrids ...')
+        wandb.login()                                        # login to the Weights and Biases   
 
     
      
@@ -223,12 +224,13 @@ if __name__ == '__main__':
         header=joint_header)
 
 
-    run = wandb.init(
-        project = "iksolver-experiments",                # set the project name this run will be logged
-        name = "Model_"+robot_choice+"_" \
-                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale))
-    )
+    if save_option == "cloud":
+        run = wandb.init(
+            project = "iksolver-experiments",                # set the project name this run will be logged
+            name = "Model_"+robot_choice+"_" \
+                    +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                    +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale))
+        )
 
 
 
@@ -248,10 +250,12 @@ if __name__ == '__main__':
         valid_losses.append(valid_loss)
         all_losses.append([train_loss, valid_loss])
 
-        train_metrics= {
-            "train/epoch": epoch,
-            "train/train_loss": train_loss,
-        }
+
+        if save_option == "cloud":
+            train_metrics= {
+                "train/epoch": epoch,
+                "train/train_loss": train_loss,
+            }
         
     
         if valid_loss < best_valid_loss:
@@ -270,10 +274,11 @@ if __name__ == '__main__':
 
         
         
-        val_metrics = {
-            "val/val_loss": valid_loss,
-        }
-        wandb.log({**train_metrics, **val_metrics})
+        if save_option == "cloud":
+            val_metrics = {
+                "val/val_loss": valid_loss,
+            }
+            wandb.log({**train_metrics, **val_metrics})
 
 
 
@@ -311,7 +316,9 @@ if __name__ == '__main__':
 
     #print("Resetting the architecture ...\n\n")
     #hidden_layer_sizes = np.zeros((1,layers))
-    wandb.finish()
+
+    if save_option == "cloud":
+        wandb.finish()
 
 
             
