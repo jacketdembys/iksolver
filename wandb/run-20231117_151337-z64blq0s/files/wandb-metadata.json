@@ -1,0 +1,108 @@
+{
+    "os": "Linux-5.15.0-88-generic-x86_64-with-glibc2.35",
+    "python": "3.11.5",
+    "heartbeatAt": "2023-11-17T21:13:38.892295",
+    "startedAt": "2023-11-17T21:13:37.660082",
+    "docker": null,
+    "cuda": "10.2.89",
+    "args": [],
+    "state": "running",
+    "program": "/home/retina/dembysj/Dropbox/WCCI2024/iksolver/ik-solver.py",
+    "codePathLocal": "ik-solver.py",
+    "codePath": "ik-solver.py",
+    "git": {
+        "remote": "https://github.com/jacketdembys/iksolver.git",
+        "commit": "580e1ea110f0c9358d28f43738c02afd1cb508c4"
+    },
+    "email": "jacketdembys@yahoo.fr",
+    "root": "/home/retina/dembysj/Dropbox/WCCI2024/iksolver",
+    "host": "retina",
+    "username": "dembysj",
+    "executable": "/home/retina/dembysj/.conda/envs/wcci_24/bin/python",
+    "cpu_count": 6,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 3383.2990000000004,
+        "min": 800.0,
+        "max": 4600.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 4299.934,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 4299.96,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 4300.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        },
+        {
+            "current": 3200.0,
+            "min": 800.0,
+            "max": 4600.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 23.990325927734375,
+            "used": 20.509838104248047
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 2060",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 2060",
+            "memory_total": 6442450944
+        }
+    ],
+    "memory": {
+        "total": 31.277503967285156
+    }
+}

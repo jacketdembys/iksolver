@@ -102,8 +102,8 @@ if __name__ == '__main__':
         
     # load dataset from file
     if save_option == "cloud":
-        data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
-        #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        #data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     elif save_option == "local":
         data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     data_a = np.array(data) 
@@ -200,7 +200,7 @@ if __name__ == '__main__':
         criterion = FKLoss()
     
     
-    print("\n==> Experiment {} Training network: {}".format(experiment_number+1, model.name))
+    print("\n==> Experiment {} Training network: {}".format(experiment_number, model.name))
     print("==> Training device: {}".format(device))
     
 
@@ -229,7 +229,7 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments",                
-            group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
+            group = "Dataset_"+str(dataset_samples), #+"_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
                     +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
                     +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -374,6 +374,8 @@ if __name__ == '__main__':
     avg_orientation_error = X_errors_r[1,3:].mean()
 
 
+
+
     X_preds = results["X_preds"]
     X_desireds = results["X_desireds"]
     X_errors_p = np.abs(X_preds - X_desireds)
@@ -466,6 +468,20 @@ if __name__ == '__main__':
     }
     inference_results = pd.DataFrame(inference_results, index=[0])
     inference_results_table = wandb.Table(data=inference_results)
+
+
+
+    inference_metrics = {
+        "avg_x(mm)": X_errors_r[1,0],
+        "avg_y(mm)": X_errors_r[1,1],
+        "avg_z(mm)": X_errors_r[1,2],
+        "avg_ro(deg)": X_errors_r[1,3],
+        "avg_pi(deg)": X_errors_r[1,4],
+        "avg_ya(deg)": X_errors_r[1,5]
+    }
+
+    # visualize some errors
+    wandb.log({**inference_metrics})
 
     #df2 = np.array(all_losses)
     #print(df2[0,0], df2[0,1])
