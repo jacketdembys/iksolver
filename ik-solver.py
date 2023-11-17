@@ -229,7 +229,7 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments",                
-            group = "Dataset_"+str(dataset_samples), #+"_Scale_"+str(int(scale)),
+            group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
                     +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
                     +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
