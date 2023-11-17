@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/home/retina/dembysj/Dropbox/WCCI2024/iksolver/ik-solver.py", line 261, in <module>
-    run,log_artifact(artifact)
-        ^^^^^^^^^^^^
-NameError: name 'log_artifact' is not defined
