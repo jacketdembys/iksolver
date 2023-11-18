@@ -66,19 +66,13 @@ if __name__ == '__main__':
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
 
     scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
-    EPOCHS = config["TRAIN"]["HYPERPARAMETERS"]["EPOCHS"]                         # total training epochs
-
-    
+    EPOCHS = config["TRAIN"]["HYPERPARAMETERS"]["EPOCHS"]                         # total training epochs   
 
     
     if save_option == "cloud":
         print('==> Log in to wandb to send out metrics ...')
         wandb.login()                                        # login to the Weights and Biases   
-
-    
-     
-
-        
+               
     
     print("==> Running based on configuration...")
     #device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
