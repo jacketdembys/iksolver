@@ -65,7 +65,7 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 10000,
-                'BATCH_SIZE': 256,
+                'BATCH_SIZE': 512,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': True,
@@ -79,7 +79,7 @@ config_info = {
                 'LOSS': 'l2',
             },
             'PRINT_EPOCHS': True,
-            'PRINT_STEPS': 1000
+            'PRINT_STEPS': 100
         },
 }
 
