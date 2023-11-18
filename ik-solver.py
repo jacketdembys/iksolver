@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     
     if save_option == "cloud":
-        print('==> Log into wandb to send out metrids ...')
+        print('==> Log in to wandb to send out metrics ...')
         wandb.login()                                        # login to the Weights and Biases   
 
     
@@ -229,7 +229,8 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments",                
-            group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
+            #group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
+            group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
                     +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
                     +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -411,6 +412,7 @@ if __name__ == '__main__':
         "loss": loss_choice,
         "completed_epochs": epoch,
         "best_epoch": best_epoch,
+        "elapsed_time": "{}m {}s".format(epoch_mins, epoch_secs),
         "min_x(mm)": X_errors_r[0,0],
         "avg_x(mm)": X_errors_r[1,0],
         "max_x(mm)": X_errors_r[2,0],
@@ -468,9 +470,11 @@ if __name__ == '__main__':
     }
     inference_results = pd.DataFrame(inference_results, index=[0])
     inference_results_table = wandb.Table(data=inference_results)
+    wandb.log({"inferences": inference_results_table})
 
 
 
+    """
     inference_metrics = {
         "avg_x(mm)": X_errors_r[1,0],
         "avg_y(mm)": X_errors_r[1,1],
@@ -482,12 +486,13 @@ if __name__ == '__main__':
 
     # visualize some errors
     wandb.log({**inference_metrics})
+    """
+    
 
     #df2 = np.array(all_losses)
     #print(df2[0,0], df2[0,1])
     #test_metrics_table = wandb.Table(columns=columns)
     #test_metrics_table.add_data(df2[0,0], df2[0,1])
-    wandb.log({"inferences": inference_results_table})
 
     if save_option == "cloud":
         wandb.finish()
