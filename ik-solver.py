@@ -237,7 +237,7 @@ if __name__ == '__main__':
     ##############################################################################################################
     # Training and Validation
     ##############################################################################################################   
-    patience = 0.1*EPOCHS
+    patience = 0.01*EPOCHS
     train_losses = []
     valid_losses = []
     all_losses = []
@@ -327,8 +327,8 @@ if __name__ == '__main__':
                 header=header)
                       
             
-            end_time_train = time.monotonic()
-            epoch_mins, epoch_secs = epoch_time(start_time_train, end_time_train)
+    end_time_train = time.monotonic()
+    epoch_mins, epoch_secs = epoch_time(start_time_train, end_time_train)
     
     if print_epoch:
         print('\nEnd of Training for {} - Elapsed Time: {}m {}s'.format(model.name, epoch_mins, epoch_secs))    
