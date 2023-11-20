@@ -76,11 +76,11 @@ if __name__ == '__main__':
     
     print("==> Running based on configuration...")
     
-    device = torch.device('cpu')
-    device_name = "cpu"
-    #device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
+    #device = torch.device('cpu')
+    #device_name = "cpu"
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
     #device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
-    #device_name = torch.cuda.get_device_name(device)
+    device_name = torch.cuda.get_device_name(device)
     
     # set input and output size based on robot
     if robot_choice == "6DoF-6R-Puma260":
@@ -237,7 +237,7 @@ if __name__ == '__main__':
     ##############################################################################################################
     # Training and Validation
     ##############################################################################################################   
-    patience = 0.01*EPOCHS
+    patience = 0.1*EPOCHS
     train_losses = []
     valid_losses = []
     all_losses = []
