@@ -486,8 +486,10 @@ def load_dataset(data, n_DoF, batch_size, robot_choice):
                                    pin_memory=True)
 
     test_data_loader = DataLoader(dataset=test_data,
-                                   batch_size=1,
-                                   shuffle=False)
+                                   batch_size=batch_size,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=True)
 
     return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test 
 
@@ -520,7 +522,7 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
     #B = B_dict['basic'].to(device)
     
     #with tqdm(total=(len(iterator) - len(iterator) % batch_size)) as t:
-    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=False) as t:
         for data in iterator:
         #for data in tqdm(iterator, desc="Training", leave=False):
             optimizer.zero_grad()
@@ -577,7 +579,7 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
     
     with torch.no_grad():
         #for data in tqdm(iterator, desc="Evaluating", leave=False):        
-        with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+        with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=False) as t:
             for data in iterator:
                 x = data['input'].to(device)
                 y = data['output'].to(device)

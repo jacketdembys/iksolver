@@ -6,6 +6,9 @@ import argparse
 
 
 
+# GPUs declaration in the Yaml file
+# - NVIDIA-GeForce-GTX-1080-Ti
+
 # set argument parser
 parser = argparse.ArgumentParser()
 
@@ -65,8 +68,8 @@ config_info = {
                 'RESUMED_G_MODEL': "",
             },
             'HYPERPARAMETERS': {
-                'EPOCHS': 10000,
-                'BATCH_SIZE': 4096,
+                'EPOCHS': 100,
+                'BATCH_SIZE': 65536,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': True,
@@ -80,7 +83,7 @@ config_info = {
                 'LOSS': 'l2',
             },
             'PRINT_EPOCHS': True,
-            'PRINT_STEPS': 10000
+            'PRINT_STEPS': 100
         },
 }
 
