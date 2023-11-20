@@ -522,7 +522,7 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
     #B = B_dict['basic'].to(device)
     
     #with tqdm(total=(len(iterator) - len(iterator) % batch_size)) as t:
-    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=False) as t:
+    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
         for data in iterator:
         #for data in tqdm(iterator, desc="Training", leave=False):
             optimizer.zero_grad()
@@ -579,7 +579,7 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
     
     with torch.no_grad():
         #for data in tqdm(iterator, desc="Evaluating", leave=False):        
-        with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=False) as t:
+        with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
             for data in iterator:
                 x = data['input'].to(device)
                 y = data['output'].to(device)
