@@ -75,10 +75,12 @@ if __name__ == '__main__':
                
     
     print("==> Running based on configuration...")
+    
+    device = torch.device('cpu')
     #device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
-    device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
-    device_name = torch.cuda.get_device_name(device)
-    #device = torch.device('cpu')
+    #device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
+    #device_name = torch.cuda.get_device_name(device)
+    
     
     # set input and output size based on robot
     if robot_choice == "6DoF-6R-Puma260":
@@ -96,8 +98,8 @@ if __name__ == '__main__':
         
     # load dataset from file
     if save_option == "cloud":
-        data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
-        #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        #data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     elif save_option == "local":
         data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     data_a = np.array(data) 

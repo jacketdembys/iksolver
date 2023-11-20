@@ -41,6 +41,7 @@ robot_choice = '7DoF-7R-Panda'
 # read from path script
 #for scale in range(2,12,2):
 
+# batch sizes: 4096, 65536
 # build the content of the config file in a dictionary
 config_info = {
         'NUM_EXPERIMENT_REPETITIONS': 1,
@@ -65,7 +66,7 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 10000,
-                'BATCH_SIZE': 1024,
+                'BATCH_SIZE': 4096,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': True,
@@ -79,7 +80,7 @@ config_info = {
                 'LOSS': 'l2',
             },
             'PRINT_EPOCHS': True,
-            'PRINT_STEPS': 100
+            'PRINT_STEPS': 10000
         },
 }
 
