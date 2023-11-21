@@ -62,7 +62,7 @@ config_info = {
         },             
         'TRAIN': {
             'DATASET': {
-                'NUM_SAMPLES': 10000,
+                'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale)
             },
             'CHECKPOINT': {
@@ -72,7 +72,7 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 1000,
-                'BATCH_SIZE': 655,
+                'BATCH_SIZE': 65536,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': True,
