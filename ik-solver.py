@@ -276,12 +276,12 @@ if __name__ == '__main__':
             
             elif save_option == "cloud":
                 torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-                artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
-                                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
-                                            type='model')
-                artifact.add_file(save_path+'/best_epoch.pth')
-                run.log_artifact(artifact)
+                #artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
+                #                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                #                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
+                #                            type='model')
+                #artifact.add_file(save_path+'/best_epoch.pth')
+                #run.log_artifact(artifact)
 
         
                 val_metrics = {
