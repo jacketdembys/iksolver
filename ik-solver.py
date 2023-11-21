@@ -98,8 +98,8 @@ if __name__ == '__main__':
         
     # load dataset from file
     if save_option == "cloud":
-        data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
-        #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        #data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     elif save_option == "local":
         data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     data_a = np.array(data) 
@@ -201,8 +201,13 @@ if __name__ == '__main__':
     
 
     # create a directory to save weights
-    save_path = "results/"+robot_choice+"/"+robot_choice+"_" \
-                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+    #save_path = "results/"+robot_choice+"/"+robot_choice+"_" \
+    #            +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+    #            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
+    
+
+    save_path = "results/"+robot_choice+"/"+robot_choice+"_layers_" \
+                + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
                 +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
 
     if not os.path.exists(save_path):
@@ -224,12 +229,15 @@ if __name__ == '__main__':
 
     if save_option == "cloud":
         run = wandb.init(
-            project = "iksolver-experiments",                
+            project = "iksolver-experiments-2",                
             #group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
             group = "Dataset_Scale_"+str(int(scale)),
-            name = "Model_"+robot_choice+"_" \
-                    +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
+            name = "Model_"+robot_choice+"_layers_" \
+                    + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
+                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples) 
+            #name = "Model_"+robot_choice+"_" \
+            #        +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+            #        +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
         )
 
 
@@ -246,7 +254,7 @@ if __name__ == '__main__':
     start_time = time.monotonic()
     for epoch in range(EPOCHS):
 
-        print("\n")
+        
         
         train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS)        
         valid_loss = evaluate(model, test_data_loader, criterion, loss_choice, device, epoch, EPOCHS)
@@ -256,11 +264,17 @@ if __name__ == '__main__':
         all_losses.append([train_loss, valid_loss])
 
 
-        if save_option == "cloud":
-            train_metrics= {
-                "train/epoch": epoch,
-                "train/train_loss": train_loss,
-            }
+        #if save_option == "cloud":
+        train_metrics= {
+            "train/epoch": epoch,
+            "train/train_loss": train_loss,
+        }
+    
+        val_metrics = {
+            "val/val_loss": valid_loss,
+        }
+        wandb.log({**train_metrics, **val_metrics})
+        wandb.watch(model, criterion, log="all")
         
     
         if valid_loss < best_valid_loss:
@@ -283,12 +297,6 @@ if __name__ == '__main__':
                 #artifact.add_file(save_path+'/best_epoch.pth')
                 #run.log_artifact(artifact)
 
-        
-                val_metrics = {
-                    "val/val_loss": valid_loss,
-                }
-                wandb.log({**train_metrics, **val_metrics})
-                wandb.watch(model, criterion, log="all")
         else:
             counter += 1
             if counter >= patience:
@@ -303,7 +311,7 @@ if __name__ == '__main__':
             if print_epoch:
                 end_time = time.monotonic()
                 epoch_mins, epoch_secs = epoch_time(start_time, end_time)
-                print('Epoch: {}/{} | Epoch Time: {}m {}s'.format(epoch, EPOCHS, epoch_mins, epoch_secs))
+                print('\nEpoch: {}/{} | Epoch Time: {}m {}s'.format(epoch, EPOCHS, epoch_mins, epoch_secs))
                 print('\tTrain Loss: {}'.format(train_loss))
                 print('\tValid Loss: {}'.format(valid_loss))
                 print("\tBest Epoch Occurred [{}/{}]".format(best_epoch, EPOCHS)) 
