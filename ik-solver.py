@@ -312,12 +312,12 @@ if __name__ == '__main__':
                 torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
             elif save_option == "cloud":
                 torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
-                artifact2 = wandb.Artifact(name="Model_"+robot_choice+"_" \
-                                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
-                                            type='model')
-                artifact2.add_file(save_path+'/epoch_'+str(epoch)+'.pth')
-                run.log_artifact(artifact2)
+                #artifact2 = wandb.Artifact(name="Model_"+robot_choice+"_" \
+                #                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                #                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
+                #                            type='model')
+                #artifact2.add_file(save_path+'/epoch_'+str(epoch)+'.pth')
+                #run.log_artifact(artifact2)
                 #torch.save(model.state_dict(), os.path.join(wandb.run.dir, "epoch_"+str(epoch)+".pth"))
 
             # save the histories of losses

@@ -8,6 +8,9 @@ import argparse
 
 # GPUs declaration in the Yaml file
 # - NVIDIA-GeForce-GTX-1080-Ti
+# - NVIDIA-GeForce-RTX-2080-Ti
+# - NVIDIA-A10
+# - NVIDIA-GeForce-RTX-3090
 
 # set argument parser
 parser = argparse.ArgumentParser()
