@@ -27,6 +27,10 @@ parser.add_argument("--scale",
                     type=int,
                     default=2,
                     help="Scale of the joints limits.")
+parser.add_argument("--load",
+                    type=str,
+                    default='cloud',
+                    help="local or cloud loading.")
 
 
 if not len(sys.argv) > 1:
@@ -42,6 +46,7 @@ gpu_id = 0
 layers = args.layers
 neurons = args.neurons
 scale = args.scale # 2 - 10
+load_option = args.load
 robot_choice = '7DoF-7R-Panda'
 
 # read from path script
@@ -67,6 +72,7 @@ config_info = {
             },
             'CHECKPOINT': {
                 'SAVE_OPTIONS': 'cloud',
+                'LOAD_OPTIONS': load_option,
                 'PRETRAINED_G_MODEL': "",
                 'RESUMED_G_MODEL': "",
             },

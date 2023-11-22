@@ -64,6 +64,7 @@ if __name__ == '__main__':
     dataset_samples = config["TRAIN"]["DATASET"]["NUM_SAMPLES"]                   # MLP, ResMLP, DenseMLP, FouierMLP 
     print_steps = config["TRAIN"]["PRINT_STEPS"] 
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
+    load_option = config["TRAIN"]["CHECKPOINT"]["LOAD_OPTIONS"]  
 
     scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
     EPOCHS = config["TRAIN"]["HYPERPARAMETERS"]["EPOCHS"]                         # total training epochs   
@@ -97,10 +98,10 @@ if __name__ == '__main__':
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7"]
         
     # load dataset from file
-    if save_option == "cloud":
+    if load_option == "cloud":
         data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
         #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
-    elif save_option == "local":
+    elif load_option == "local":
         data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     data_a = np.array(data) 
 
@@ -230,8 +231,8 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments-2",                
-            #group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
-            group = "Dataset_Scale_"+str(int(scale)),
+            group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
+            #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_layers_" \
                     + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
                     +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples) 
@@ -350,7 +351,7 @@ if __name__ == '__main__':
     # Inference
     ##############################################################################################################
     # training is done, let's run inferences and record the evaluation metrics
-    print("Testing the trained model ...\n\n")
+    print("\n\n==>Testing the trained model ...\n\n")
     test_data_loader = load_test_dataset(X_test, y_test)
     weights_file = save_path+"/best_epoch.pth"
     if network_type == "MLP":
