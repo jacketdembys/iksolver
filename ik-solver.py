@@ -275,7 +275,7 @@ if __name__ == '__main__':
             "val/val_loss": valid_loss,
         }
         wandb.log({**train_metrics, **val_metrics})
-        wandb.watch(model, criterion, log="all")
+        #wandb.watch(model, criterion, log="all")
         
     
         if valid_loss < best_valid_loss:
