@@ -527,9 +527,9 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
         #for data in tqdm(iterator, desc="Training", leave=False):
             optimizer.zero_grad()
             x, y = data['input'], data['output']
-            print(x.shape)
-            print(y.shape)
-            sys.exit()
+            #print(x.shape)
+            #print(y.shape)
+            #sys.exit()
 
             x = x.to(device)
             y = y.to(device)
