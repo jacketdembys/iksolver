@@ -78,7 +78,7 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 1000,
-                'BATCH_SIZE': 500000,
+                'BATCH_SIZE': 250000,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': True,
