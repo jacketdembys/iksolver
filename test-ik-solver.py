@@ -24,7 +24,7 @@ class ResidualBlock(nn.Module):
             )
 
     def forward(self, x):
-        print("DEBUG: x.shape = {}".format(x.shape))
+        print("DEBUG: block input shape = {}".format(x.shape))
         residual = self.shortcut(x)
 
         out = self.fc1(x)
@@ -37,27 +37,33 @@ class ResidualBlock(nn.Module):
         out += residual
         out = self.relu(out)
 
+        print("DEBUG: block output shape = {}\n".format(out.shape))
+
         return out
     
 
 class ResNet(nn.Module):
-    def __init__(self, input_dim, output_dim, num_blocks):
+    def __init__(self, input_dim, hidden_size, output_dim, num_blocks):
         super(ResNet, self).__init__()
 
+        
         self.blocks = nn.Sequential()
-        self.blocks.add_module('block{}'.format(0), ResidualBlock(input_dim, output_dim))
+        self.blocks.add_module('block{}'.format(0), ResidualBlock(input_dim, hidden_size))
         for i in range(num_blocks-1):
-            self.blocks.add_module('block{}'.format(i+1), ResidualBlock(output_dim, output_dim))
+            self.blocks.add_module('block{}'.format(i+1), ResidualBlock(hidden_size, hidden_size))
+        #self.blocks.add_module('block{}'.format(num_blocks-1), ResidualBlock(hidden_size, output_dim))
+        self.out = nn.Linear(hidden_size, output_dim)
 
     def forward(self, x):
         out = self.blocks(x)
+        out = self.out(out)
 
         return out
     
 if __name__ == '__main__':
-    model = ResNet(6,7,2)
+    model = ResNet(6,128,7,3)
     print(model)
 
-    input = torch.randn(1,1,6)
+    input = torch.randn(3,6)
     output = model(input)
     print(output.size())

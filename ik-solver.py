@@ -81,7 +81,8 @@ if __name__ == '__main__':
     #device_name = "cpu"
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
     #device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
-    device_name = torch.cuda.get_device_name(device)
+    device_name = "cpu"
+    #device_name = torch.cuda.get_device_name(device)
     
     # set input and output size based on robot
     if robot_choice == "6DoF-6R-Puma260":
