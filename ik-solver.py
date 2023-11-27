@@ -29,6 +29,7 @@ from tqdm import tqdm
 from scipy import stats
 #from torchviz import make_dot
 from utils import *
+from models import *
 
 
 if __name__ == '__main__':
@@ -60,7 +61,8 @@ if __name__ == '__main__':
     learning_rate = config["TRAIN"]["HYPERPARAMETERS"]["LEARNING_RATE"]           # learning rate
     optimizer_choice = config["TRAIN"]["HYPERPARAMETERS"]["OPTIMIZER_NAME"]       # optimizers (SGD, Adam, Adadelta, RMSprop)
     loss_choice =  config["TRAIN"]["HYPERPARAMETERS"]["LOSS"]                     # l2, l1, lfk
-    network_type =  config["MODEL"]["NAME"]     
+    network_type =  config["MODEL"]["NAME"] 
+    num_blocks =  config["MODEL"]["NUM_BLOCKS"]     
     dataset_samples = config["TRAIN"]["DATASET"]["NUM_SAMPLES"]                   # MLP, ResMLP, DenseMLP, FouierMLP 
     print_steps = config["TRAIN"]["PRINT_STEPS"] 
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
@@ -81,8 +83,8 @@ if __name__ == '__main__':
     #device_name = "cpu"
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
     #device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
-    device_name = "cpu"
-    #device_name = torch.cuda.get_device_name(device)
+    #device_name = "cpu"
+    device_name = torch.cuda.get_device_name(device)
     
     # set input and output size based on robot
     if robot_choice == "6DoF-6R-Puma260":
@@ -153,7 +155,7 @@ if __name__ == '__main__':
         model = MLP(input_dim, hidden_layer_sizes, output_dim)
         #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim)
     elif network_type == "ResMLP":
-        model = ResMLP(input_dim, hidden_layer_sizes, output_dim)
+        model = ResMLP(input_dim, neurons, output_dim, num_blocks)
     elif network_type == "DenseMLP":
         model = DenseMLP(input_dim, hidden_layer_sizes, output_dim)
     elif network_type == "FourierMLP":
@@ -208,7 +210,7 @@ if __name__ == '__main__':
     #            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
     
 
-    save_path = "results/"+robot_choice+"/"+robot_choice+"_layers_" \
+    save_path = "results/"+robot_choice+"/"+network_type+"_"+robot_choice+"_layers_" \
                 + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
                 +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
 
@@ -232,7 +234,7 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments-2",                
-            group = "Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
+            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
             #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_layers_" \
                     + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
@@ -359,7 +361,7 @@ if __name__ == '__main__':
         model = MLP(input_dim, hidden_layer_sizes, output_dim).to(device)
         #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim).to(device)
     elif network_type == "ResMLP":
-        model = ResMLP(input_dim, hidden_layer_sizes, output_dim).to(device)
+        model = ResMLP(input_dim, neurons, output_dim, num_blocks).to(device)
     elif network_type == "DenseMLP":
         model = DenseMLP(input_dim, hidden_layer_sizes, output_dim).to(device)
     

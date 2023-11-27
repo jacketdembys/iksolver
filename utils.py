@@ -303,7 +303,7 @@ class MLP(nn.Module):
         return x, x_temp 
 
 
-class ResMLP(nn.Module):
+class ResMLP_2(nn.Module):
     def __init__(self, input_dim, h_sizes, output_dim):
         super().__init__()
 

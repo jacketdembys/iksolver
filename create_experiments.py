@@ -27,6 +27,10 @@ parser.add_argument("--scale",
                     type=int,
                     default=2,
                     help="Scale of the joints limits.")
+parser.add_argument("--blocks",
+                    type=int,
+                    default=2,
+                    help="Number of blocks if ResMLP or DenseMLP.")
 parser.add_argument("--load",
                     type=str,
                     default='cloud',
@@ -47,6 +51,7 @@ layers = args.layers
 neurons = args.neurons
 scale = args.scale # 2 - 10
 load_option = args.load
+num_blocks = args.blocks
 robot_choice = '7DoF-7R-Panda'
 
 # read from path script
@@ -61,9 +66,10 @@ config_info = {
         'SEED_NUMBER': 0,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'MLP',
+            'NAME': 'MLP',      # MLP, ResMLP
             'NUM_HIDDEN_LAYERS': layers,          
-            'NUM_HIDDEN_NEURONS': neurons
+            'NUM_HIDDEN_NEURONS': neurons,
+            'NUM_BLOCKS': num_blocks
         },             
         'TRAIN': {
             'DATASET': {
@@ -78,7 +84,7 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 1000,
-                'BATCH_SIZE': 250000,
+                'BATCH_SIZE': 32,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': True,
