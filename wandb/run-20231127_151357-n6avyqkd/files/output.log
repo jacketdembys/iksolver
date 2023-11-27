@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/retina/dembysj/Dropbox/WCCI2024/iksolver/ik-solver.py", line 263, in <module>
+    train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/retina/dembysj/Dropbox/WCCI2024/iksolver/utils.py", line 557, in train
+    loss.backward()
+  File "/home/retina/dembysj/.conda/envs/wcci_24/lib/python3.11/site-packages/torch/_tensor.py", line 487, in backward
+    torch.autograd.backward(
+  File "/home/retina/dembysj/.conda/envs/wcci_24/lib/python3.11/site-packages/torch/autograd/__init__.py", line 200, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 734.00 MiB (GPU 2; 10.75 GiB total capacity; 3.62 GiB already allocated; 106.69 MiB free; 4.34 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

@@ -1,0 +1,143 @@
+{
+    "os": "Linux-5.19.0-43-generic-x86_64-with-glibc2.35",
+    "python": "3.11.5",
+    "heartbeatAt": "2023-11-27T21:02:46.630826",
+    "startedAt": "2023-11-27T21:02:44.457200",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--config-path",
+        "train.yaml"
+    ],
+    "state": "running",
+    "program": "/home/retina/dembysj/Dropbox/WCCI2024/iksolver/ik-solver.py",
+    "codePathLocal": "ik-solver.py",
+    "codePath": "ik-solver.py",
+    "git": {
+        "remote": "https://github.com/jacketdembys/iksolver.git",
+        "commit": "3cf1c38dec13409b57dfbbb5df778dfb83b5a5c2"
+    },
+    "email": "jacketdembys@yahoo.fr",
+    "root": "/home/retina/dembysj/Dropbox/WCCI2024/iksolver",
+    "host": "choroid",
+    "username": "dembysj",
+    "executable": "/home/retina/dembysj/.conda/envs/wcci_24/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 2675.0665625,
+        "min": 1200.0,
+        "max": 4350.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1800.704,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.055,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1200.269,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1199.723,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 4071.917,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 4071.93,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1199.983,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1199.844,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 4500.0
+        },
+        {
+            "current": 1199.995,
+            "min": 1200.0,
+            "max": 4300.0
+        },
+        {
+            "current": 3600.0,
+            "min": 1200.0,
+            "max": 4300.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 378.9653778076172,
+            "used": 78.0426139831543
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "gpu_count": 4,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 2080 Ti",
+            "memory_total": 11811160064
+        },
+        {
+            "name": "NVIDIA GeForce RTX 2080 Ti",
+            "memory_total": 11811160064
+        },
+        {
+            "name": "NVIDIA GeForce RTX 2080 Ti",
+            "memory_total": 11811160064
+        },
+        {
+            "name": "NVIDIA GeForce RTX 2080 Ti",
+            "memory_total": 11811160064
+        }
+    ],
+    "memory": {
+        "total": 62.478294372558594
+    }
+}

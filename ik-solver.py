@@ -81,8 +81,8 @@ if __name__ == '__main__':
     
     #device = torch.device('cpu')
     #device_name = "cpu"
-    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
-    #device = torch.device('cuda:'+str(config["DEVICE_ID"])) 
+    #device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')         # device to train on
+    device = torch.device('cuda:'+str(config["DEVICE_ID"]) if torch.cuda.is_available() else 'cpu') 
     #device_name = "cpu"
     device_name = torch.cuda.get_device_name(device)
     

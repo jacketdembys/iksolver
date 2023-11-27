@@ -1,0 +1,649 @@
+2023-11-27 15:06:18,375 INFO    StreamThr :3868224 [internal.py:wandb_internal():86] W&B internal server running at pid: 3868224, started at: 2023-11-27 15:06:18.332277
+2023-11-27 15:06:18,377 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status
+2023-11-27 15:06:18,378 INFO    WriterThread:3868224 [datastore.py:open_for_write():85] open: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/run-uluvouw7.wandb
+2023-11-27 15:06:18,482 DEBUG   SenderThread:3868224 [sender.py:send():380] send: header
+2023-11-27 15:06:18,483 DEBUG   SenderThread:3868224 [sender.py:send():380] send: run
+2023-11-27 15:06:19,009 INFO    SenderThread:3868224 [dir_watcher.py:__init__():211] watching files in: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files
+2023-11-27 15:06:19,009 INFO    SenderThread:3868224 [sender.py:_start_run_threads():1122] run started: uluvouw7 with start time 1701119178.333198
+2023-11-27 15:06:19,024 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: check_version
+2023-11-27 15:06:19,024 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: check_version
+2023-11-27 15:06:19,155 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: run_start
+2023-11-27 15:06:19,163 DEBUG   HandlerThread:3868224 [system_info.py:__init__():32] System info init
+2023-11-27 15:06:19,163 DEBUG   HandlerThread:3868224 [system_info.py:__init__():47] System info init done
+2023-11-27 15:06:19,163 INFO    HandlerThread:3868224 [system_monitor.py:start():194] Starting system monitor
+2023-11-27 15:06:19,163 INFO    SystemMonitor:3868224 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-27 15:06:19,164 INFO    HandlerThread:3868224 [system_monitor.py:probe():214] Collecting system info
+2023-11-27 15:06:19,164 INFO    SystemMonitor:3868224 [interfaces.py:start():190] Started cpu monitoring
+2023-11-27 15:06:19,165 INFO    SystemMonitor:3868224 [interfaces.py:start():190] Started disk monitoring
+2023-11-27 15:06:19,166 INFO    SystemMonitor:3868224 [interfaces.py:start():190] Started gpu monitoring
+2023-11-27 15:06:19,166 INFO    SystemMonitor:3868224 [interfaces.py:start():190] Started memory monitoring
+2023-11-27 15:06:19,167 INFO    SystemMonitor:3868224 [interfaces.py:start():190] Started network monitoring
+2023-11-27 15:06:19,194 DEBUG   HandlerThread:3868224 [system_info.py:probe():196] Probing system
+2023-11-27 15:06:19,287 DEBUG   HandlerThread:3868224 [system_info.py:_probe_git():181] Probing git
+2023-11-27 15:06:19,436 DEBUG   HandlerThread:3868224 [system_info.py:_probe_git():189] Probing git done
+2023-11-27 15:06:19,436 DEBUG   HandlerThread:3868224 [system_info.py:probe():244] Probing system done
+2023-11-27 15:06:19,436 DEBUG   HandlerThread:3868224 [system_monitor.py:probe():223] {'os': 'Linux-5.19.0-43-generic-x86_64-with-glibc2.35', 'python': '3.11.5', 'heartbeatAt': '2023-11-27T21:06:19.194264', 'startedAt': '2023-11-27T21:06:17.248004', 'docker': None, 'cuda': None, 'args': ('--config-path', 'train.yaml'), 'state': 'running', 'program': '/home/retina/dembysj/Dropbox/WCCI2024/iksolver/ik-solver.py', 'codePathLocal': 'ik-solver.py', 'codePath': 'ik-solver.py', 'git': {'remote': 'https://github.com/jacketdembys/iksolver.git', 'commit': '3cf1c38dec13409b57dfbbb5df778dfb83b5a5c2'}, 'email': 'jacketdembys@yahoo.fr', 'root': '/home/retina/dembysj/Dropbox/WCCI2024/iksolver', 'host': 'choroid', 'username': 'dembysj', 'executable': '/home/retina/dembysj/.conda/envs/wcci_24/bin/python', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 3042.6419375, 'min': 1200.0, 'max': 4350.0}, 'cpu_freq_per_core': [{'current': 2500.326, 'min': 1200.0, 'max': 4300.0}, {'current': 2499.892, 'min': 1200.0, 'max': 4300.0}, {'current': 2899.975, 'min': 1200.0, 'max': 4300.0}, {'current': 1200.622, 'min': 1200.0, 'max': 4300.0}, {'current': 4000.0, 'min': 1200.0, 'max': 4500.0}, {'current': 3800.112, 'min': 1200.0, 'max': 4500.0}, {'current': 3999.998, 'min': 1200.0, 'max': 4300.0}, {'current': 2499.825, 'min': 1200.0, 'max': 4300.0}, {'current': 3600.0, 'min': 1200.0, 'max': 4300.0}, {'current': 3600.0, 'min': 1200.0, 'max': 4300.0}, {'current': 2901.587, 'min': 1200.0, 'max': 4300.0}, {'current': 1200.0, 'min': 1200.0, 'max': 4300.0}, {'current': 4048.923, 'min': 1200.0, 'max': 4500.0}, {'current': 3600.0, 'min': 1200.0, 'max': 4500.0}, {'current': 4000.001, 'min': 1200.0, 'max': 4300.0}, {'current': 2499.977, 'min': 1200.0, 'max': 4300.0}], 'disk': {'/': {'total': 378.9653778076172, 'used': 78.04267120361328}}, 'gpu': 'NVIDIA GeForce RTX 2080 Ti', 'gpu_count': 4, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 2080 Ti', 'memory_total': 11811160064}, {'name': 'NVIDIA GeForce RTX 2080 Ti', 'memory_total': 11811160064}, {'name': 'NVIDIA GeForce RTX 2080 Ti', 'memory_total': 11811160064}, {'name': 'NVIDIA GeForce RTX 2080 Ti', 'memory_total': 11811160064}], 'memory': {'total': 62.478294372558594}}
+2023-11-27 15:06:19,437 INFO    HandlerThread:3868224 [system_monitor.py:probe():224] Finished collecting system info
+2023-11-27 15:06:19,437 INFO    HandlerThread:3868224 [system_monitor.py:probe():227] Publishing system info
+2023-11-27 15:06:19,437 DEBUG   HandlerThread:3868224 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2023-11-27 15:06:19,620 DEBUG   HandlerThread:3868224 [system_info.py:_save_pip():68] Saving pip packages done
+2023-11-27 15:06:19,620 DEBUG   HandlerThread:3868224 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2023-11-27 15:06:20,013 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/conda-environment.yaml
+2023-11-27 15:06:20,013 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/requirements.txt
+2023-11-27 15:06:22,970 DEBUG   HandlerThread:3868224 [system_info.py:_save_conda():87] Saving conda packages done
+2023-11-27 15:06:23,059 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/conda-environment.yaml
+2023-11-27 15:06:23,060 INFO    HandlerThread:3868224 [system_monitor.py:probe():229] Finished publishing system info
+2023-11-27 15:06:23,060 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-metadata.json
+2023-11-27 15:06:23,066 DEBUG   SenderThread:3868224 [sender.py:send():380] send: files
+2023-11-27 15:06:23,066 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-metadata.json with policy now
+2023-11-27 15:06:23,073 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:06:23,073 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:06:23,075 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:06:23,204 DEBUG   SenderThread:3868224 [sender.py:send():380] send: telemetry
+2023-11-27 15:06:23,456 INFO    wandb-upload_0:3868224 [upload_job.py:push():131] Uploaded file /tmp/tmpjwtm1zhbwandb/4be675sx-wandb-metadata.json
+2023-11-27 15:06:24,205 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:06:29,206 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:06:34,206 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:06:35,254 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:06:35,256 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:06:35,256 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:06:35,409 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:06:36,074 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/output.log
+2023-11-27 15:06:36,074 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_created():271] file/dir created: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:06:38,113 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:06:38,113 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:06:38,185 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:06:38,227 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/output.log
+2023-11-27 15:06:39,247 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:06:44,248 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:06:47,126 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:06:47,126 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:06:47,126 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:06:47,252 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:06:47,252 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:06:49,256 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:06:50,258 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/config.yaml
+2023-11-27 15:06:53,096 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:06:53,096 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:06:53,097 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:06:55,244 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:06:58,679 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:06:58,680 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:06:58,680 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:06:59,432 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:06:59,432 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:07:00,433 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:05,434 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:08,127 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:07:08,128 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:07:08,137 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:07:10,848 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:07:10,848 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:07:10,849 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:07:10,849 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:11,119 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:07:11,443 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:07:16,120 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:19,167 DEBUG   SystemMonitor:3868224 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-27 15:07:19,169 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:07:21,170 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:22,531 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:07:22,532 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:07:22,532 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:07:22,675 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:07:23,140 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:07:23,140 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:07:23,228 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:07:23,457 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:07:26,260 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:31,261 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:34,176 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:07:34,177 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:07:34,177 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:07:34,377 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:07:34,469 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:07:36,378 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:38,252 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:07:38,288 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:07:38,288 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:07:41,428 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:46,069 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:07:46,070 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:07:46,070 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:07:46,271 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:07:46,480 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:07:47,272 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:49,170 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:07:53,171 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:07:53,251 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:07:53,252 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:07:53,263 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:07:57,710 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:07:57,710 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:07:57,710 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:07:57,854 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:07:58,490 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:07:58,854 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:03,855 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:08,286 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:08:08,286 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:08:08,322 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:08:09,342 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:09,376 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:08:09,376 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:08:09,376 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:08:09,517 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:08:09,517 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:08:14,518 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:19,172 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:08:20,172 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:21,040 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:08:21,041 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:08:21,041 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:08:21,240 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:08:21,528 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:08:23,409 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:08:23,508 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:08:23,508 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:08:25,586 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:30,587 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:32,805 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:08:32,806 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:08:32,806 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:08:32,933 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:08:33,625 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/output.log
+2023-11-27 15:08:33,625 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:08:35,936 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:38,718 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:08:38,718 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:08:38,761 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:08:41,828 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:44,877 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:08:44,878 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:08:44,878 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:08:45,096 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:08:45,636 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:08:47,097 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:49,173 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:08:52,174 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:08:53,688 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:08:53,714 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:08:53,714 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:08:56,603 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:08:56,604 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:08:56,604 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:08:56,743 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:08:57,649 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:08:57,744 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:02,745 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:07,745 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:08,224 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:09:08,224 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:09:08,225 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:09:08,375 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:09:08,399 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:09:08,404 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:09:08,405 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:09:08,659 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:09:13,722 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:18,722 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:19,174 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:09:19,962 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:09:19,962 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:09:19,963 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:09:20,184 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:09:20,670 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:09:23,479 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:09:23,520 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:09:23,521 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:09:24,696 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:29,697 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:31,790 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:09:31,791 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:09:31,791 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:09:31,952 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:09:32,680 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:09:34,953 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:38,438 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:09:38,443 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:09:38,444 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:09:40,816 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:43,500 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:09:43,500 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:09:43,501 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:09:43,780 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:09:43,780 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:09:46,782 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:49,176 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:09:52,177 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:09:53,438 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:09:53,443 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:09:53,443 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:09:55,414 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:09:55,415 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:09:55,415 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:09:55,666 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:09:55,789 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:09:57,667 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:02,668 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:07,122 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:10:07,123 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:10:07,123 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:10:07,376 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:10:07,799 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:10:08,377 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:08,464 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:10:08,469 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:10:08,469 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:10:13,949 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:18,890 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:10:18,891 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:10:18,891 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:10:19,007 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:10:19,008 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:19,178 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:10:19,808 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:10:23,479 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:10:23,505 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:10:23,506 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:10:24,954 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:29,954 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:30,629 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:10:30,630 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:10:30,630 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:10:30,767 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:10:30,816 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:10:31,858 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/output.log
+2023-11-27 15:10:35,770 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:38,490 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:10:38,563 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:10:38,563 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:10:40,959 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:42,515 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:10:42,515 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:10:42,515 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:10:42,654 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:10:42,868 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:10:46,655 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:49,179 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:10:52,180 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:10:53,510 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:10:53,557 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:10:53,557 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:10:54,237 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:10:54,238 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:10:54,238 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:10:54,406 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:10:54,878 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:10:57,406 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:02,407 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:05,894 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:11:05,895 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:11:05,895 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:11:06,027 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:11:06,888 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:11:08,028 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:08,520 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:11:08,556 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:11:08,557 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:11:13,924 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:17,861 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:11:17,862 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:11:17,862 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:11:18,173 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:11:18,899 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:11:19,174 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:19,180 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:11:23,645 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:11:23,645 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:11:23,691 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:11:25,017 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:29,970 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:11:29,971 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:11:29,971 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:11:30,699 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:11:30,700 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:30,908 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:11:35,701 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:38,825 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:11:38,825 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:11:38,845 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:11:40,960 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:42,420 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:11:42,421 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:11:42,421 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:11:42,545 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:11:42,919 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:11:46,546 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:49,181 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:11:52,182 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:11:53,756 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:11:53,756 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:11:53,887 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:11:54,096 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:11:54,248 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:11:54,248 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:11:54,540 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:11:54,929 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:11:57,540 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:02,541 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:06,016 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:12:06,017 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:12:06,017 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:12:06,171 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:12:06,942 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:12:08,172 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:08,761 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:12:08,761 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:12:08,842 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:12:13,934 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:17,746 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:12:17,747 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:12:17,747 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:12:17,987 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:12:17,987 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:12:18,988 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:19,183 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:12:23,957 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:12:23,958 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:12:23,982 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:12:24,094 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:29,095 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:29,458 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:12:29,458 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:12:29,458 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:12:29,657 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:12:29,999 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:12:32,063 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/output.log
+2023-11-27 15:12:34,682 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:38,735 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:12:38,735 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:12:38,979 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:12:39,980 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:41,409 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:12:41,409 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:12:41,409 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:12:41,535 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:12:42,070 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:12:45,536 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:49,184 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:12:51,185 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:12:53,176 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:12:53,177 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:12:53,177 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:12:53,426 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:12:53,905 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:12:53,905 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:12:54,082 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:12:54,245 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:12:57,148 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:02,149 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:05,041 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:13:05,041 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:13:05,041 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:13:05,150 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:13:05,150 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:13:07,151 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:09,080 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:13:09,081 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:13:09,127 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:13:12,234 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:16,685 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:13:16,685 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:13:16,686 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:13:16,818 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:13:17,160 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:13:17,819 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:19,288 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:13:23,290 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:23,846 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:13:23,847 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:13:24,255 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:13:28,266 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:13:28,267 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:13:28,267 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:13:28,387 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:13:28,387 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:29,169 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:13:33,388 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:38,389 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:38,847 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:13:38,847 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:13:39,201 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:13:39,906 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:13:39,906 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:13:39,906 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:13:40,127 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:13:40,178 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:13:44,128 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:49,129 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:49,186 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:13:51,852 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:13:51,921 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:13:51,921 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:13:52,043 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:13:52,187 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:13:53,931 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:13:53,931 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:13:54,249 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:13:54,316 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:13:59,317 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:03,578 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:14:03,578 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:14:03,579 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:14:03,732 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:14:04,199 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:14:04,733 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:09,051 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:14:09,052 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:14:09,285 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:14:10,234 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:15,235 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:15,243 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:14:15,243 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:14:15,243 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:14:15,417 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:14:16,209 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:14:19,187 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:14:21,188 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:24,118 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:14:24,119 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:14:24,296 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:14:26,271 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:27,051 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:14:27,052 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:14:27,052 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:14:27,280 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:14:27,280 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:14:30,341 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/output.log
+2023-11-27 15:14:31,349 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:36,349 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:39,087 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:14:39,087 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:14:39,224 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:14:39,283 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:14:39,284 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:14:39,284 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:14:39,620 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:14:40,348 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:14:41,620 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:46,621 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:49,188 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:14:50,781 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:14:50,781 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:14:50,781 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:14:50,910 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:14:51,357 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:14:51,910 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:14:54,163 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:14:54,164 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:14:54,271 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:14:57,251 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:02,252 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:02,645 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:15:02,646 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:15:02,646 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:15:02,870 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:15:03,367 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:15:07,871 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:09,153 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:15:09,153 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:15:09,225 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:15:13,212 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:14,312 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:15:14,312 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:15:14,313 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:15:14,532 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:15:15,376 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:15:18,533 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:19,189 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:15:24,153 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:15:24,153 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:15:24,270 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:15:24,291 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:26,293 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:15:26,294 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:15:26,294 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:15:26,481 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:15:26,482 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:15:29,482 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:34,483 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:38,173 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:15:38,174 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:15:38,174 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:15:38,363 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:15:38,491 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:15:39,209 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:15:39,210 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:15:39,434 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:15:39,569 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:44,569 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:49,190 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:15:49,998 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:15:49,998 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:15:49,998 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:15:49,998 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:15:50,123 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:15:50,502 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:15:54,360 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:15:54,361 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:15:54,444 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:15:55,455 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:00,456 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:01,770 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:16:01,770 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:16:01,771 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:16:01,955 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:16:02,515 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:16:05,956 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:09,209 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:16:09,210 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:16:09,517 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:16:11,440 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:13,531 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:16:13,532 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:16:13,532 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:16:13,713 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:16:14,524 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:16:16,715 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:19,192 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:16:22,193 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:24,261 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:16:24,261 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:16:24,572 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:16:25,361 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:16:25,362 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:16:25,362 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:16:25,477 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:16:25,533 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:16:27,478 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:28,892 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/output.log
+2023-11-27 15:16:32,479 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:37,164 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:16:37,164 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:16:37,164 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:16:37,307 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:16:37,899 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:16:38,307 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:39,225 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:16:39,226 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:16:39,527 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:16:43,563 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:48,564 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:48,995 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:16:48,996 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:16:48,996 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:16:49,136 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:16:49,193 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:16:49,910 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:16:54,194 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:16:54,241 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:16:54,241 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:16:54,589 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:16:59,580 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:00,817 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:17:00,817 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:17:00,818 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:17:01,019 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:17:01,019 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:17:05,020 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:09,271 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:17:09,271 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:17:09,750 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:17:10,657 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:12,609 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:17:12,610 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:17:12,610 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:17:12,700 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:17:13,029 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:17:15,701 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:19,194 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:17:21,195 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:24,220 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:17:24,221 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:17:24,221 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:17:24,221 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:17:24,353 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:17:24,354 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:17:24,794 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:17:25,038 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:17:26,681 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:31,681 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:36,044 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:17:36,045 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:17:36,045 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:17:36,258 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:17:37,048 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:17:37,259 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:39,321 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:17:39,321 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:17:39,695 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:17:42,855 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:47,686 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:17:47,686 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:17:47,686 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:17:47,912 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:17:47,912 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:48,057 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:17:49,195 DEBUG   SenderThread:3868224 [sender.py:send():380] send: stats
+2023-11-27 15:17:53,197 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:54,259 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:17:54,260 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:17:54,761 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:17:58,736 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:17:59,603 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:17:59,604 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:17:59,604 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:17:59,735 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:18:00,067 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:18:04,736 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:18:09,260 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-27 15:18:09,260 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: stop_status
+2023-11-27 15:18:09,781 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
+2023-11-27 15:18:09,811 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-27 15:18:11,357 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: partial_history
+2023-11-27 15:18:11,357 DEBUG   SenderThread:3868224 [sender.py:send():380] send: history
+2023-11-27 15:18:11,358 DEBUG   SenderThread:3868224 [sender.py:send_request():407] send_request: summary_record
+2023-11-27 15:18:11,567 INFO    SenderThread:3868224 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-27 15:18:12,076 INFO    Thread-12 :3868224 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/retina/dembysj/Dropbox/WCCI2024/iksolver/wandb/run-20231127_150617-uluvouw7/files/wandb-summary.json
+2023-11-27 15:18:15,568 DEBUG   HandlerThread:3868224 [handler.py:handle_request():146] handle_request: status_report
