@@ -400,8 +400,8 @@ class LoadIKDataset(Dataset):
         x_temp = inputs_array
         y_temp = outputs_array
 
-        self.x_data = torch.tensor(x_temp, dtype=torch.float32).to(device) 
-        self.y_data = torch.tensor(y_temp, dtype=torch.float32).to(device)  
+        self.x_data = torch.tensor(x_temp, dtype=torch.float32) #.to(device) 
+        self.y_data = torch.tensor(y_temp, dtype=torch.float32) #.to(device)  
 
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
@@ -483,13 +483,13 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
                                    batch_size=batch_size,
                                    shuffle=True,
                                    drop_last=False,
-                                   pin_memory=False)
+                                   pin_memory=True)
 
     test_data_loader = DataLoader(dataset=test_data,
                                    batch_size=batch_size,
                                    drop_last=False,
                                    shuffle=False,
-                                   pin_memory=False)
+                                   pin_memory=True)
 
     return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test 
 
@@ -504,7 +504,8 @@ def load_test_dataset(X_test, y_test, device):
 
     test_data_loader = DataLoader(dataset=test_data,
                                    batch_size=1,
-                                   shuffle=False)
+                                   shuffle=False,
+                                   pin_memory=True)
 
     return test_data_loader
 
@@ -531,8 +532,8 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             #print(y.shape)
             #sys.exit()
 
-            x = x #.to(device)
-            y = y #.to(device)
+            x = x.to(device)
+            y = y.to(device)
             
             #x = input_mapping(x,B)
             
@@ -583,8 +584,8 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
         #for data in tqdm(iterator, desc="Evaluating", leave=False):        
         with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
             for data in iterator:
-                x = data['input'] #.to(device)
-                y = data['output'] #.to(device)
+                x = data['input'].to(device)
+                y = data['output'].to(device)
 
                 #x = input_mapping(x,B)
                 
@@ -612,8 +613,8 @@ def inference(model, iterator, criterion, device, robot_choice):
     X_desireds = []
     
     for data in iterator:
-        x = data['input'] #.to(device)
-        y = data['output'] #.to(device)
+        x = data['input'].to(device)
+        y = data['output'].to(device)
 
         #x = input_mapping(x,B)
         
@@ -656,8 +657,8 @@ def inference_FK(model, iterator, criterion, device):
     y_desireds = []
     X_desireds = []
     for data in iterator:
-        x = data['input'] #.to(device)
-        y = data['output'] #.to(device)
+        x = data['input'].to(device)
+        y = data['output'].to(device)
         y_pred, _ = model(x)
         y_preds.append(y_pred.detach().cpu().numpy().squeeze())
         y_desireds.append(y.detach().cpu().numpy().squeeze())
