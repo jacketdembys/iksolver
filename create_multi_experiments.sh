@@ -9,7 +9,7 @@ scripts=$(ls *.yaml)
 # Create the config file
 echo "$scripts";
 
-for script in $scripts; do
+for script in $`scripts`; do
     python ik-solver.py --config-path "$script" &
 done
 

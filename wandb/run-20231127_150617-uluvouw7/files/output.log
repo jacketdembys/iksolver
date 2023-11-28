@@ -1,0 +1,408 @@
+Epoch: 0/1000 | Epoch Time: 0m 12s
+	Train Loss: 2.285747706890106
+	Valid Loss: 2.5878403186798096
+	Best Epoch Occurred [0/1000]
+Epoch: 10/1000 | Epoch Time: 2m 9s
+	Train Loss: 1.5161305963993073
+	Valid Loss: 1.572455644607544
+	Best Epoch Occurred [10/1000]
+Epoch: 20/1000 | Epoch Time: 4m 7s
+	Train Loss: 1.4628332555294037
+	Valid Loss: 1.4625381231307983
+	Best Epoch Occurred [20/1000]
+Epoch: 30/1000 | Epoch Time: 6m 6s
+	Train Loss: 1.4201209545135498
+	Valid Loss: 1.4220587015151978
+	Best Epoch Occurred [30/1000]
+Epoch: 40/1000 | Epoch Time: 8m 4s
+	Train Loss: 1.3892352879047394
+	Valid Loss: 1.3901170492172241
+	Best Epoch Occurred [40/1000]
+Epoch: 50/1000 | Epoch Time: 10m 2s
+	Train Loss: 1.3674399554729462
+	Valid Loss: 1.3690531253814697
+	Best Epoch Occurred [49/1000]
+Epoch: 60/1000 | Epoch Time: 12m 0s
+	Train Loss: 1.352304458618164
+	Valid Loss: 1.353054404258728
+	Best Epoch Occurred [60/1000]
+Epoch: 70/1000 | Epoch Time: 13m 57s
+	Train Loss: 1.3412217497825623
+	Valid Loss: 1.342794418334961
+	Best Epoch Occurred [70/1000]
+Epoch: 80/1000 | Epoch Time: 15m 55s
+	Train Loss: 1.3326367735862732
+	Valid Loss: 1.3343560695648193
+	Best Epoch Occurred [80/1000]
+Epoch: 90/1000 | Epoch Time: 17m 52s
+	Train Loss: 1.3263875246047974
+	Valid Loss: 1.3291429281234741
+	Best Epoch Occurred [90/1000]
+Epoch: 100/1000 | Epoch Time: 19m 50s
+	Train Loss: 1.3316093385219574
+	Valid Loss: 1.3351893424987793
+	Best Epoch Occurred [97/1000]
+Epoch: 110/1000 | Epoch Time: 21m 47s
+	Train Loss: 1.3205289840698242
+	Valid Loss: 1.323473334312439
+	Best Epoch Occurred [106/1000]
+Epoch: 120/1000 | Epoch Time: 23m 44s
+	Train Loss: 1.3124683201313019
+	Valid Loss: 1.3168150186538696
+	Best Epoch Occurred [117/1000]
+Epoch: 130/1000 | Epoch Time: 25m 40s
+	Train Loss: 1.309172660112381
+	Valid Loss: 1.3131117820739746
+	Best Epoch Occurred [129/1000]
+Epoch: 140/1000 | Epoch Time: 27m 37s
+	Train Loss: 1.31106498837471
+	Valid Loss: 1.3160759210586548
+	Best Epoch Occurred [136/1000]
+Epoch: 150/1000 | Epoch Time: 29m 36s
+	Train Loss: 1.3038548231124878
+	Valid Loss: 1.3100098371505737
+	Best Epoch Occurred [148/1000]
+Epoch: 160/1000 | Epoch Time: 31m 33s
+	Train Loss: 1.300962895154953
+	Valid Loss: 1.3059961795806885
+	Best Epoch Occurred [159/1000]
+Epoch: 170/1000 | Epoch Time: 33m 31s
+	Train Loss: 1.2998919188976288
+	Valid Loss: 1.3035558462142944
+	Best Epoch Occurred [164/1000]
+Epoch: 180/1000 | Epoch Time: 35m 27s
+	Train Loss: 1.29922217130661
+	Valid Loss: 1.3095288276672363
+	Best Epoch Occurred [172/1000]
+Epoch: 190/1000 | Epoch Time: 37m 24s
+	Train Loss: 1.2916846871376038
+	Valid Loss: 1.2978017330169678
+	Best Epoch Occurred [190/1000]
+Epoch: 200/1000 | Epoch Time: 39m 21s
+	Train Loss: 1.2929191887378693
+	Valid Loss: 1.3016473054885864
+	Best Epoch Occurred [199/1000]
+Epoch: 210/1000 | Epoch Time: 41m 19s
+	Train Loss: 1.2941433489322662
+	Valid Loss: 1.303829312324524
+	Best Epoch Occurred [201/1000]
+Epoch: 220/1000 | Epoch Time: 43m 16s
+	Train Loss: 1.29116553068161
+	Valid Loss: 1.303710699081421
+	Best Epoch Occurred [215/1000]
+Epoch: 230/1000 | Epoch Time: 45m 13s
+	Train Loss: 1.287642389535904
+	Valid Loss: 1.2920321226119995
+	Best Epoch Occurred [230/1000]
+Epoch: 240/1000 | Epoch Time: 47m 9s
+	Train Loss: 1.2874873876571655
+	Valid Loss: 1.292129397392273
+	Best Epoch Occurred [235/1000]
+Epoch: 250/1000 | Epoch Time: 49m 6s
+	Train Loss: 1.2848573625087738
+	Valid Loss: 1.2909886837005615
+	Best Epoch Occurred [249/1000]
+Epoch: 260/1000 | Epoch Time: 51m 2s
+	Train Loss: 1.2863933145999908
+	Valid Loss: 1.2999197244644165
+	Best Epoch Occurred [258/1000]
+Epoch: 270/1000 | Epoch Time: 52m 58s
+	Train Loss: 1.2803543508052826
+	Valid Loss: 1.2885115146636963
+	Best Epoch Occurred [258/1000]
+Epoch: 280/1000 | Epoch Time: 54m 56s
+	Train Loss: 1.2829664051532745
+	Valid Loss: 1.285129427909851
+	Best Epoch Occurred [280/1000]
+Epoch: 290/1000 | Epoch Time: 56m 52s
+	Train Loss: 1.2805134952068329
+	Valid Loss: 1.2912250757217407
+	Best Epoch Occurred [280/1000]
+Epoch: 300/1000 | Epoch Time: 58m 48s
+	Train Loss: 1.2789358794689178
+	Valid Loss: 1.2964524030685425
+	Best Epoch Occurred [280/1000]
+Epoch: 310/1000 | Epoch Time: 60m 46s
+	Train Loss: 1.278500735759735
+	Valid Loss: 1.290921926498413
+	Best Epoch Occurred [280/1000]
+Epoch: 320/1000 | Epoch Time: 62m 43s
+	Train Loss: 1.2771431505680084
+	Valid Loss: 1.2861167192459106
+	Best Epoch Occurred [317/1000]
+Epoch: 330/1000 | Epoch Time: 64m 39s
+	Train Loss: 1.2827054560184479
+	Valid Loss: 1.3086657524108887
+	Best Epoch Occurred [317/1000]
+Epoch: 340/1000 | Epoch Time: 66m 35s
+	Train Loss: 1.272244155406952
+	Valid Loss: 1.2826063632965088
+	Best Epoch Occurred [317/1000]
+Epoch: 350/1000 | Epoch Time: 68m 33s
+	Train Loss: 1.2722996473312378
+	Valid Loss: 1.2847470045089722
+	Best Epoch Occurred [349/1000]
+Epoch: 360/1000 | Epoch Time: 70m 31s
+	Train Loss: 1.270242691040039
+	Valid Loss: 1.2837318181991577
+	Best Epoch Occurred [359/1000]
+Epoch: 370/1000 | Epoch Time: 72m 28s
+	Train Loss: 1.269504725933075
+	Valid Loss: 1.282865047454834
+	Best Epoch Occurred [369/1000]
+Epoch: 380/1000 | Epoch Time: 74m 25s
+	Train Loss: 1.2727876007556915
+	Valid Loss: 1.2888864278793335
+	Best Epoch Occurred [377/1000]
+Epoch: 390/1000 | Epoch Time: 76m 23s
+	Train Loss: 1.2778611481189728
+	Valid Loss: 1.2895575761795044
+	Best Epoch Occurred [383/1000]
+Epoch: 400/1000 | Epoch Time: 78m 21s
+	Train Loss: 1.266473263502121
+	Valid Loss: 1.2791986465454102
+	Best Epoch Occurred [398/1000]
+Epoch: 410/1000 | Epoch Time: 80m 17s
+	Train Loss: 1.2643633782863617
+	Valid Loss: 1.2762888669967651
+	Best Epoch Occurred [410/1000]
+Epoch: 420/1000 | Epoch Time: 82m 14s
+	Train Loss: 1.2664265632629395
+	Valid Loss: 1.2752035856246948
+	Best Epoch Occurred [415/1000]
+Epoch: 430/1000 | Epoch Time: 84m 11s
+	Train Loss: 1.2744437158107758
+	Valid Loss: 1.2939025163650513
+	Best Epoch Occurred [415/1000]
+Epoch: 440/1000 | Epoch Time: 86m 9s
+	Train Loss: 1.2650994658470154
+	Valid Loss: 1.2736735343933105
+	Best Epoch Occurred [436/1000]
+Epoch: 450/1000 | Epoch Time: 88m 5s
+	Train Loss: 1.2677958607673645
+	Valid Loss: 1.275050163269043
+	Best Epoch Occurred [436/1000]
+Epoch: 460/1000 | Epoch Time: 90m 2s
+	Train Loss: 1.264950543642044
+	Valid Loss: 1.2740482091903687
+	Best Epoch Occurred [436/1000]
+Epoch: 470/1000 | Epoch Time: 92m 0s
+	Train Loss: 1.2692774534225464
+	Valid Loss: 1.274936556816101
+	Best Epoch Occurred [464/1000]
+Epoch: 480/1000 | Epoch Time: 93m 57s
+	Train Loss: 1.2627962529659271
+	Valid Loss: 1.2719045877456665
+	Best Epoch Occurred [464/1000]
+Epoch: 490/1000 | Epoch Time: 95m 55s
+	Train Loss: 1.267288327217102
+	Valid Loss: 1.274681806564331
+	Best Epoch Occurred [483/1000]
+Epoch: 500/1000 | Epoch Time: 97m 52s
+	Train Loss: 1.261502981185913
+	Valid Loss: 1.267846703529358
+	Best Epoch Occurred [500/1000]
+Epoch: 510/1000 | Epoch Time: 99m 49s
+	Train Loss: 1.2661055326461792
+	Valid Loss: 1.2726837396621704
+	Best Epoch Occurred [500/1000]
+Epoch: 520/1000 | Epoch Time: 101m 45s
+	Train Loss: 1.2634197473526
+	Valid Loss: 1.2835191488265991
+	Best Epoch Occurred [500/1000]
+Epoch: 530/1000 | Epoch Time: 103m 42s
+	Train Loss: 1.2612673044204712
+	Valid Loss: 1.2718926668167114
+	Best Epoch Occurred [500/1000]
+Epoch: 540/1000 | Epoch Time: 105m 39s
+	Train Loss: 1.26926589012146
+	Valid Loss: 1.294714331626892
+	Best Epoch Occurred [500/1000]
+Epoch: 550/1000 | Epoch Time: 107m 36s
+	Train Loss: 1.2596290409564972
+	Valid Loss: 1.276610016822815
+	Best Epoch Occurred [546/1000]
+Epoch: 560/1000 | Epoch Time: 109m 33s
+	Train Loss: 1.2586205005645752
+	Valid Loss: 1.2786495685577393
+	Best Epoch Occurred [555/1000]
+Epoch: 570/1000 | Epoch Time: 111m 30s
+	Train Loss: 1.2571382820606232
+	Valid Loss: 1.2711131572723389
+	Best Epoch Occurred [555/1000]
+Epoch: 580/1000 | Epoch Time: 113m 26s
+	Train Loss: 1.2784567177295685
+	Valid Loss: 1.2718336582183838
+	Best Epoch Occurred [555/1000]
+Epoch: 590/1000 | Epoch Time: 115m 23s
+	Train Loss: 1.253802239894867
+	Valid Loss: 1.26802396774292
+	Best Epoch Occurred [583/1000]
+Epoch: 600/1000 | Epoch Time: 117m 20s
+	Train Loss: 1.2557154297828674
+	Valid Loss: 1.2741410732269287
+	Best Epoch Occurred [594/1000]
+Epoch: 610/1000 | Epoch Time: 119m 16s
+	Train Loss: 1.2540075778961182
+	Valid Loss: 1.2674479484558105
+	Best Epoch Occurred [594/1000]
+Epoch: 620/1000 | Epoch Time: 121m 13s
+	Train Loss: 1.251509040594101
+	Valid Loss: 1.2683916091918945
+	Best Epoch Occurred [611/1000]
+Epoch: 630/1000 | Epoch Time: 123m 10s
+	Train Loss: 1.258563756942749
+	Valid Loss: 1.275597333908081
+	Best Epoch Occurred [621/1000]
+Epoch: 640/1000 | Epoch Time: 125m 6s
+	Train Loss: 1.2508402168750763
+	Valid Loss: 1.2685240507125854
+	Best Epoch Occurred [621/1000]
+Epoch: 650/1000 | Epoch Time: 127m 3s
+	Train Loss: 1.2525572776794434
+	Valid Loss: 1.2679730653762817
+	Best Epoch Occurred [621/1000]
+Epoch: 660/1000 | Epoch Time: 128m 59s
+	Train Loss: 1.2616144120693207
+	Valid Loss: 1.2715293169021606
+	Best Epoch Occurred [652/1000]
+Epoch: 670/1000 | Epoch Time: 130m 56s
+	Train Loss: 1.2506864964962006
+	Valid Loss: 1.2665678262710571
+	Best Epoch Occurred [669/1000]
+Epoch: 680/1000 | Epoch Time: 132m 53s
+	Train Loss: 1.2491165697574615
+	Valid Loss: 1.2640446424484253
+	Best Epoch Occurred [676/1000]
+Epoch: 690/1000 | Epoch Time: 134m 50s
+	Train Loss: 1.251164197921753
+	Valid Loss: 1.267879843711853
+	Best Epoch Occurred [676/1000]
+Epoch: 700/1000 | Epoch Time: 136m 47s
+	Train Loss: 1.2523757219314575
+	Valid Loss: 1.275962471961975
+	Best Epoch Occurred [696/1000]
+Epoch: 710/1000 | Epoch Time: 138m 43s
+	Train Loss: 1.248642474412918
+	Valid Loss: 1.2655247449874878
+	Best Epoch Occurred [696/1000]
+Epoch: 720/1000 | Epoch Time: 140m 38s
+	Train Loss: 1.2505062818527222
+	Valid Loss: 1.2683874368667603
+	Best Epoch Occurred [696/1000]
+Epoch: 730/1000 | Epoch Time: 142m 35s
+	Train Loss: 1.2519022226333618
+	Valid Loss: 1.27773916721344
+	Best Epoch Occurred [696/1000]
+Epoch: 740/1000 | Epoch Time: 144m 31s
+	Train Loss: 1.251031756401062
+	Valid Loss: 1.2700262069702148
+	Best Epoch Occurred [734/1000]
+Epoch: 750/1000 | Epoch Time: 146m 27s
+	Train Loss: 1.2489985823631287
+	Valid Loss: 1.265663504600525
+	Best Epoch Occurred [734/1000]
+Epoch: 760/1000 | Epoch Time: 148m 23s
+	Train Loss: 1.2481645941734314
+	Valid Loss: 1.2630302906036377
+	Best Epoch Occurred [754/1000]
+Epoch: 770/1000 | Epoch Time: 150m 20s
+	Train Loss: 1.2451611459255219
+	Valid Loss: 1.2664213180541992
+	Best Epoch Occurred [765/1000]
+Epoch: 780/1000 | Epoch Time: 152m 16s
+	Train Loss: 1.2524084746837616
+	Valid Loss: 1.2642027139663696
+	Best Epoch Occurred [765/1000]
+Epoch: 790/1000 | Epoch Time: 154m 12s
+	Train Loss: 1.248861700296402
+	Valid Loss: 1.2650028467178345
+	Best Epoch Occurred [765/1000]
+Epoch: 800/1000 | Epoch Time: 156m 8s
+	Train Loss: 1.243434876203537
+	Valid Loss: 1.2627145051956177
+	Best Epoch Occurred [799/1000]
+Epoch: 810/1000 | Epoch Time: 158m 4s
+	Train Loss: 1.2456278204917908
+	Valid Loss: 1.2650275230407715
+	Best Epoch Occurred [799/1000]
+Epoch: 820/1000 | Epoch Time: 160m 1s
+	Train Loss: 1.2435243427753448
+	Valid Loss: 1.267149567604065
+	Best Epoch Occurred [799/1000]
+Epoch: 830/1000 | Epoch Time: 161m 57s
+	Train Loss: 1.2416529059410095
+	Valid Loss: 1.2633817195892334
+	Best Epoch Occurred [829/1000]
+Epoch: 840/1000 | Epoch Time: 163m 53s
+	Train Loss: 1.2515112459659576
+	Valid Loss: 1.2727339267730713
+	Best Epoch Occurred [834/1000]
+Epoch: 850/1000 | Epoch Time: 165m 51s
+	Train Loss: 1.2472690343856812
+	Valid Loss: 1.2654579877853394
+	Best Epoch Occurred [834/1000]
+Epoch: 860/1000 | Epoch Time: 167m 48s
+	Train Loss: 1.2500168979167938
+	Valid Loss: 1.265876054763794
+	Best Epoch Occurred [834/1000]
+Epoch: 870/1000 | Epoch Time: 169m 45s
+	Train Loss: 1.2412150502204895
+	Valid Loss: 1.2617571353912354
+	Best Epoch Occurred [834/1000]
+Epoch: 880/1000 | Epoch Time: 171m 41s
+	Train Loss: 1.2435161769390106
+	Valid Loss: 1.2620958089828491
+	Best Epoch Occurred [834/1000]
+Epoch: 890/1000 | Epoch Time: 173m 38s
+	Train Loss: 1.244774043560028
+	Valid Loss: 1.262589931488037
+	Best Epoch Occurred [881/1000]
+Epoch: 900/1000 | Epoch Time: 175m 34s
+	Train Loss: 1.2400070428848267
+	Valid Loss: 1.2595574855804443
+	Best Epoch Occurred [899/1000]
+Epoch: 910/1000 | Epoch Time: 177m 30s
+	Train Loss: 1.2388585805892944
+	Valid Loss: 1.2595248222351074
+	Best Epoch Occurred [909/1000]
+Epoch: 920/1000 | Epoch Time: 179m 26s
+	Train Loss: 1.2422558665275574
+	Valid Loss: 1.2676682472229004
+	Best Epoch Occurred [909/1000]
+Epoch: 930/1000 | Epoch Time: 181m 22s
+	Train Loss: 1.243149071931839
+	Valid Loss: 1.2594455480575562
+	Best Epoch Occurred [909/1000]
+Epoch: 940/1000 | Epoch Time: 183m 17s
+	Train Loss: 1.2438169717788696
+	Valid Loss: 1.265929102897644
+	Best Epoch Occurred [909/1000]
+Epoch: 950/1000 | Epoch Time: 185m 13s
+	Train Loss: 1.238499790430069
+	Valid Loss: 1.2652537822723389
+	Best Epoch Occurred [909/1000]
+Epoch: 960/1000 | Epoch Time: 187m 8s
+	Train Loss: 1.2487925589084625
+	Valid Loss: 1.2614308595657349
+	Best Epoch Occurred [909/1000]
+Epoch: 970/1000 | Epoch Time: 189m 2s
+	Train Loss: 1.2435165345668793
+	Valid Loss: 1.2679660320281982
+	Best Epoch Occurred [963/1000]
+Epoch: 980/1000 | Epoch Time: 190m 55s
+	Train Loss: 1.2546270191669464
+	Valid Loss: 1.2710366249084473
+	Best Epoch Occurred [963/1000]
+Epoch: 990/1000 | Epoch Time: 192m 48s
+	Train Loss: 1.2397094368934631
+	Valid Loss: 1.2682762145996094
+	Best Epoch Occurred [989/1000]
+Epoch: 999/1000 | Epoch Time: 194m 30s
+	Train Loss: 1.2397899627685547
+	Valid Loss: 1.2562949657440186
+	Best Epoch Occurred [989/1000]
+End of Training for ResMLP [6, 512, 7] - Elapsed Time: 194m 30s
+==>Testing the trained model ...
+==> Shape X_test:  (90000, 6)
+==> Shape y_test:  (90000, 7)

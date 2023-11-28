@@ -143,7 +143,7 @@ if __name__ == '__main__':
         torch.backends.cudnn.deterministic = True
     ## train and validate
     # load the dataset
-    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset(data_a, n_DoF, batch_size, robot_choice)
+    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset(data_a, n_DoF, batch_size, robot_choice, device)
 
     #print(input_dim)
     #print(hidden_layer_sizes)
@@ -209,7 +209,7 @@ if __name__ == '__main__':
     #            +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
     #            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
     
-
+    layers = num_blocks
     save_path = "results/"+robot_choice+"/"+network_type+"_"+robot_choice+"_layers_" \
                 + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
                 +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -355,7 +355,7 @@ if __name__ == '__main__':
     ##############################################################################################################
     # training is done, let's run inferences and record the evaluation metrics
     print("\n\n==>Testing the trained model ...\n\n")
-    test_data_loader = load_test_dataset(X_test, y_test)
+    test_data_loader = load_test_dataset(X_test, y_test, device)
     weights_file = save_path+"/best_epoch.pth"
     if network_type == "MLP":
         model = MLP(input_dim, hidden_layer_sizes, output_dim).to(device)
