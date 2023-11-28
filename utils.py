@@ -483,13 +483,13 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
                                    batch_size=batch_size,
                                    shuffle=True,
                                    drop_last=False,
-                                   pin_memory=True)
+                                   pin_memory=False)
 
     test_data_loader = DataLoader(dataset=test_data,
                                    batch_size=batch_size,
                                    drop_last=False,
                                    shuffle=False,
-                                   pin_memory=True)
+                                   pin_memory=False)
 
     return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test 
 
