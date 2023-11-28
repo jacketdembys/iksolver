@@ -87,7 +87,7 @@ config_info = {
                 'BATCH_SIZE': 250000,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
-                'PIN_MEMORY': True,
+                'PIN_MEMORY': False,
                 'PERSISTENT_WORKERS': True,
                 'OPTIMIZER_NAME': 'Adam',
                 'LEARNING_RATE': 0.0001,
