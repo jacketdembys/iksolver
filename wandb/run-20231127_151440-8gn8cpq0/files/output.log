@@ -1,7 +1,0 @@
-Epoch: 0/1000 | Epoch Time: 0m 13s
-	Train Loss: 2.3054756224155426
-	Valid Loss: 2.4368205070495605
-	Best Epoch Occurred [0/1000]
-Epoch: 10/1000 | Epoch Time: 2m 17s
-	Train Loss: 1.502188354730606
-	Valid Loss: 1.5629594326019287

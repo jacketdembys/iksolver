@@ -46,7 +46,7 @@ class ResMLP(nn.Module):
     def __init__(self, input_dim, hidden_size, output_dim, num_blocks):
         super(ResMLP, self).__init__()
 
-        self.name = "ResMLP [{}, {}, {}]".format(str(input_dim), str(hidden_size).replace("[","").replace("]",""), str(output_dim))
+        self.name = "ResMLP [{}, {}, {}, {}]".format(str(input_dim), str(hidden_size).replace("[","").replace("]",""), str(num_blocks), str(output_dim))
         self.blocks = nn.Sequential()
         self.blocks.add_module('block{}'.format(0), ResidualBlock(input_dim, hidden_size))
         for i in range(num_blocks-1):
@@ -70,8 +70,8 @@ if __name__ == '__main__':
     output_dim = 7
     num_blocks = 10
     model = ResMLP(input_dim, hidden_size, output_dim, num_blocks)
-    print(model)
+    print(model.name)
 
     input = torch.randn(3,6)
-    output = model(input)
+    output, _ = model(input)
     print(output.size())
