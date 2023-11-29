@@ -234,7 +234,7 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments-2",                
-            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale)),
+            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_no_BatchNorm",
             #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_layers_" \
                     + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \

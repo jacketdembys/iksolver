@@ -9,18 +9,18 @@ class ResidualBlock(nn.Module):
         self.output_dim = output_dim
         
         self.fc1 = nn.Linear(input_dim, output_dim)
-        self.bn1 = nn.BatchNorm1d(output_dim)
+        #self.bn1 = nn.BatchNorm1d(output_dim)
         self.relu = nn.ReLU(inplace=True)
 
         self.fc2 = nn.Linear(output_dim, output_dim)
-        self.bn2 = nn.BatchNorm1d(output_dim)
+        #self.bn2 = nn.BatchNorm1d(output_dim)
 
         # set up the shortcut  connection 
         self.shortcut = nn.Sequential()
         if input_dim != output_dim:
             self.shortcut = nn.Sequential(
                 nn.Linear(input_dim, output_dim),
-                nn.BatchNorm1d(output_dim)
+                #nn.BatchNorm1d(output_dim)
             )
 
     def forward(self, x):
@@ -28,11 +28,11 @@ class ResidualBlock(nn.Module):
         residual = self.shortcut(x)
 
         out = self.fc1(x)
-        out = self.bn1(out)
+        #out = self.bn1(out)
         out = self.relu(out)
 
         out = self.fc2(out)
-        out = self.bn2(out)
+        #out = self.bn2(out)
 
         out += residual
         out = self.relu(out)
