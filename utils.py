@@ -430,10 +430,10 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
         X = data[:,:6]
         y = data[:,6:]
     if robot_choice == "7DoF-7R-Panda":
-        X = data[:,:19]
-        y = data[:,19:]
-        #X = data[:,:6]
-        #y = data[:,6:13]
+        #X = data[:,:19]
+        #y = data[:,19:]
+        X = data[:,:6]
+        y = data[:,6:13]
 
         
     #y = data[:,:2]

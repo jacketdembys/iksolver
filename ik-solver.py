@@ -95,7 +95,7 @@ if __name__ == '__main__':
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6"]
     if robot_choice == "7DoF-7R-Panda":
         n_DoF = 7
-        input_dim = 6+6+7 #6
+        input_dim = 6 #+6+7 #6
         output_dim = 7
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7"]
