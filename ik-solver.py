@@ -95,17 +95,17 @@ if __name__ == '__main__':
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6"]
     if robot_choice == "7DoF-7R-Panda":
         n_DoF = 7
-        input_dim = 6
+        input_dim = 6+6+7 #6
         output_dim = 7
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7"]
         
     # load dataset from file
     if load_option == "cloud":
-        data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
         #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
     elif load_option == "local":
-        data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
     data_a = np.array(data) 
 
 
@@ -153,11 +153,14 @@ if __name__ == '__main__':
     # get network architecture
     if network_type == "MLP":
         model = MLP(input_dim, hidden_layer_sizes, output_dim)
+        save_layers_str = "layers_"+ str(layers)
         #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim)
-    elif network_type == "ResMLP":
-        model = ResMLP(input_dim, neurons, output_dim, num_blocks)
+    elif network_type == "ResMLPSum":
+        model = ResMLPSum(input_dim, neurons, output_dim, num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)
     elif network_type == "DenseMLP":
-        model = DenseMLP(input_dim, hidden_layer_sizes, output_dim)
+        model = DenseMLP(input_dim, neurons, output_dim, num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)
     elif network_type == "FourierMLP":
         fourier_dim = 16
         scale = 10
@@ -209,9 +212,9 @@ if __name__ == '__main__':
     #            +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
     #            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
     
-    layers = num_blocks
-    save_path = "results/"+robot_choice+"/"+network_type+"_"+robot_choice+"_layers_" \
-                + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
+    
+    save_path = "results/"+robot_choice+"/"+network_type+"_"+robot_choice+"_" \
+                + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
                 +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
 
     if not os.path.exists(save_path):
@@ -219,7 +222,8 @@ if __name__ == '__main__':
 
  
 
-    # save test sets        
+    # save test sets 
+    """       
     df = pd.DataFrame(X_test)
     df.to_csv(save_path+"/X_test_"+robot_choice+"_"+str(dataset_samples)+".csv",
         index=False,
@@ -229,16 +233,17 @@ if __name__ == '__main__':
     df.to_csv(save_path+"/y_test_"+robot_choice+"_"+str(dataset_samples)+".csv",
         index=False,
         header=joint_header)
+    """
 
 
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments-2",                
-            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_no_BatchNorm",
+            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_seq",  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
-            name = "Model_"+robot_choice+"_layers_" \
-                    + str(layers) + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
-                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples) 
+            name = "Model_"+robot_choice+"_" \
+                    + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
+                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+'_non_traj_split'  #+'_non_traj_split', '_traj_split'   
             #name = "Model_"+robot_choice+"_" \
             #        +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
             #        +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -361,9 +366,9 @@ if __name__ == '__main__':
         model = MLP(input_dim, hidden_layer_sizes, output_dim).to(device)
         #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim).to(device)
     elif network_type == "ResMLP":
-        model = ResMLP(input_dim, neurons, output_dim, num_blocks).to(device)
+        model = ResMLPSum(input_dim, neurons, output_dim, num_blocks).to(device)
     elif network_type == "DenseMLP":
-        model = DenseMLP(input_dim, hidden_layer_sizes, output_dim).to(device)
+        model = DenseMLP(input_dim, neurons, output_dim, num_blocks).to(device)
     
     state_dict = model.state_dict()
     for n, p in torch.load(weights_file, map_location=lambda storage, loc: storage).items():

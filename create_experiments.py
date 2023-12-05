@@ -66,7 +66,7 @@ config_info = {
         'SEED_NUMBER': 0,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'ResMLP',      # MLP, ResMLP
+            'NAME': 'DenseMLP',      # MLP, ResMLPSum, ResMLPConcat, DenseMLP
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
@@ -84,7 +84,7 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 1000,
-                'BATCH_SIZE': 250000,
+                'BATCH_SIZE': 100000,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': False,

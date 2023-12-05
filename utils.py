@@ -430,26 +430,39 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
         X = data[:,:6]
         y = data[:,6:]
     if robot_choice == "7DoF-7R-Panda":
-        X = data[:,:6]
-        y = data[:,6:]
+        X = data[:,:19]
+        y = data[:,19:]
+        #X = data[:,:6]
+        #y = data[:,6:13]
 
         
     #y = data[:,:2]
     #X = data[:,2:]
         
     # split in train and test sets
+    
     X_train, X_validate, y_train, y_validate = train_test_split(X, 
                                                                 y, 
                                                                 test_size = 0.1,
                                                                 random_state = 1)
 
-
-
     X_train, X_test, y_train, y_test = train_test_split(X_train, 
                                                         y_train, 
                                                         test_size = 0.1,
                                                         random_state = 1)
+    
+    
+    """
+    n_samples = len(data[:,0])
+    X_train = X[:int(0.8*n_samples),:]
+    X_validate = X[int(0.8*n_samples):int(0.9*n_samples),:]
+    X_test = X[int(0.9*n_samples):,:]
 
+    y_train = y[:int(0.8*n_samples),:]
+    y_validate = y[int(0.8*n_samples):int(0.9*n_samples),:]
+    y_test = y[int(0.9*n_samples):,:]
+    """
+    
 
     sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
     sc_out = MinMaxScaler(copy=True, feature_range=(0, 1))
@@ -483,13 +496,15 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
                                    batch_size=batch_size,
                                    shuffle=True,
                                    drop_last=False,
-                                   pin_memory=True)
+                                   pin_memory=False,
+                                   num_workers=16)
 
     test_data_loader = DataLoader(dataset=test_data,
                                    batch_size=batch_size,
                                    drop_last=False,
                                    shuffle=False,
-                                   pin_memory=True)
+                                   pin_memory=False,
+                                   num_workers=16)
 
     return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test 
 
@@ -505,7 +520,8 @@ def load_test_dataset(X_test, y_test, device):
     test_data_loader = DataLoader(dataset=test_data,
                                    batch_size=1,
                                    shuffle=False,
-                                   pin_memory=True)
+                                   pin_memory=False,
+                                   num_workers=16)
 
     return test_data_loader
 
@@ -528,9 +544,7 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
         #for data in tqdm(iterator, desc="Training", leave=False):
             optimizer.zero_grad()
             x, y = data['input'], data['output']
-            #print(x.shape)
-            #print(y.shape)
-            #sys.exit()
+          
 
             x = x.to(device)
             y = y.to(device)
@@ -538,6 +552,12 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             #x = input_mapping(x,B)
             
             y_pred, _ = model(x)
+
+            #print(x.shape)
+            #print(y.shape)
+            #print(y_pred.shape)
+            #sys.exit()
+
             #print("\nTrain Epoch {} at batch {}".format(epoch, i))
             """
             if i == 1:
@@ -804,19 +824,25 @@ class FKLoss(nn.Module):
         #self.criterion = nn.MSELoss()
         self.criterion = nn.L1Loss(reduction="mean")
 
-    def forward(self, inputs, targets):
+    def forward(self, inputs, targets, robot_choice):
         #inputs_fk = torch.zeros_like(targets)
         inputs_fk = torch.clone(targets)
         print(inputs_fk)
         for i in range(inputs.shape[0]):
             #print()
-            DH = get_DH(robot_choice, inputs[i,:])
+            t = inputs[i,:]
+            DH = get_DH(robot_choice, t)
             #print(DH)
             T = forward_kinematics(DH)
             #print(T.type)
-            inputs_fk[i,:] = T[:3,-1]   
+            if robot_choice == "7DoF-7R-Panda":
+                R = T[:3,:3]
+                rpy = matrix_to_euler_angles(R, "XYZ")
+                
+                #inputs_fk[i,:] = T[:3,-1]   
+                inputs_fk[i,:] = torch.cat([T[:3,-1], rpy])
 
-        inputs_fk = inputs_fk
+        #inputs_fk = inputs_fk
         #print(inputs_fk)
         #print(targets)
         loss = self.criterion(inputs_fk, targets)
