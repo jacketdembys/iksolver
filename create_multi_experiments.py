@@ -29,7 +29,7 @@ parser.add_argument("--scale",
                     help="Scale of the joints limits.")
 parser.add_argument("--blocks",
                     type=int,
-                    default=2,
+                    default=5,
                     help="Number of blocks if ResMLP or DenseMLP.")
 parser.add_argument("--load",
                     type=str,
