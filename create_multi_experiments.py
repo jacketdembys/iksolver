@@ -87,7 +87,7 @@ for scale in range(2,12,2):
                 },
                 'HYPERPARAMETERS': {
                     'EPOCHS': 1000000,
-                    'BATCH_SIZE': 40000,
+                    'BATCH_SIZE': 30000,
                     'SHUFFLE': True,
                     'NUM_WORKERS': 4,
                     'PIN_MEMORY': True,
