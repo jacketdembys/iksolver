@@ -60,6 +60,10 @@ def get_DH(robot_choice, t):
                            [t[6],    0.107,    0.088,  torch.pi/2]])
     return DH
 
+
+
+
+
 # A matrix
 def A_matrix(t,d,a,al):
     # the inputs of torch.sin and torch.cos are expressed in rad
@@ -419,7 +423,7 @@ class LoadIKDataset(Dataset):
 
 
 # function to load the dataset
-def load_dataset(data, n_DoF, batch_size, robot_choice, device):
+def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
 
     # file data_4DoF
     #X = data[:,:3]
@@ -430,10 +434,14 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
         X = data[:,:6]
         y = data[:,6:]
     if robot_choice == "7DoF-7R-Panda":
-        #X = data[:,:19]
-        #y = data[:,19:]
-        X = data[:,:6]
-        y = data[:,6:13]
+        if dataset_type == "seq":
+            print("==> Sequence dataset ...")
+            X = data[:,:19]
+            y = data[:,19:]
+        elif dataset_type == "1_to_1": 
+            print("==> 1 to 1 dataset ...")
+            X = data[:,:6]
+            y = data[:,6:] #13]
 
         
     #y = data[:,:2]
@@ -463,13 +471,29 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
     y_test = y[int(0.9*n_samples):,:]
     """
     
-
+    
     sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
     sc_out = MinMaxScaler(copy=True, feature_range=(0, 1))
     
     X_train = sc_in.fit_transform(X_train)
     X_validate = sc_in.transform(X_validate) 
-    X_test = sc_in.transform(X_test)  
+    X_test = sc_in.transform(X_test) 
+    
+
+    """
+    min_value = np.min(X_train)
+    max_value = np.max.max(X_train)
+    range = max_value - min_value
+    X_train = (X_train - min_value) / range
+    X_validate = (X_validate - min_value) / range
+    X_test = (X_test - min_value) / range
+
+    print(X_train.min(), X_train.max())
+    print(X_validate.min(), X_validate.max())
+    print(X_test.min(), X_test.max())
+    """
+
+    
     
     #xx = torch.from_numpy(X_train)
     #xx = xx
@@ -495,19 +519,20 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, device):
     train_data_loader = DataLoader(dataset=train_data,
                                    batch_size=batch_size,
                                    shuffle=True,
-                                   drop_last=False,
+                                   drop_last=True,
                                    pin_memory=False,
-                                   num_workers=16)
+                                   num_workers=12,
+                                   persistent_workers=True)
 
     test_data_loader = DataLoader(dataset=test_data,
                                    batch_size=batch_size,
                                    drop_last=False,
                                    shuffle=False,
                                    pin_memory=False,
-                                   num_workers=16)
+                                   num_workers=12,
+                                   persistent_workers=True)
 
-    return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test 
-
+    return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test
 
 # function to load the dataset
 def load_test_dataset(X_test, y_test, device):
@@ -519,9 +544,11 @@ def load_test_dataset(X_test, y_test, device):
 
     test_data_loader = DataLoader(dataset=test_data,
                                    batch_size=1,
+                                   drop_last=False,
                                    shuffle=False,
                                    pin_memory=False,
-                                   num_workers=16)
+                                   num_workers=12,
+                                   persistent_workers=True)
 
     return test_data_loader
 
@@ -529,10 +556,16 @@ def load_test_dataset(X_test, y_test, device):
 
 
 # train function
-def train(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS):
+def train(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler):
     epoch_loss = 0
+    epoch_loss_2 = 0
     model.train()
     i = 0
+
+
+
+    if criterion_type == "ld":
+        criterion_2 = nn.MSELoss(reduction="mean")
 
     #B_dict = {}
     #B_dict['basic'] = torch.eye(32,3)
@@ -544,7 +577,7 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
         #for data in tqdm(iterator, desc="Training", leave=False):
             optimizer.zero_grad()
             x, y = data['input'], data['output']
-          
+            x.requires_grad = True
 
             x = x.to(device)
             y = y.to(device)
@@ -552,6 +585,8 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             #x = input_mapping(x,B)
             
             y_pred, _ = model(x)
+
+            #print("y_pred\n:", y_pred)
 
             #print(x.shape)
             #print(y.shape)
@@ -566,18 +601,29 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
                 print(y[:5,:])
                 #sys.exit()
             """
-            optimizer.zero_grad()
-            #loss = criterion(y_pred, y)
             
-            if criterion_type == "lfk":
-                loss = criterion(y_pred, x)
+            # optimizer.zero_grad()
+            #loss = criterion(y_pred, y)
+
+            #print(x)
+            #print(y_pred) 
+            
+            if criterion_type == "ld":
+                #loss = criterion(y_pred, x)
+                wp = 1
+                wq = 0
+                loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
             else:
                 loss = criterion(y_pred, y)
             #make_dot(loss, params=dict(list(model.named_parameters()))).render("loss", format="png")
             
             loss.backward()
+            #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
             optimizer.step()
+            scheduler.step()
             epoch_loss += loss.item()
+            #if criterion_type == "ld":
+                #epoch_loss_2 += loss2.item()
             t.set_postfix_str('Train loss: {:.6f}'.format(epoch_loss/len(iterator)))
             t.update()
 
@@ -588,13 +634,18 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
     
     
     #print("Total batches {}".format(i))
-        
+        #if criterion_type == "ld":
+            #print('\n\tTrain FK Loss: {}'.format(epoch_loss/len(iterator)))
+            #print('\tTrain L2 Loss: {}'.format(epoch_loss_2/len(iterator)))
     return epoch_loss/len(iterator)
 
 # evaluation function 
 def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
     epoch_loss = 0
     model.eval()
+
+    if criterion_type == "ld":
+        criterion_2 = nn.MSELoss(reduction="mean")
 
     #B_dict = {}
     #B_dict['basic'] = torch.eye(32,3)
@@ -606,15 +657,19 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
             for data in iterator:
                 x = data['input'].to(device)
                 y = data['output'].to(device)
+                #x.requires_grad = True
 
                 #x = input_mapping(x,B)
                 
                 y_pred, _ = model(x)
                 #loss = criterion(y_pred, y)
-                #loss = criterion(y_pred, x)   
+                #loss = criterion(y_pred, x)  
                 
-                if criterion_type == "lfk":
-                    loss = criterion(y_pred, x)
+                if criterion_type == "ld":
+                    #loss = criterion(y_pred, x)
+                    wp = 1
+                    wq = 0
+                    loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
                 else:
                     loss = criterion(y_pred, y)
                 
@@ -817,34 +872,184 @@ class FourierMLP(nn.Module):
 
 
 
+
+def get_DH_2(robot_choice):
+    # columns: t, d, a, alpha
+
+    if robot_choice == "7DoF-7R-Panda":
+        DH = torch.tensor([[0,    0.333,      0.0,           0],
+                            [0,      0.0,      0.0, -torch.pi/2],
+                            [0,    0.316,      0.0,  torch.pi/2],
+                            [0,      0.0,   0.0825,  torch.pi/2],
+                            [0,    0.384,  -0.0825, -torch.pi/2],
+                            [0,      0.0,      0.0,  torch.pi/2],
+                            [0,    0.107,    0.088,  torch.pi/2]])
+
+    return DH
+
+
+
+def joint_angle_to_transformation_matrix(theta_ndh, DH, device):
+        
+        #print("theta.shape: {}".format(theta_ndh.shape))
+        #print(theta.shape[0])
+        #print(theta.shape[1])
+
+        
+        #print("theta: {}".format(theta_ndh))
+        #print("theta: {}".format(theta_ndh[:,:,0]))
+       
+        batch = theta_ndh.shape[0]
+        joint_number = theta_ndh.shape[1]
+
+        # populate the DH with the thetas and have as many as the batch size
+        #print("DH.shape: {}".format(self.DH.shape))
+        DH = DH.to(device)
+        DH = DH.repeat(batch, 1).view(batch, joint_number, 4)
+        DH[:,:,0] = theta_ndh
+        #DH[:,2,2] = theta_ndh[:,0,2]
+        #DH[:,:2,3] = theta_ndh[:,0,:2]
+        #print("DH.shape: {}".format(DH.shape))
+        #print("DH.shape: {}".format(DH))
+        
+        #theta = theta_ndh.clone()
+        #print("theta.shape 2", theta.shape)
+
+        #print(DH)
+        theta = DH[:,:,0]
+        d = DH[:,:,1]
+        a = DH[:,:,2]
+        alpha = DH[:,:,3]
+        
+        #print("theta: {}".format(theta))
+        #print("d: {}".format(d))
+        #print("alpha: {}".format(alpha))
+        #print("a: {}".format(a))
+
+        theta = theta.view(-1,1)
+        d = d.view(-1, 1)        
+        a = a.view(-1, 1)
+        alpha = alpha.view(-1, 1)
+        
+        #print("theta:\n",theta)
+        #print("d:\n",d)
+        #print("a:\n",a)
+        #print("alpha:\n",alpha)
+        
+
+        row_1 = torch.cat( (torch.cos(theta), -torch.sin(theta)*torch.cos(alpha),  torch.sin(theta)*torch.sin(alpha), a*torch.cos(theta)), 1 )    
+        row_2 = torch.cat( (torch.sin(theta),  torch.cos(theta)*torch.cos(alpha), -torch.cos(theta)*torch.sin(alpha), a*torch.sin(theta)), 1 )   
+            
+        zeros = torch.autograd.Variable(torch.zeros(joint_number,1).to(device))
+        zeros = zeros.repeat(batch,1).view(-1, 1)         
+        ones = torch.autograd.Variable(torch.ones(joint_number,1).to(device))
+        ones = ones.repeat(batch,1).view(-1, 1)
+
+        #print(joint_number)
+        #print(zeros.shape)
+        #print(alpha.shape)
+        #print(d.shape)
+        
+        row_3 = torch.cat( (zeros, torch.sin(alpha), torch.cos(alpha), d), 1 )
+        row_4 = torch.cat( (zeros, zeros, zeros, ones), 1 )
+        T_successive = torch.cat((row_1, row_2, row_3, row_4), 1).view(batch, joint_number, 4, 4)  
+
+        T_total = T_successive[:,0,:,:].view(batch,1,4,4)
+        #print("T_successive.shape): {}".format(T_successive.shape))
+        #print("T_total.shape): {}".format(T_total.shape))      
+
+        for i in range(1, joint_number):
+            temp_total_transformation = torch.matmul(T_total, T_successive[:,i,:,:].view(batch,1,4,4))
+            T_total = temp_total_transformation    
+
+        return T_successive, T_total.view(batch,4,4)
+
+
 # compute loss function by employing the FK 
 class FKLoss(nn.Module):
-    def __init__(self):
-        super(FKLoss, self).__init__()
-        #self.criterion = nn.MSELoss()
-        self.criterion = nn.L1Loss(reduction="mean")
+    def __init__(self, robot_choice, device):
+        #super(FKLoss, self).__init__()
+        super().__init__()
+        self.criterion = nn.MSELoss(reduction="mean")
+        #self.criterion = nn.L1Loss(reduction="mean")
+        self.robot_choice = robot_choice
+        self.device = device
 
-    def forward(self, inputs, targets, robot_choice):
+    def forward(self, joints_pred, joints_des):
         #inputs_fk = torch.zeros_like(targets)
-        inputs_fk = torch.clone(targets)
-        print(inputs_fk)
-        for i in range(inputs.shape[0]):
+        #joints_fk = torch.clone(poses)
+        #joints_fk.retain_grad()
+
+        
+        DH = get_DH_2(self.robot_choice)
+        T_successive_pred, T_total_pred = joint_angle_to_transformation_matrix(joints_pred, DH, self.device)
+        R_pred = T_total_pred[:,:3,:3]
+        rpy_pred = matrix_to_euler_angles(R_pred, "XYZ")
+        pose_pred = torch.cat([T_total_pred[:,:3,-1], rpy_pred[:,:]], axis=1)
+
+
+        T_successive_des, T_total_des = joint_angle_to_transformation_matrix(joints_des, DH, self.device)
+        R_des = T_total_des[:,:3,:3]
+        rpy_des = matrix_to_euler_angles(R_des, "XYZ")
+        pose_des = torch.cat([T_total_des[:,:3,-1], rpy_des[:,:]], axis=1)
+
+        #print()
+        #print("T_total:")
+        #print(T_total)
+        #print("Joints_fk:")
+        #print(pose_pred)
+        #print("poses")
+        #print(pose_des)
+        #print()
+        
+        loss = self.criterion(pose_pred, pose_des)
+        
+        return loss
+    
+
+class FKLossB(nn.Module):
+    def __init__(self, robot_choice):
+        #super(FKLoss, self).__init__()
+        super().__init__()
+        self.criterion = nn.MSELoss(reduction="mean")
+        #self.criterion = nn.L1Loss(reduction="mean")
+        self.robot_choice = robot_choice
+
+    def forward(self, joints, poses):
+        #inputs_fk = torch.zeros_like(targets)
+        joints_fk = torch.clone(poses)
+        joints_fk.retain_grad()
+
+
+        #DH = torch.vmap(get_DH, in)(self.robot_choice, joints)
+        #print(DH.shape)
+
+        #sys.exit()
+
+
+
+        #print(targets)
+        #print(inputs_fk)
+        #sys.exit()
+        for i in range(joints.shape[0]):
             #print()
-            t = inputs[i,:]
-            DH = get_DH(robot_choice, t)
+            t = joints[i,:]
+            DH = get_DH(self.robot_choice, t)
             #print(DH)
             T = forward_kinematics(DH)
             #print(T.type)
-            if robot_choice == "7DoF-7R-Panda":
+            if self.robot_choice == "7DoF-7R-Panda":
                 R = T[:3,:3]
                 rpy = matrix_to_euler_angles(R, "XYZ")
                 
                 #inputs_fk[i,:] = T[:3,-1]   
-                inputs_fk[i,:] = torch.cat([T[:3,-1], rpy])
+                joints_fk[i,:] = torch.cat([T[:3,-1], rpy])
 
         #inputs_fk = inputs_fk
-        #print(inputs_fk)
-        #print(targets)
-        loss = self.criterion(inputs_fk, targets)
+        #print(joints_fk)
+        #print(poses)
+        #print("here")
         #sys.exit()
+        loss = self.criterion(joints_fk, poses)
+        #print(loss)
         return loss

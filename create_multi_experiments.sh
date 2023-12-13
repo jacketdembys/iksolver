@@ -4,14 +4,21 @@
 #layers=2
 #neurons=1000
 #robot_choice="7DoF-7R-Panda"
-scripts=$(ls *.yaml)
+#scripts=$(ls *.yaml)
 
 # Create the config file
-echo "$scripts";
+#echo "$scripts";
 
-for script in $`scripts`; do
-    python ik-solver.py --config-path "$script" &
-done
+#for script in $`scripts`; do
+#    python ik-solver.py --config-path "$script" &
+#done
+
+python ik-solver.py --config-path "$script" &
+python ik-solver.py --config-path "$script" &
+python ik-solver.py --config-path "$script" &
+python ik-solver.py --config-path "$script" &
+python ik-solver.py --config-path "$script" &
+wait
 
 
 # Print a success message

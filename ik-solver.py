@@ -67,6 +67,7 @@ if __name__ == '__main__':
     print_steps = config["TRAIN"]["PRINT_STEPS"] 
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
     load_option = config["TRAIN"]["CHECKPOINT"]["LOAD_OPTIONS"]  
+    dataset_type = config["TRAIN"]["DATASET"]["TYPE"]
 
     scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
     EPOCHS = config["TRAIN"]["HYPERPARAMETERS"]["EPOCHS"]                         # total training epochs   
@@ -102,10 +103,11 @@ if __name__ == '__main__':
         
     # load dataset from file
     if load_option == "cloud":
-        data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
         #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
     elif load_option == "local":
-        data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
+        data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+        #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
     data_a = np.array(data) 
 
 
@@ -143,7 +145,7 @@ if __name__ == '__main__':
         torch.backends.cudnn.deterministic = True
     ## train and validate
     # load the dataset
-    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset(data_a, n_DoF, batch_size, robot_choice, device)
+    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset(data_a, n_DoF, batch_size, robot_choice, dataset_type, device)
 
     #print(input_dim)
     #print(hidden_layer_sizes)
@@ -155,7 +157,7 @@ if __name__ == '__main__':
         model = MLP(input_dim, hidden_layer_sizes, output_dim)
         save_layers_str = "layers_"+ str(layers)
         #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim)
-    elif network_type == "ResMLPSum":
+    elif network_type == "ResMLP":
         model = ResMLPSum(input_dim, neurons, output_dim, num_blocks)
         save_layers_str = "blocks_"+ str(num_blocks)
     elif network_type == "DenseMLP":
@@ -195,14 +197,16 @@ if __name__ == '__main__':
         optimizer = optim.RMSprop(model.parameters())
     
     # set loss
-    if loss_choice == "l2":
+    if loss_choice == "lq":
         criterion = nn.MSELoss(reduction="mean")
     elif loss_choice == "l1":
         criterion = nn.L1Loss(reduction="mean")
-    elif loss_choice == "lfk":
-        criterion = FKLoss()
+    elif loss_choice == "ld":
+        criterion = FKLoss(robot_choice=robot_choice, device=device)
     
     
+
+
     print("\n==> Experiment {} Training network: {}".format(experiment_number, model.name))
     print("==> Training device: {}".format(device))
     
@@ -239,11 +243,11 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             project = "iksolver-experiments-2",                
-            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_seq",  # "_seq", "_1_to_1"
+            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
                     + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
-                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+'_non_traj_split'  #+'_non_traj_split', '_traj_split'   
+                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)  #+'_non_traj_split', '_traj_split'   
             #name = "Model_"+robot_choice+"_" \
             #        +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
             #        +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -253,7 +257,8 @@ if __name__ == '__main__':
 
     ##############################################################################################################
     # Training and Validation
-    ##############################################################################################################   
+    ############################################################################################################## 
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=learning_rate, steps_per_epoch=len(train_data_loader), epochs=EPOCHS)  
     patience = 0.1*EPOCHS
     train_losses = []
     valid_losses = []
@@ -265,7 +270,7 @@ if __name__ == '__main__':
 
         
         
-        train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS)        
+        train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS, scheduler)        
         valid_loss = evaluate(model, test_data_loader, criterion, loss_choice, device, epoch, EPOCHS)
     
         train_losses.append(train_loss)
@@ -299,12 +304,12 @@ if __name__ == '__main__':
             
             elif save_option == "cloud":
                 torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-                #artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
-                #                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                #                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
-                #                            type='model')
-                #artifact.add_file(save_path+'/best_epoch.pth')
-                #run.log_artifact(artifact)
+                artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
+                                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
+                                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
+                                            type='model')
+                artifact.add_file(save_path+'/best_epoch.pth')
+                run.log_artifact(artifact)
 
         else:
             counter += 1
@@ -428,6 +433,8 @@ if __name__ == '__main__':
         "completed_epochs": epoch,
         "best_epoch": best_epoch,
         "elapsed_time": "{}m {}s".format(epoch_mins, epoch_secs),
+        "average_position_error(mm)": avg_position_error,
+        "average_orientation_error(deg)": avg_orientation_error,
         "min_x(mm)": X_errors_r[0,0],
         "avg_x(mm)": X_errors_r[1,0],
         "max_x(mm)": X_errors_r[2,0],

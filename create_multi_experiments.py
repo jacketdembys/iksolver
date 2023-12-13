@@ -50,8 +50,9 @@ load_option = args.load
 robot_choice = '7DoF-7R-Panda'
 
 # read from path script
-#for scale in range(2,12,2):
-for neuron in range(128, neurons+128, 128):
+for scale in range(2,12,2):
+    neuron = 1024
+#for neuron in range(128, neurons+128, 128):
 
     # batch sizes: 4096, 65536
     # build the content of the config file in a dictionary
@@ -78,8 +79,8 @@ for neuron in range(128, neurons+128, 128):
                     'RESUMED_G_MODEL': "",
                 },
                 'HYPERPARAMETERS': {
-                    'EPOCHS': 1000,
-                    'BATCH_SIZE': 250000,
+                    'EPOCHS': 1000000,
+                    'BATCH_SIZE': 128,
                     'SHUFFLE': True,
                     'NUM_WORKERS': 4,
                     'PIN_MEMORY': True,
@@ -103,6 +104,6 @@ for neuron in range(128, neurons+128, 128):
     #            os.makedirs(save_path)
 
     # open a yaml file and dump the content of the dictionary 
-    with open("train_"+str(neuron)+".yaml", 'w') as yamlfile:
+    with open("train_"+str(scale)+".yaml", 'w') as yamlfile:
         data = yaml.dump(config_info, yamlfile)
         print("Successfully created the config file!")

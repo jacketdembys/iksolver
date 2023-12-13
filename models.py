@@ -52,7 +52,7 @@ class ResMLPSum(nn.Module):
     def __init__(self, input_dim, hidden_size, output_dim, num_blocks):
         super(ResMLPSum, self).__init__()
 
-        self.name = "ResMLPSum [{}, {}, {}, {}]".format(str(input_dim), str(hidden_size).replace("[","").replace("]",""), str(num_blocks), str(output_dim))
+        self.name = "ResMLP [{}, {}, {}, {}]".format(str(input_dim), str(hidden_size).replace("[","").replace("]",""), str(num_blocks), str(output_dim))
         self.input = nn.Linear(input_dim, hidden_size)
         self.blocks = nn.Sequential()
         #self.blocks.add_module('block{}'.format(0), ResidualBlock(input_dim, hidden_size))
