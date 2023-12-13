@@ -98,7 +98,7 @@ for scale in range(2,12,2):
                     'EPS': 0.0001,
                     'WEIGHT_DECAY': 0.0,
                     'WEIGHT_INITIALIZATION': 'default',
-                    'LOSS': 'l2',
+                    'LOSS': 'lq',
                 },
                 'PRINT_EPOCHS': True,
                 'PRINT_STEPS': 100
