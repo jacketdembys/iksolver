@@ -27,6 +27,10 @@ parser.add_argument("--scale",
                     type=int,
                     default=2,
                     help="Scale of the joints limits.")
+parser.add_argument("--blocks",
+                    type=int,
+                    default=2,
+                    help="Number of blocks if ResMLP or DenseMLP.")
 parser.add_argument("--load",
                     type=str,
                     default='cloud',
@@ -47,6 +51,7 @@ layers = args.layers
 neurons = args.neurons
 scale = args.scale # 2 - 10
 load_option = args.load
+num_blocks = args.blocks
 robot_choice = '7DoF-7R-Panda'
 
 # read from path script
@@ -65,7 +70,8 @@ for scale in range(2,12,2):
             'MODEL': {
                 'NAME': 'MLP',
                 'NUM_HIDDEN_LAYERS': layers,          
-                'NUM_HIDDEN_NEURONS': neuron
+                'NUM_HIDDEN_NEURONS': neuron,
+                'NUM_BLOCKS': num_blocks
             },             
             'TRAIN': {
                 'DATASET': {
