@@ -76,7 +76,8 @@ for scale in range(2,12,2):
             'TRAIN': {
                 'DATASET': {
                     'NUM_SAMPLES': 1000000,
-                    'JOINT_LIMIT_SCALE': int(scale)
+                    'JOINT_LIMIT_SCALE': int(scale),
+                    'TYPE':'1_to_1' # 1_to_1, seq
                 },
                 'CHECKPOINT': {
                     'SAVE_OPTIONS': 'cloud',
