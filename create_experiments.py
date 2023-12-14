@@ -84,8 +84,8 @@ config_info = {
                 'RESUMED_G_MODEL': "",
             },
             'HYPERPARAMETERS': {
-                'EPOCHS': 1000,
-                'BATCH_SIZE': 150000,
+                'EPOCHS': 1000000,
+                'BATCH_SIZE': 50000,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': False,
