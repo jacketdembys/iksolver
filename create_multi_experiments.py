@@ -68,7 +68,7 @@ for scale in range(2,12,2):
             'SEED_NUMBER': 0,
             'DEVICE_ID': int(gpu_id),
             'MODEL': {
-                'NAME': 'DenseMLP', # MLP, ResMLP, ResMLPConcat, DenseMLP
+                'NAME': 'MLP', # MLP, ResMLP, ResMLPConcat, DenseMLP
                 'NUM_HIDDEN_LAYERS': layers,          
                 'NUM_HIDDEN_NEURONS': neuron,
                 'NUM_BLOCKS': num_blocks
@@ -86,14 +86,14 @@ for scale in range(2,12,2):
                     'RESUMED_G_MODEL': "",
                 },
                 'HYPERPARAMETERS': {
-                    'EPOCHS': 1000000,
+                    'EPOCHS': 10000,
                     'BATCH_SIZE': 128,
                     'SHUFFLE': True,
                     'NUM_WORKERS': 4,
                     'PIN_MEMORY': True,
                     'PERSISTENT_WORKERS': True,
                     'OPTIMIZER_NAME': 'Adam',
-                    'LEARNING_RATE': 0.0001,
+                    'LEARNING_RATE': 0.001,
                     'BETAS': [0.9, 0.999],
                     'EPS': 0.0001,
                     'WEIGHT_DECAY': 0.0,
