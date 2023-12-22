@@ -400,8 +400,10 @@ if __name__ == '__main__':
     # get the results from training    
     with torch.no_grad():
         results = inference_modified(model, test_data_loader, criterion, device, robot_choice)
-    X_errors = results["X_errors"]
+    X_errors = results["X_errors_report"]
     
+    #print(X_errors.shape)
+
     # get some inference stats
     X_errors_r = X_errors[:,:6]
     X_errors_r[:,:3] = X_errors_r[:,:3] * 1000
@@ -409,20 +411,24 @@ if __name__ == '__main__':
     avg_position_error = X_errors_r[1,:3].mean()
     avg_orientation_error = X_errors_r[1,3:].mean()
 
+    print("avg_position_error (mm): {}".format(avg_position_error))
+    print("avg_orientation_error (deg): {}".format(avg_orientation_error))
+
 
 
 
     X_preds = results["X_preds"]
     X_desireds = results["X_desireds"]
     #X_errors_p = np.abs(X_preds - X_desireds)
-    #X_errors_p[:,:3] = X_errors_p[:,:3] * 1000
-    #X_errors_p[:,3:] = np.rad2deg(X_errors_p[:,3:]) 
-    X_percentile = stats.percentileofscore(X_errors_r[:,0], [1,5,10,15,20], kind='rank')
-    Y_percentile = stats.percentileofscore(X_errors_r[:,1], [1,5,10,15,20], kind='rank')
-    Z_percentile = stats.percentileofscore(X_errors_r[:,2], [1,5,10,15,20], kind='rank')
-    Ro_percentile = stats.percentileofscore(X_errors_r[:,3], [1,2,3,4,5], kind='rank')
-    Pi_percentile = stats.percentileofscore(X_errors_r[:,4], [1,2,3,4,5], kind='rank')
-    Ya_percentile = stats.percentileofscore(X_errors_r[:,5], [1,2,3,4,5], kind='rank')
+    X_errors_p = results["X_errors"]
+    X_errors_p[:,:3] = X_errors_p[:,:3] * 1000
+    X_errors_p[:,3:] = np.rad2deg(X_errors_p[:,3:]) 
+    X_percentile = stats.percentileofscore(X_errors_p[:,0], [1,5,10,15,20], kind='rank')
+    Y_percentile = stats.percentileofscore(X_errors_p[:,1], [1,5,10,15,20], kind='rank')
+    Z_percentile = stats.percentileofscore(X_errors_p[:,2], [1,5,10,15,20], kind='rank')
+    Ro_percentile = stats.percentileofscore(X_errors_p[:,3], [1,2,3,4,5], kind='rank')
+    Pi_percentile = stats.percentileofscore(X_errors_p[:,4], [1,2,3,4,5], kind='rank')
+    Ya_percentile = stats.percentileofscore(X_errors_p[:,5], [1,2,3,4,5], kind='rank')
 
     #print(X_errors_p.shape)
     #print(X_errors_r.shape)

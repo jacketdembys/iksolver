@@ -1082,7 +1082,8 @@ def inference_modified(model, iterator, criterion, device, robot_choice):
         "X_preds": X_preds,
         "y_desireds": y_desireds,
         "X_desireds": X_desireds,
-        "X_errors": X_errors_report
+        "X_errors": X_errors,
+        "X_errors_report": X_errors_report
     }
     return results
 
@@ -1183,10 +1184,13 @@ def reconstruct_pose_modified(y_desireds, y_preds, robot_choice):
             rpy_desireds = matrix_to_euler_angles(R_desireds, "XYZ")
             rpy_preds = matrix_to_euler_angles(R_preds, "XYZ")
 
-            T_errors = torch.matmul(T_desireds, torch.inverse(T_preds))
-            R_errors = T_errors[:3,:3] 
-            rpy_errors = matrix_to_euler_angles(R_errors, "XYZ")           
-            position_errors = T_errors[:3,-1]
+            R_errors = torch.matmul(R_desireds, torch.inverse(R_preds))
+            #T_errors = torch.matmul(T_desireds, torch.inverse(T_preds))
+            #R_errors = T_errors[:3,:3] 
+            rpy_errors = matrix_to_euler_angles(R_errors, "XYZ")   
+            rpy_errors = torch.abs(rpy_errors)         
+            #position_errors = T_errors[:3,-1]
+            position_errors = torch.abs(T_desireds[:3,-1]-T_preds[:3,-1])
             
             # x,y,z,R,P,Y,t1,t2,t3,t4,t5,t6,t7 where x,y,z (m) and t (rad)
             #print(T[:3,-1])
