@@ -442,6 +442,15 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
             print("==> 1 to 1 dataset ...")
             X = data[:,:6]
             y = data[:,6:] #13]
+    if robot_choice == "3DoF-3R":
+        if dataset_type == "seq":
+            print("==> Sequence dataset ...")
+            X = data[:,:7]
+            y = data[:,7:]
+        elif dataset_type == "1_to_1": 
+            print("==> 1 to 1 dataset ...")
+            X = data[:,:2]
+            y = data[:,2:5] #13]
 
         
     #y = data[:,:2]
@@ -518,10 +527,10 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
 
     train_data_loader = DataLoader(dataset=train_data,
                                    batch_size=batch_size,
-                                   shuffle=True,
+                                   shuffle=False,
                                    drop_last=True,
                                    pin_memory=False,
-                                   num_workers=12,
+                                   num_workers=8,
                                    persistent_workers=True)
 
     test_data_loader = DataLoader(dataset=test_data,
@@ -529,10 +538,133 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
                                    drop_last=False,
                                    shuffle=False,
                                    pin_memory=False,
-                                   num_workers=12,
+                                   num_workers=8,
                                    persistent_workers=True)
 
     return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test
+
+
+
+
+# function to load the dataset
+def load_dataset_dist(data, n_DoF, batch_size, robot_choice, dataset_type, device):
+
+    # file data_4DoF
+    #X = data[:,:3]
+    #y = data[:,6:]
+
+    # file data_4DOF_2
+    if robot_choice == "6DoF-6R-Puma260":
+        X = data[:,:6]
+        y = data[:,6:]
+    if robot_choice == "7DoF-7R-Panda":
+        if dataset_type == "seq":
+            print("==> Sequence dataset ...")
+            X = data[:,:19]
+            y = data[:,19:]
+        elif dataset_type == "1_to_1": 
+            print("==> 1 to 1 dataset ...")
+            X = data[:,:6]
+            y = data[:,6:] #13]
+    if robot_choice == "3DoF-3R":
+        if dataset_type == "seq":
+            print("==> Sequence dataset ...")
+            X = data[:,:7]
+            y = data[:,7:]
+        elif dataset_type == "1_to_1": 
+            print("==> 1 to 1 dataset ...")
+            X = data[:,:2]
+            y = data[:,2:5] #13]
+
+
+    # split in train and test sets    
+    X_train_priv, X_validate_priv, y_train, y_validate = train_test_split(X, 
+                                                                        y, 
+                                                                        test_size = 0.1,
+                                                                        random_state = 1)
+
+    X_train_priv, X_test_priv, y_train, y_test = train_test_split(X_train_priv, 
+                                                                y_train, 
+                                                                test_size = 0.1,
+                                                                random_state = 1)
+        
+    
+    sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
+    sc_out = MinMaxScaler(copy=True, feature_range=(0, 1))
+    
+    X_train_priv = sc_in.fit_transform(X_train_priv)
+    X_validate_priv = sc_in.transform(X_validate_priv) 
+    X_test_priv = sc_in.transform(X_test_priv) 
+    
+    print("==> Shape X_train: ", X_train_priv.shape)
+    print("==> Shape y_train: ", y_train.shape)
+
+    train_data_priv = LoadIKDataset(X_train_priv, y_train, device)
+    test_data_priv = LoadIKDataset(X_validate_priv, y_validate, device)
+
+    train_data_loader_priv = DataLoader(dataset=train_data_priv,
+                                   batch_size=batch_size,
+                                   shuffle=True,
+                                   drop_last=True,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    test_data_loader_priv = DataLoader(dataset=test_data_priv,
+                                   batch_size=batch_size,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+    
+
+
+    X_train_dist = X_train_priv[:,13:]
+    X_validate_dist = X_validate_priv[:,13:]
+    X_test_dist = X_test_priv[:,13:]
+    train_data_dist = LoadIKDataset(X_train_dist, y_train, device)
+    test_data_dist = LoadIKDataset(X_validate_dist, y_validate, device)
+
+    train_data_loader_dist = DataLoader(dataset=train_data_dist,
+                                   batch_size=batch_size,
+                                   shuffle=True,
+                                   drop_last=True,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    test_data_loader_dist = DataLoader(dataset=test_data_dist,
+                                   batch_size=batch_size,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+    
+
+
+    output = {
+        "train_data_loader_priv": train_data_loader_priv,
+        "test_data_loader_priv": test_data_loader_priv,
+        "X_validate_priv": X_validate_priv,
+        "y_validate": y_validate,
+        "X_train_priv": X_train_priv,
+        "y_train": y_train,
+        "X_test_priv": X_test_priv,
+        "y_test": y_test,
+        "train_data_loader_dist": train_data_loader_dist,
+        "test_data_loader_dist": test_data_loader_dist,
+        "X_validate_dist": X_validate_dist,
+        "X_train_dist": X_train_dist,
+        "X_test_dist": X_test_dist
+    }
+
+
+    return output
+
+
+
 
 # function to load the dataset
 def load_test_dataset(X_test, y_test, device):
@@ -547,7 +679,7 @@ def load_test_dataset(X_test, y_test, device):
                                    drop_last=False,
                                    shuffle=False,
                                    pin_memory=False,
-                                   num_workers=12,
+                                   num_workers=8,
                                    persistent_workers=True)
 
     return test_data_loader
@@ -556,7 +688,7 @@ def load_test_dataset(X_test, y_test, device):
 
 
 # train function
-def train(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler):
+def train(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
     epoch_loss = 0
     epoch_loss_2 = 0
     model.train()
@@ -584,7 +716,16 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             
             #x = input_mapping(x,B)
             
-            y_pred, _ = model(x)
+            with torch.autocast(device_type='cuda', dtype=torch.float16):
+                y_pred, _ = model(x)
+
+                if criterion_type == "ld":
+                    #loss = criterion(y_pred, x)
+                    wp = 1
+                    wq = 0
+                    loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
+                else:
+                    loss = criterion(y_pred, y)
 
             #print("y_pred\n:", y_pred)
 
@@ -608,19 +749,20 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             #print(x)
             #print(y_pred) 
             
-            if criterion_type == "ld":
-                #loss = criterion(y_pred, x)
-                wp = 1
-                wq = 0
-                loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
-            else:
-                loss = criterion(y_pred, y)
+
             #make_dot(loss, params=dict(list(model.named_parameters()))).render("loss", format="png")
             
-            loss.backward()
+            #loss.backward()
             #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
-            optimizer.step()
-            scheduler.step()
+            #optimizer.step()
+            #scheduler.step()
+
+
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            #scheduler.step()
+            scaler.update()
+
             epoch_loss += loss.item()
             #if criterion_type == "ld":
                 #epoch_loss_2 += loss2.item()
@@ -638,6 +780,185 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             #print('\n\tTrain FK Loss: {}'.format(epoch_loss/len(iterator)))
             #print('\tTrain L2 Loss: {}'.format(epoch_loss_2/len(iterator)))
     return epoch_loss/len(iterator)
+
+
+
+
+def train_back(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
+    epoch_loss = 0
+    epoch_loss_2 = 0
+    model.train()
+    i = 0
+
+
+
+    if criterion_type == "ld":
+        criterion_2 = nn.MSELoss(reduction="mean")
+
+    #B_dict = {}
+    #B_dict['basic'] = torch.eye(32,3)
+    #B = B_dict['basic'].to(device)
+    
+    #with tqdm(total=(len(iterator) - len(iterator) % batch_size)) as t:
+    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+        for data in iterator:
+        #for data in tqdm(iterator, desc="Training", leave=False):
+            optimizer.zero_grad()
+            x, y = data['input'], data['output']
+            x.requires_grad = True
+
+            x = x.to(device)
+            y = y.to(device)
+            
+            #x = input_mapping(x,B)
+            
+            with torch.autocast(device_type='cuda', dtype=torch.float16):
+                y_pred, _ = model(x)
+
+                if criterion_type == "ld":
+                    #loss = criterion(y_pred, x)
+                    wp = 1
+                    wq = 0
+                    loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
+                else:
+                    loss = criterion(y_pred, y)
+
+            #print("y_pred\n:", y_pred)
+
+            #print(x.shape)
+            #print(y.shape)
+            #print(y_pred.shape)
+            #sys.exit()
+
+            #print("\nTrain Epoch {} at batch {}".format(epoch, i))
+            """
+            if i == 1:
+                print("\nTrain Epoch {} at batch {}".format(epoch, i))
+                print(y_pred[:5,:])
+                print(y[:5,:])
+                #sys.exit()
+            """
+            
+            # optimizer.zero_grad()
+            #loss = criterion(y_pred, y)
+
+            #print(x)
+            #print(y_pred) 
+            
+
+            #make_dot(loss, params=dict(list(model.named_parameters()))).render("loss", format="png")
+            
+            #loss.backward()
+            #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
+            #optimizer.step()
+            #scheduler.step()
+
+
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            #scheduler.step()
+            scaler.update()
+
+            epoch_loss += loss.item()
+            #if criterion_type == "ld":
+                #epoch_loss_2 += loss2.item()
+            t.set_postfix_str('Train loss: {:.6f}'.format(epoch_loss/len(iterator)))
+            t.update()
+
+            i += 1
+
+            #sys.exit()
+    
+    
+    
+    #print("Total batches {}".format(i))
+        #if criterion_type == "ld":
+            #print('\n\tTrain FK Loss: {}'.format(epoch_loss/len(iterator)))
+            #print('\tTrain L2 Loss: {}'.format(epoch_loss_2/len(iterator)))
+    return epoch_loss/len(iterator)
+
+
+def train_dist(model_priv, model_dist, iterator_priv, iterator_dist, optimizer_dist, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler, alpha):
+    epoch_loss = 0
+    epoch_loss_2 = 0
+    model_priv.eval()
+    model_dist.train()
+    i = 0
+    
+
+
+
+    if criterion_type == "ld":
+        criterion_2 = nn.MSELoss(reduction="mean")
+
+    #B_dict = {}
+    #B_dict['basic'] = torch.eye(32,3)
+    #B = B_dict['basic'].to(device)
+
+    
+    #with tqdm(total=(len(iterator) - len(iterator) % batch_size)) as t:
+    with tqdm(total=len(iterator_dist), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+        for (data_dist, data_priv) in zip (iterator_dist, iterator_priv):
+        #for data in tqdm(iterator, desc="Training", leave=False):
+            optimizer_dist.zero_grad()
+
+            # for distillation phase
+            x_dist, y_dist = data_dist['input'], data_dist['output']
+            x_dist.requires_grad = True
+            x_dist = x_dist.to(device)
+            y_dist = y_dist.to(device)
+
+
+            # from privilege phase
+            x_priv, y_priv = data_priv['input'], data_priv['output']
+            x_priv = x_priv.to(device)
+            y_priv = y_priv.to(device)
+
+            #print(x_dist[0,:],y_dist[0,:])
+            #print(x_priv[0,:],y_priv[0,:])
+            #sys.exit()
+            
+            with torch.no_grad():
+                y_pred_priv, _ = model_priv(x_priv)
+            
+            with torch.autocast(device_type='cuda', dtype=torch.float16):
+                y_pred_dist, _ = model_dist(x_dist)
+
+                loss_dist = criterion(y_pred_dist, y_dist)
+                loss_imit = criterion(y_pred_dist, y_pred_priv)
+                loss = (1-alpha)*loss_dist + alpha*loss_imit           
+           
+
+            #make_dot(loss, params=dict(list(model.named_parameters()))).render("loss", format="png")
+            
+            #loss.backward()
+            #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
+            #optimizer.step()
+            #scheduler.step()
+
+
+            scaler.scale(loss).backward()
+            scaler.step(optimizer_dist)
+            #scheduler.step()
+            scaler.update()
+
+            epoch_loss += loss.item()
+            #if criterion_type == "ld":
+                #epoch_loss_2 += loss2.item()
+            t.set_postfix_str('Train loss: {:.6f}'.format(epoch_loss/len(iterator_dist)))
+            t.update()
+
+            i += 1
+
+            #sys.exit()
+    
+    
+    
+    #print("Total batches {}".format(i))
+        #if criterion_type == "ld":
+            #print('\n\tTrain FK Loss: {}'.format(epoch_loss/len(iterator)))
+            #print('\tTrain L2 Loss: {}'.format(epoch_loss_2/len(iterator)))
+    return epoch_loss/len(iterator_dist)
 
 # evaluation function 
 def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
@@ -698,6 +1019,7 @@ def inference(model, iterator, criterion, device, robot_choice):
         y_desireds.append(y.detach().cpu().numpy().squeeze())
         #X_desireds.append(x.detach().cpu().numpy().squeeze())
 
+
     y_desireds = np.array(y_desireds)
     #X_desireds = np.array(X_desireds)
     X_desireds = reconstruct_pose(y_desireds, robot_choice)
@@ -712,6 +1034,44 @@ def inference(model, iterator, criterion, device, robot_choice):
 
     #print(X_errors.shape)
 
+    X_errors_report = np.array([[X_errors.min(axis=0)],
+                                [X_errors.mean(axis=0)],
+                                [X_errors.max(axis=0)],
+                                [X_errors.std(axis=0)]]).squeeze()
+    
+    results = {
+        "y_preds": y_preds,
+        "X_preds": X_preds,
+        "y_desireds": y_desireds,
+        "X_desireds": X_desireds,
+        "X_errors": X_errors_report
+    }
+    return results
+
+
+def inference_modified(model, iterator, criterion, device, robot_choice):
+    model.eval()
+    y_preds = []
+    y_desireds = []
+    X_desireds = []
+    
+    for data in iterator:
+        x = data['input'].to(device)
+        y = data['output'].to(device)
+
+        #x = input_mapping(x,B)
+        
+        y_pred, _ = model(x)
+        y_preds.append(y_pred.detach().cpu().numpy().squeeze())
+        y_desireds.append(y.detach().cpu().numpy().squeeze())
+        #X_desireds.append(x.detach().cpu().numpy().squeeze())
+
+
+    y_desireds = np.array(y_desireds)
+    y_preds = np.array(y_preds)
+    #X_desireds = np.array(X_desireds)
+    X_desireds, X_preds, X_errors = reconstruct_pose_modified(y_desireds, y_preds, robot_choice)
+    
     X_errors_report = np.array([[X_errors.min(axis=0)],
                                 [X_errors.mean(axis=0)],
                                 [X_errors.max(axis=0)],
@@ -792,6 +1152,55 @@ def reconstruct_pose(y_preds, robot_choice):
 
     X_pred = np.array(pose)
     return X_pred
+
+
+def reconstruct_pose_modified(y_desireds, y_preds, robot_choice):
+    y_desireds = torch.from_numpy(y_desireds)
+    y_preds = torch.from_numpy(y_preds)
+    n_samples = y_preds.shape[0]
+
+    pose_desireds = []
+    pose_preds = []
+    pose_errors = []
+    
+    for i in range(n_samples):
+
+        # set the joints
+        t_desireds = y_desireds[i,:]
+        t_preds = y_preds[i,:]
+
+        # compute the forward kinematics
+        DH_desireds = get_DH(robot_choice, t_desireds)
+        T_desireds = forward_kinematics(DH_desireds)
+
+        DH_preds = get_DH(robot_choice, t_preds)
+        T_preds = forward_kinematics(DH_preds)       
+        
+        if robot_choice == "7DoF-7R-Panda":
+            R_desireds = T_desireds[:3,:3]
+            R_preds = T_preds[:3,:3] 
+
+            rpy_desireds = matrix_to_euler_angles(R_desireds, "XYZ")
+            rpy_preds = matrix_to_euler_angles(R_preds, "XYZ")
+
+            T_errors = torch.matmul(T_desireds, torch.inverse(T_preds))
+            R_errors = T_errors[:3,:3] 
+            rpy_errors = matrix_to_euler_angles(R_errors, "XYZ")           
+            position_errors = T_errors[:3,-1]
+            
+            # x,y,z,R,P,Y,t1,t2,t3,t4,t5,t6,t7 where x,y,z (m) and t (rad)
+            #print(T[:3,-1])
+            #print(rpy)
+            pose_desireds.append(torch.cat([T_desireds[:3,-1], rpy_desireds, t_desireds]).numpy())
+            pose_preds.append(torch.cat([T_preds[:3,-1], rpy_preds, t_preds]).numpy())
+            pose_errors.append(torch.cat([position_errors, rpy_errors]).numpy())
+
+
+
+    X_desireds = np.array(pose_desireds)
+    X_preds = np.array(pose_preds)
+    X_errors = np.array(pose_errors)
+    return X_desireds, X_preds, X_errors
     
 
 # compute epoch time

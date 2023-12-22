@@ -95,9 +95,15 @@ if __name__ == '__main__':
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6"]
     if robot_choice == "7DoF-7R-Panda":
-        n_DoF = 7
-        input_dim = 6 #+6+7 #6
-        output_dim = 7
+        if dataset_type == "1_to_1":
+            n_DoF = 7
+            input_dim = 6 #+6+7 #6
+            output_dim = 7
+        elif dataset_type == "seq":
+            n_DoF = 7
+            input_dim = 6+6+7 #6
+            output_dim = 7
+
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7"]
         
@@ -246,10 +252,10 @@ if __name__ == '__main__':
 
     if save_option == "cloud":
         run = wandb.init(
-            project = "iksolver-experiments-2",                
+            project = "ik-0",                
             group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
-            name = "New_Model_"+robot_choice+"_" \
+            name = "Modif_Err_Model_"+robot_choice+"_" \
                     + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
                     +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)  #+'_non_traj_split', '_traj_split'   
             #name = "Model_"+robot_choice+"_" \
@@ -258,10 +264,12 @@ if __name__ == '__main__':
         )
 
 
+ 
 
     ##############################################################################################################
     # Training and Validation
     ############################################################################################################## 
+    scaler = torch.cuda.amp.GradScaler()
     scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=learning_rate, steps_per_epoch=len(train_data_loader), epochs=EPOCHS)  
     #patience = 0.1*EPOCHS
     patience = 100
@@ -275,7 +283,7 @@ if __name__ == '__main__':
 
         
         
-        train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS, scheduler)        
+        train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS, scheduler, scaler)        
         valid_loss = evaluate(model, test_data_loader, criterion, loss_choice, device, epoch, EPOCHS)
     
         train_losses.append(train_loss)
@@ -309,12 +317,14 @@ if __name__ == '__main__':
             
             elif save_option == "cloud":
                 torch.save(model.state_dict(), save_path+'/best_epoch.pth')
+                
                 artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
                                                 +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
                                                 +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
                                             type='model')
                 artifact.add_file(save_path+'/best_epoch.pth')
                 run.log_artifact(artifact)
+                
 
         else:
             counter += 1
@@ -389,7 +399,7 @@ if __name__ == '__main__':
     
     # get the results from training    
     with torch.no_grad():
-        results = inference(model, test_data_loader, criterion, device, robot_choice)
+        results = inference_modified(model, test_data_loader, criterion, device, robot_choice)
     X_errors = results["X_errors"]
     
     # get some inference stats
@@ -404,15 +414,15 @@ if __name__ == '__main__':
 
     X_preds = results["X_preds"]
     X_desireds = results["X_desireds"]
-    X_errors_p = np.abs(X_preds - X_desireds)
-    X_errors_p[:,:3] = X_errors_p[:,:3] * 1000
-    X_errors_p[:,3:] = np.rad2deg(X_errors_p[:,3:]) 
-    X_percentile = stats.percentileofscore(X_errors_p[:,0], [1,5,10,15,20], kind='rank')
-    Y_percentile = stats.percentileofscore(X_errors_p[:,1], [1,5,10,15,20], kind='rank')
-    Z_percentile = stats.percentileofscore(X_errors_p[:,2], [1,5,10,15,20], kind='rank')
-    Ro_percentile = stats.percentileofscore(X_errors_p[:,3], [1,2,3,4,5], kind='rank')
-    Pi_percentile = stats.percentileofscore(X_errors_p[:,4], [1,2,3,4,5], kind='rank')
-    Ya_percentile = stats.percentileofscore(X_errors_p[:,5], [1,2,3,4,5], kind='rank')
+    #X_errors_p = np.abs(X_preds - X_desireds)
+    #X_errors_p[:,:3] = X_errors_p[:,:3] * 1000
+    #X_errors_p[:,3:] = np.rad2deg(X_errors_p[:,3:]) 
+    X_percentile = stats.percentileofscore(X_errors_r[:,0], [1,5,10,15,20], kind='rank')
+    Y_percentile = stats.percentileofscore(X_errors_r[:,1], [1,5,10,15,20], kind='rank')
+    Z_percentile = stats.percentileofscore(X_errors_r[:,2], [1,5,10,15,20], kind='rank')
+    Ro_percentile = stats.percentileofscore(X_errors_r[:,3], [1,2,3,4,5], kind='rank')
+    Pi_percentile = stats.percentileofscore(X_errors_r[:,4], [1,2,3,4,5], kind='rank')
+    Ya_percentile = stats.percentileofscore(X_errors_r[:,5], [1,2,3,4,5], kind='rank')
 
     #print(X_errors_p.shape)
     #print(X_errors_r.shape)

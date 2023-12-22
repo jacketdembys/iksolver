@@ -52,7 +52,7 @@ neurons = args.neurons
 scale = args.scale # 2 - 10
 load_option = args.load
 num_blocks = args.blocks
-robot_choice = '7DoF-7R-Panda'
+robot_choice = '7DoF-7R-Panda'    # '7DoF-7R-Panda', '7DoF-3R'
 
 # read from path script
 #for scale in range(2,12,2):
@@ -66,7 +66,7 @@ config_info = {
         'SEED_NUMBER': 0,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'MLP',      # MLP, ResMLPSum, ResMLPConcat, DenseMLP
+            'NAME': 'DenseMLP',      # MLP, ResMLPSum, ResMLPConcat, DenseMLP
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
@@ -75,7 +75,7 @@ config_info = {
             'DATASET': {
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
-                'TYPE':'1_to_1' # 1_to_1, seq
+                'TYPE':'seq' # 1_to_1, seq
             },
             'CHECKPOINT': {
                 'SAVE_OPTIONS': 'cloud',
@@ -84,7 +84,7 @@ config_info = {
                 'RESUMED_G_MODEL': "",
             },
             'HYPERPARAMETERS': {
-                'EPOCHS': 10000,
+                'EPOCHS': 2,
                 'BATCH_SIZE': 128,
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
