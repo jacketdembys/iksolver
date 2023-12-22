@@ -68,7 +68,7 @@ for scale in range(2,12,2):
             'SEED_NUMBER': 0,
             'DEVICE_ID': int(gpu_id),
             'MODEL': {
-                'NAME': 'MLP', # MLP, ResMLP, ResMLPConcat, DenseMLP
+                'NAME': 'ResMLP', # MLP, ResMLP, ResMLPConcat, DenseMLP
                 'NUM_HIDDEN_LAYERS': layers,          
                 'NUM_HIDDEN_NEURONS': neuron,
                 'NUM_BLOCKS': num_blocks
