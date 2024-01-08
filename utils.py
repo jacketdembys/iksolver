@@ -58,6 +58,23 @@ def get_DH(robot_choice, t):
                            [t[4],    0.384,  -0.0825, -torch.pi/2],
                            [t[5],      0.0,      0.0,  torch.pi/2],
                            [t[6],    0.107,    0.088,  torch.pi/2]])
+    elif robot_choice == "7DoF-GP66":
+        DH = torch.tensor([[t[0],    0.0,      0.0,  torch.pi/2],
+                           [t[1],    0.0,     0.25,  torch.pi/2],
+                           [ 0.0,   t[2],      0.0,         0.0],
+                           [t[3],    0.0,      0.0,  torch.pi/2],
+                           [t[4],   0.14,      0.0,  torch.pi/2],
+                           [t[5],    0.0,      0.0,  torch.pi/2],
+                           [t[6],    0.0,      0.0,  torch.pi/2]])
+    elif robot_choice == "8DoF-P8":
+        DH = torch.tensor([[        0.0,     t[0],      0.0, -torch.pi/2],
+                           [-torch.pi/2,     t[1],      0.0,  torch.pi/2],
+                           [       t[2],   0.6718,      0.0,  torch.pi/2],
+                           [       t[3],      0.0,   0.4318,         0.0],
+                           [       t[4],     0.15,   0.0203, -torch.pi/2],
+                           [       t[5],   0.4318,      0.0,  torch.pi/2],
+                           [       t[6],      0.0,      0.0, -torch.pi/2],
+                           [       t[7],      0.0,      0.0,         0.0]])
     return DH
 
 
@@ -272,8 +289,10 @@ class MLP(nn.Module):
 
         self.name = "MLP [{}, {}, {}]".format(str(input_dim), str(h_sizes).replace("[","").replace("]",""), str(output_dim))
         self.input_dim = input_dim
+        self.in_size = input_dim
         self.h_sizes = h_sizes
         self.output_dim = output_dim
+        self.out_size = output_dim
         
         self.input_fc = nn.Linear(self.input_dim, self.h_sizes[0])
         
@@ -423,7 +442,7 @@ class LoadIKDataset(Dataset):
 
 
 # function to load the dataset
-def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
+def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim):
 
     # file data_4DoF
     #X = data[:,:3]
@@ -433,15 +452,16 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
     if robot_choice == "6DoF-6R-Puma260":
         X = data[:,:6]
         y = data[:,6:]
-    if robot_choice == "7DoF-7R-Panda":
+    if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66" or robot_choice == "8DoF-P8":
         if dataset_type == "seq":
             print("==> Sequence dataset ...")
-            X = data[:,:19]
-            y = data[:,19:]
+            X = data[:,:input_dim]
+            y = data[:,input_dim:]
         elif dataset_type == "1_to_1": 
             print("==> 1 to 1 dataset ...")
-            X = data[:,:6]
-            y = data[:,6:] #13]
+            #X = data[:,:6]
+            X = data[:,:input_dim]
+            y = data[:,input_dim:] #13]
     if robot_choice == "3DoF-3R":
         if dataset_type == "seq":
             print("==> Sequence dataset ...")
@@ -487,7 +507,9 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
     X_train = sc_in.fit_transform(X_train)
     X_validate = sc_in.transform(X_validate) 
     X_test = sc_in.transform(X_test) 
-    
+
+    #print("Here")
+   
 
     """
     min_value = np.min(X_train)
@@ -527,7 +549,7 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
 
     train_data_loader = DataLoader(dataset=train_data,
                                    batch_size=batch_size,
-                                   shuffle=False,
+                                   shuffle=True,
                                    drop_last=True,
                                    pin_memory=False,
                                    num_workers=8,
@@ -544,6 +566,62 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device):
     return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test
 
 
+
+
+# function to load the dataset
+def load_dataset_sobolev(data, n_DoF, batch_size, robot_choice, dataset_type, device):
+
+    if robot_choice == "7DoF-7R-Panda":
+        X = data[:,:6]
+        y = data[:,6:]
+
+    #print(X.shape)
+    #print(y.shape)
+
+          
+    X_train, X_validate, y_train, y_validate = train_test_split(X, 
+                                                                y, 
+                                                                test_size = 0.1,
+                                                                random_state = 1)
+
+    X_train, X_test, y_train, y_test = train_test_split(X_train, 
+                                                        y_train, 
+                                                        test_size = 0.1,
+                                                        random_state = 1)    
+    
+    
+    sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
+    sc_out = MinMaxScaler(copy=True, feature_range=(0, 1))
+    
+    X_train = sc_in.fit_transform(X_train)
+    X_validate = sc_in.transform(X_validate) 
+    X_test = sc_in.transform(X_test) 
+       
+    print("==> Shape X_train: ", X_train.shape)
+    print("==> Shape y_train: ", y_train.shape)
+    batch_size = 10
+
+    train_data = LoadIKDataset(X_train, y_train, device)
+    test_data = LoadIKDataset(X_validate, y_validate, device)
+
+    train_data_loader = DataLoader(dataset=train_data,
+                                   batch_size=batch_size,
+                                   shuffle=True,
+                                   drop_last=True,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    test_data_loader = DataLoader(dataset=test_data,
+                                   batch_size=batch_size,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+    
+
+    return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test
 
 
 # function to load the dataset
@@ -684,11 +762,63 @@ def load_test_dataset(X_test, y_test, device):
 
     return test_data_loader
 
+# function to load the dataset
+def load_test_dataset_2(X_test, y_test, device, sc_in):
+
+    print("==> Shape X_test: ", X_test.shape)
+    print("==> Shape y_test: ", y_test.shape)
+
+    X_test = sc_in.transform(X_test) 
+
+    test_data = LoadIKDataset(X_test, y_test, device)
+
+    test_data_loader = DataLoader(dataset=test_data,
+                                   batch_size=1,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    return test_data_loader
+
+
 
 
 
 # train function
 def train(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
+    epoch_loss = 0
+    model.train()    
+   
+    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+        for data in iterator:
+            optimizer.zero_grad()
+            x, y = data['input'], data['output']
+            x.requires_grad = True
+
+            x = x.to(device)
+            y = y.to(device)           
+ 
+            
+            y_pred, _ = model(x)
+            loss = criterion(y_pred, y)
+
+            loss.backward()
+            #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
+            optimizer.step()
+            #scheduler.step()           
+           
+            epoch_loss += loss.item()
+            t.set_postfix_str('Train loss: {:.6f}'.format(epoch_loss/len(iterator)))
+            t.update()        
+
+    return epoch_loss/len(iterator)
+
+
+
+
+def train_keep(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
     epoch_loss = 0
     epoch_loss_2 = 0
     model.train()
@@ -715,17 +845,35 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             y = y.to(device)
             
             #x = input_mapping(x,B)
+
+            """
+            y_pred, _ = model(x)
+            loss = criterion(y_pred, y)
+            
+            loss.backward()
+            #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
+            optimizer.step()
+            #scheduler.step()
+            """
+            
             
             with torch.autocast(device_type='cuda', dtype=torch.float16):
                 y_pred, _ = model(x)
 
-                if criterion_type == "ld":
-                    #loss = criterion(y_pred, x)
-                    wp = 1
-                    wq = 0
-                    loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
-                else:
-                    loss = criterion(y_pred, y)
+                loss = criterion(y_pred, y)
+
+                #loss = criterion(torch.sin(y_pred), torch.sin(y)) + criterion(torch.cos(y_pred), torch.cos(y))
+
+                
+                #if criterion_type == "ld":
+                #    #loss = criterion(y_pred, x)
+                #    wp = 1
+                #    wq = 0
+                #    loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
+                #else:
+                #    loss = criterion(y_pred, y)
+                
+                
 
             #print("y_pred\n:", y_pred)
 
@@ -735,13 +883,13 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             #sys.exit()
 
             #print("\nTrain Epoch {} at batch {}".format(epoch, i))
-            """
-            if i == 1:
-                print("\nTrain Epoch {} at batch {}".format(epoch, i))
-                print(y_pred[:5,:])
-                print(y[:5,:])
-                #sys.exit()
-            """
+            
+            #if i == 1:
+            #    print("\nTrain Epoch {} at batch {}".format(epoch, i))
+            #    print(y_pred[:5,:])
+            #    print(y[:5,:])
+            #    #sys.exit()
+            
             
             # optimizer.zero_grad()
             #loss = criterion(y_pred, y)
@@ -757,11 +905,13 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             #optimizer.step()
             #scheduler.step()
 
-
+            
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             #scheduler.step()
             scaler.update()
+            
+            
 
             epoch_loss += loss.item()
             #if criterion_type == "ld":
@@ -782,6 +932,161 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
     return epoch_loss/len(iterator)
 
 
+
+def train_sobolev(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
+    epoch_loss_q = 0
+    epoch_loss_J = 0
+    epoch_loss = 0
+    model.train()
+    i = 0
+    
+    
+    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+        for data in iterator:
+            optimizer.zero_grad()
+            x, y = data['input'], data['output']
+            x.requires_grad = True
+
+            x = x.to(device)
+            y = y.to(device)
+            
+            #x = input_mapping(x,B)
+            
+            with torch.autocast(device_type='cuda', dtype=torch.float16):
+                y_pred = model(x)
+
+                # compute the Network jacobian
+                """
+                #y_pred_J = get_network_jacobian(x, y_pred, device)
+                #y_pred_J = torch.flatten(y_pred_J, start_dim = 1).to(device)
+
+                #y_pred_J = torch.autograd.functional.jacobian(model, x[0,:])
+                #y_pred_J = y_pred_J.permute(1, 0)
+                #print(y_pred_J)
+                #print(y_pred_J.shape)
+                """
+                reshape_size = x.shape[0]
+
+                """
+                # Method 2 to compute the Jacobian
+                y_pred_J = torch.autograd.functional.jacobian(model, x)                
+                y_pred_J = y_pred_J[y_pred_J.sum(dim=3) != 0]                
+                y_pred_J = torch.reshape(y_pred_J, (reshape_size, 7, 6))
+                y_pred_J = y_pred_J.permute(0,2,1)             
+                print(y_pred_J[0])
+                print(y_pred_J.shape)
+                y_pred_J = torch.flatten(y_pred_J, start_dim = 1).to(device)
+                """
+                
+                
+                
+                # Method 3 to compute the Jacobian
+                y_pred_J = torch.autograd.functional.jacobian(model, x)
+                y_pred_J_True = torch.zeros(reshape_size, 6, 7)
+                for i in range(reshape_size):
+                    y_pred_J_True[i,:,:] = y_pred_J[i,:,i,:].permute(1,0)
+
+                #print(y_pred_J_True[0])
+                #print(y_pred_J_True.shape)
+
+                y_pred_J = torch.flatten(y_pred_J_True, start_dim = 1).to(device)
+                
+
+             
+                
+               
+                # compare the joints    
+                loss_q = criterion(y_pred, y[:,:7])
+
+                # compare the jacobians
+                loss_J = criterion(y_pred_J, y[:,7:])
+
+                # total loss
+                loss = loss_q + loss_J
+
+                
+           
+            #make_dot(loss, params=dict(list(model.named_parameters()))).render("loss", format="png")
+            
+            #loss.backward()
+            #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
+            #optimizer.step()
+            #scheduler.step()
+
+
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            #scheduler.step()
+            scaler.update()
+
+            epoch_loss += loss.item()
+            epoch_loss_q += loss_q.item()
+            epoch_loss_J += loss_J.item()
+            #if criterion_type == "ld":
+                #epoch_loss_2 += loss2.item()
+            t.set_postfix_str('Train loss: {:.6f} - Train loss q: {:.6f} - Train loss J: {:.6f}'.format(epoch_loss/len(iterator), 
+                                                                                                        epoch_loss_q/len(iterator),
+                                                                                                        epoch_loss_J/len(iterator)))
+            t.update()
+
+            i += 1
+
+            #sys.exit()
+    
+    
+    
+    #print("Total batches {}".format(i))
+        #if criterion_type == "ld":
+            #print('\n\tTrain FK Loss: {}'.format(epoch_loss/len(iterator)))
+            #print('\tTrain L2 Loss: {}'.format(epoch_loss_2/len(iterator)))
+    return epoch_loss/len(iterator), epoch_loss_q/len(iterator), epoch_loss_J/len(iterator)
+
+
+
+
+
+
+def get_network_jacobian(inputs, output_poses, device):
+
+            # compute the Jacobian
+            batch = inputs.shape[0]
+            input_size = inputs.shape[1]
+            output_size = output_poses.shape[1] #* self.dim_position
+            
+
+            # initialize a tensor to hold the Jacobian
+            J = torch.zeros(batch, 1 , input_size, output_size)
+            #print('J: ', J.shape)
+            #print('output_size: ', output_size)
+            #print('output_poses: ', output_poses.shape)
+            #print('inputs: ', inputs.shape)
+
+            t = time.time()
+            for j in range(output_size):
+                g = torch.autograd.grad(output_poses[:,j], 
+                                        inputs, 
+                                        grad_outputs=torch.ones_like(output_poses[:,j]).to(device),
+                                        retain_graph=True)
+                g = g[0].permute(1,0)
+                g = torch.reshape(g, (batch, 1, input_size))
+                J[:,:,:,j] = g
+                #print('g{}: {}'.format(j, g))
+
+
+            #print('g: ', g.shape)
+            #print('J: ', J.shape)
+
+            J_reshape = torch.reshape(J, (batch, -1, input_size))
+            #print(J[0,:,:,0])
+            #print(J[0,:,:,1])
+            #print(J_reshape[0,:,:])
+            #print('J_reshape: ', J_reshape.shape)
+
+            J_reshape = J_reshape.permute(0, 2, 1) 
+            #print('J_reshape: ', J_reshape.shape)
+            #print(J_reshape[0,:,:])
+            
+            return J_reshape
 
 
 def train_back(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
@@ -983,9 +1288,12 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
                 #x = input_mapping(x,B)
                 
                 y_pred, _ = model(x)
-                #loss = criterion(y_pred, y)
+                loss = criterion(y_pred, y)
                 #loss = criterion(y_pred, x)  
                 
+                #loss = criterion(torch.sin(y_pred), torch.sin(y)) + criterion(torch.cos(y_pred), torch.cos(y))
+
+                """
                 if criterion_type == "ld":
                     #loss = criterion(y_pred, x)
                     wp = 1
@@ -993,10 +1301,40 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
                     loss = wp*criterion(y_pred, y)+wq*criterion_2(y_pred, y)
                 else:
                     loss = criterion(y_pred, y)
+                """
+                
                 
                 epoch_loss += loss.item()
     
                 t.set_postfix_str('Valid loss: {:.6f}'.format(epoch_loss/len(iterator)))
+                t.update()
+
+    return epoch_loss/len(iterator)
+
+
+
+def evaluate_sobolev(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
+    epoch_loss = 0
+    epoch_loss_q = 0
+    epoch_loss_J = 0
+    model.eval()
+    
+    with torch.no_grad():
+        #for data in tqdm(iterator, desc="Evaluating", leave=False):        
+        with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+            for data in iterator:
+                x = data['input'].to(device)
+                y = data['output'].to(device)
+                
+                y_pred = model(x)   
+                
+                loss = criterion(y_pred, y[:,:7])
+                
+                epoch_loss += loss.item()
+                #if criterion_type == "ld":
+                    #epoch_loss_2 += loss2.item()
+                t.set_postfix_str('Valid loss: {:.6f}'.format(epoch_loss/len(iterator)))
+                t.update()
                 t.update()
 
     return epoch_loss/len(iterator)
@@ -1087,6 +1425,47 @@ def inference_modified(model, iterator, criterion, device, robot_choice):
     }
     return results
 
+
+def inference_sobolev(model, iterator, criterion, device, robot_choice):
+    model.eval()
+    y_preds = []
+    y_desireds = []
+    X_desireds = []
+    
+    for data in iterator:
+        x = data['input'].to(device)
+        yt = data['output'].to(device)
+        y = yt[:,:7]
+
+        #x = input_mapping(x,B)
+        
+        y_pred = model(x)
+        y_preds.append(y_pred.detach().cpu().numpy().squeeze())
+        y_desireds.append(y.detach().cpu().numpy().squeeze())
+        #X_desireds.append(x.detach().cpu().numpy().squeeze())
+
+
+    y_desireds = np.array(y_desireds)
+    y_preds = np.array(y_preds)
+    #X_desireds = np.array(X_desireds)
+    X_desireds, X_preds, X_errors = reconstruct_pose_modified(y_desireds, y_preds, robot_choice)
+    
+    X_errors_report = np.array([[X_errors.min(axis=0)],
+                                [X_errors.mean(axis=0)],
+                                [X_errors.max(axis=0)],
+                                [X_errors.std(axis=0)]]).squeeze()
+    
+    results = {
+        "y_preds": y_preds,
+        "X_preds": X_preds,
+        "y_desireds": y_desireds,
+        "X_desireds": X_desireds,
+        "X_errors": X_errors,
+        "X_errors_report": X_errors_report
+    }
+    return results
+
+
 def inference_FK(model, iterator, criterion, device):
     model.eval()
     y_preds = []
@@ -1143,7 +1522,7 @@ def reconstruct_pose(y_preds, robot_choice):
             #print(rpy)
             pose.append(torch.cat([T[:3,-1], rpy, t]).numpy())
         
-        elif robot_choice == "7DoF-7R-Panda":
+        elif robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66":
             R = T[:3,:3] 
             rpy = matrix_to_euler_angles(R, "XYZ")
             # x,y,z,R,P,Y,t1,t2,t3,t4,t5,t6,t7 where x,y,z (m) and t (rad)
@@ -1177,7 +1556,7 @@ def reconstruct_pose_modified(y_desireds, y_preds, robot_choice):
         DH_preds = get_DH(robot_choice, t_preds)
         T_preds = forward_kinematics(DH_preds)       
         
-        if robot_choice == "7DoF-7R-Panda":
+        if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66":
             R_desireds = T_desireds[:3,:3]
             R_preds = T_preds[:3,:3] 
 

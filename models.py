@@ -36,9 +36,8 @@ class ResidualBlockSum(nn.Module):
         out = self.fc1(x)
         #out = self.bn1(out)
         out = self.relu(out)
-
-        out = self.fc2(out)
         #out = self.bn2(out)
+        out = self.fc2(out)
 
         out += residual
         out = self.relu(out)
@@ -47,6 +46,44 @@ class ResidualBlockSum(nn.Module):
 
         return out
     
+
+"""
+out = self.fc1(x)
+out = torch.cat([out,residual],1)
+out = self.relu(out)
+"""
+
+"""
+out = self.fc1(x)
+out = self.relu(out)
+out = self.fc2(out)
+"""
+
+"""
+out = self.fc1(x)
+out = self.relu(out)
+out = self.fc2(out)
+out = self.relu(out)
+out = self.fc2(out)
+"""
+
+
+"""
+out = self.fc1(x)
+#out = self.bn1(out)
+out = self.relu(out)
+
+out = self.fc2(out)
+#out = self.bn1(out)
+out = self.relu(out)
+
+out = self.fc2(out)
+#out = self.bn2(out)
+"""
+
+
+
+
 
 class ResMLPSum(nn.Module):
     def __init__(self, input_dim, hidden_size, output_dim, num_blocks):
@@ -123,6 +160,8 @@ class ResidualBlockConcat(nn.Module):
         #print("DEBUG: block output shape = {}\n".format(out.shape))
 
         return out
+
+
 
 
 
@@ -399,6 +438,78 @@ class DenseMLP(nn.Module):
         x_temp = out
 
         return out, x_temp
+    
+
+class DenseMLP2(nn.Module):
+    def __init__(self, input_dim, hidden_size, output_dim, num_blocks):
+        super(DenseMLP2, self).__init__()
+
+        self.name = "DenseMLP2 [{}, {}, {}, {}]".format(str(input_dim), str(hidden_size).replace("[","").replace("]",""), str(num_blocks), str(output_dim))
+        self.input = nn.Linear(input_dim, hidden_size)
+        self.fc1 = nn.Linear(hidden_size, hidden_size)
+        self.fc2 = nn.Linear(2*hidden_size, hidden_size)
+        self.fc3 = nn.Linear(3*hidden_size, hidden_size)
+        self.fc4 = nn.Linear(4*hidden_size, hidden_size)
+        self.transition = nn.Linear(5*hidden_size, hidden_size)
+        #self.transition12 = nn.Linear(2*hidden_size, hidden_size)
+        #self.transition23 = nn.Linear(3*hidden_size, hidden_size)
+        #self.transition34 = nn.Linear(4*hidden_size, hidden_size)
+        #self.transition45 = nn.Linear(5*hidden_size, hidden_size)
+        #self.transition5out = nn.Linear(6*hidden_size, hidden_size)
+        self.out = nn.Linear(hidden_size, output_dim)
+        self.relu = nn.ReLU(inplace=True)
+
+    def forward(self, x):
+        
+        # input layer
+        out0 = self.input(x)
+        out0 = self.relu(out0)
+
+        # layer block 1
+        out10 = self.fc1(out0)  
+        out10p = self.relu(out10)
+        out10 = torch.cat([out0,out10p],1) 
+        out11 = self.fc2(out10) 
+        out11p = self.relu(out11)
+        out11 = torch.cat([out0,out10p,out11p],1) 
+        out12 = self.fc3(out11)
+        out12p = self.relu(out12)
+        out12 = torch.cat([out0,out10p,out11p,out12p],1)
+        out13 = self.fc4(out12)
+        out13p = self.relu(out13)
+        out1 = torch.cat([out0,out10p,out11p,out12p,out13p],1)
+        
+        # transition layer
+        out1 = self.transition(out1)
+        out1 = self.relu(out1)
+
+        # layer block 2
+        out20 = self.fc1(out1)
+        out20p = self.relu(out20)
+        out20 = torch.cat([out1,out20p],1)
+        out21 = self.fc2(out20)
+        out21p = self.relu(out21)
+        out21 = torch.cat([out1,out20p,out21p],1)
+        out22 = self.fc3(out21)
+        out22p = self.relu(out22)
+        out22 = torch.cat([out1,out20p,out21p,out22p],1)
+        out23 = self.fc4(out22)
+        out23p = self.relu(out23)
+        out2 = torch.cat([out1,out20p,out21p,out22p,out23p],1)
+       
+        # transition layer
+        out2 = self.transition(out2)
+        out2 = self.relu(out2)
+
+        # output layer
+        out = self.out(out2)
+
+        #print(x.shape)
+
+        x_temp = out
+
+        return out, x_temp
+
 
 
 
@@ -443,7 +554,7 @@ if __name__ == '__main__':
     hidden_size = 128
     output_dim = 7
     num_blocks = 5
-    model = DenseMLP(input_dim, hidden_size, output_dim, num_blocks)
+    model = DenseMLP2(input_dim, hidden_size, output_dim, num_blocks)
     print(model.name)
     print(model)
 

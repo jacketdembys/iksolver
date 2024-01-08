@@ -1,3 +1,5 @@
 results/
 wandb/
 __pycache__/
+data*
+percentage*

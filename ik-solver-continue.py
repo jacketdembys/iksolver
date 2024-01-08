@@ -68,7 +68,6 @@ if __name__ == '__main__':
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
     load_option = config["TRAIN"]["CHECKPOINT"]["LOAD_OPTIONS"]  
     dataset_type = config["TRAIN"]["DATASET"]["TYPE"]
-    orientation_type = config["TRAIN"]["DATASET"]["ORIENTATION"]
 
     scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
     EPOCHS = config["TRAIN"]["HYPERPARAMETERS"]["EPOCHS"]                         # total training epochs   
@@ -96,22 +95,12 @@ if __name__ == '__main__':
         
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6"]
-    if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66":
+
+    if robot_choice == "7DoF-7R-Panda":
         if dataset_type == "1_to_1":
             n_DoF = 7
-            #input_dim = 6 #+6+7 #6
-            #input_dim = 6 #+6+7 #6
+            input_dim = 6 #+6+7 #6
             output_dim = 7
-            if orientation_type == "RPY":  
-                input_dim = 6 
-            elif orientation_type == "Quaternion": 
-                input_dim = 7 
-            elif orientation_type == "DualQuaternion": 
-                input_dim = 8 
-            elif orientation_type == "Rotation": 
-                input_dim = 12 
-            elif orientation_type == "Rotation6d": 
-                input_dim = 9 
         elif dataset_type == "seq":
             n_DoF = 7
             input_dim = 6+6+7 #6
@@ -119,28 +108,6 @@ if __name__ == '__main__':
 
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7"]
-    
-    if robot_choice == "8DoF-P8":
-        if dataset_type == "1_to_1":
-            n_DoF = 8
-            output_dim = 8
-            if orientation_type == "RPY":  
-                input_dim = 6 
-            elif orientation_type == "Quaternion": 
-                input_dim = 7 
-            elif orientation_type == "DualQuaternion": 
-                input_dim = 8 
-            elif orientation_type == "Rotation": 
-                input_dim = 12 
-            elif orientation_type == "Rotation6d": 
-                input_dim = 9 
-        elif dataset_type == "seq":
-            n_DoF = 8
-            input_dim = 6+6+8 #6
-            output_dim = 8
-
-        pose_header = ["x", "y", "z","R","P","Y"]
-        joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"]
         
     # load dataset from file
     if load_option == "cloud":
@@ -151,7 +118,7 @@ if __name__ == '__main__':
     elif load_option == "local":
         if dataset_type == "1_to_1":
             #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_const.csv')
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv') #+'_'+orientation_type+'.csv')
+            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
         elif dataset_type == "seq":
             data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
     data_a = np.array(data) 
@@ -191,7 +158,7 @@ if __name__ == '__main__':
         torch.backends.cudnn.deterministic = True
     ## train and validate
     # load the dataset
-    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset(data_a, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim)
+    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset(data_a, n_DoF, batch_size, robot_choice, dataset_type, device)
 
     #print(input_dim)
     #print(hidden_layer_sizes)
@@ -218,18 +185,14 @@ if __name__ == '__main__':
         model = FourierMLP(input_dim, fourier_dim, hidden_layer_sizes, output_dim, scale)
         
     
-    if init_type == "uniform":
-        model.apply(weights_init_uniform_rule)
-    elif init_type == "normal":
-        model.apply(weights_init_normal_rule)
-    elif init_type == "xavier_uniform":
-        model.apply(weights_init_xavier_uniform_rule)
-    elif init_type == "xavier_normal":
-        model.apply(weights_init_xavier_normal_rule)
-    elif init_type == "kaiming_uniform":
-        model.apply(weights_init_kaiming_uniform_rule)
-    elif init_type == "kaiming_normal":
-        model.apply(weights_init_kaiming_normal_rule)
+    weights_file = load_path+"/best_epoch.pth"
+    state_dict = model.state_dict()
+    for n, p in torch.load(weights_file, map_location=lambda storage, loc: storage).items():
+        if n in state_dict.keys():
+            state_dict[n].copy_(p)
+        else:
+            raise KeyError(n)
+
         
     model = model.to(device)
     print("==> Architecture: {}\n{}".format(model.name, model))
@@ -239,7 +202,7 @@ if __name__ == '__main__':
     if optimizer_choice == "SGD":
         optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True)
     elif optimizer_choice == "Adam":
-        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+        optimizer = optim.Adam(model.parameters())
     elif optimizer_choice == "Adadelta":
         optimizer = optim.Adadelta(model.parameters())
     elif optimizer_choice == "RMSprop":
@@ -268,7 +231,7 @@ if __name__ == '__main__':
     
     save_path = "results/"+robot_choice+"/"+network_type+"_"+robot_choice+"_" \
                 + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
-                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+dataset_type+"_"+orientation_type
+                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+dataset_type+"_continued_training"
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -295,11 +258,11 @@ if __name__ == '__main__':
         run = wandb.init(
             entity="jacketdembys",
             project = "ik-1",                
-            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
+            group = network_type+"_"+"Architecture_Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
                     + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
-                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+orientation_type  #+'_non_traj_split', '_traj_split'   
+                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+'_continued_training' #, '_traj_split'   
             #name = "Model_"+robot_choice+"_" \
             #        +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
             #        +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -312,8 +275,7 @@ if __name__ == '__main__':
     # Training and Validation
     ############################################################################################################## 
     scaler = torch.cuda.amp.GradScaler()
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=10, threshold=0.0001, threshold_mode='rel', cooldown=0, min_lr=0, eps=1e-08, verbose=True)
-    #scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=learning_rate, steps_per_epoch=len(train_data_loader), epochs=EPOCHS)  
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=learning_rate, steps_per_epoch=len(train_data_loader), epochs=EPOCHS)  
     #patience = 0.1*EPOCHS
     patience = 100
     train_losses = []
@@ -322,15 +284,13 @@ if __name__ == '__main__':
     best_valid_loss = float('inf')
     start_time_train = time.monotonic()
     start_time = time.monotonic()
-    for epoch in range(EPOCHS):
+    for epoch in range(1000, EPOCHS):
 
         
         
         train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS, scheduler, scaler)        
         valid_loss = evaluate(model, test_data_loader, criterion, loss_choice, device, epoch, EPOCHS)
     
-        #scheduler.step(valid_loss)
-
         train_losses.append(train_loss)
         valid_losses.append(valid_loss)
         all_losses.append([train_loss, valid_loss])
@@ -359,21 +319,9 @@ if __name__ == '__main__':
             #torch.save(model.state_dict(), save_path+'/best_epoch.pth')
             if save_option == "local":
                 torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-                torch.save({
-                    'epoch': epoch,
-                    'model_state_dict': model.state_dict(),
-                    'optimizer_state_dict': optimizer.state_dict(),
-                    'loss': train_loss,
-                    }, save_path+'/best_epoch.pt')
-                    
+            
             elif save_option == "cloud":
                 torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-                torch.save({
-                    'epoch': epoch,
-                    'model_state_dict': model.state_dict(),
-                    'optimizer_state_dict': optimizer.state_dict(),
-                    'loss': train_loss,
-                    }, save_path+'/best_epoch.pt')
                 """
                 artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
                                                 +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
@@ -405,20 +353,8 @@ if __name__ == '__main__':
             
             if save_option == "local":   
                 torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
-                torch.save({
-                    'epoch': epoch,
-                    'model_state_dict': model.state_dict(),
-                    'optimizer_state_dict': optimizer.state_dict(),
-                    'loss': train_loss,
-                    }, save_path+'/currebt_epoch_model.pt')
             elif save_option == "cloud":
                 torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
-                torch.save({
-                    'epoch': epoch,
-                    'model_state_dict': model.state_dict(),
-                    'optimizer_state_dict': optimizer.state_dict(),
-                    'loss': train_loss,
-                    }, save_path+'/current_epoch_model.pt')
                 #artifact2 = wandb.Artifact(name="Model_"+robot_choice+"_" \
                 #                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
                 #                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
