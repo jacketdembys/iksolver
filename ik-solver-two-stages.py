@@ -30,6 +30,7 @@ from scipy import stats
 #from torchviz import make_dot
 from utils import *
 from models import *
+from models_2 import DenseNet
 
 
 if __name__ == '__main__':
@@ -68,6 +69,7 @@ if __name__ == '__main__':
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
     load_option = config["TRAIN"]["CHECKPOINT"]["LOAD_OPTIONS"]  
     dataset_type = config["TRAIN"]["DATASET"]["TYPE"]
+    orientation_type = config["TRAIN"]["DATASET"]["ORIENTATION"]
 
     scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
     EPOCHS = config["TRAIN"]["HYPERPARAMETERS"]["EPOCHS"]                         # total training epochs   
@@ -92,13 +94,25 @@ if __name__ == '__main__':
         n_DoF = 6
         input_dim = 6
         output_dim = 6
+        
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6"]
-    if robot_choice == "7DoF-7R-Panda":
+    if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66":
         if dataset_type == "1_to_1":
             n_DoF = 7
-            input_dim = 7 #+6+7 #6
-            output_dim = 6
+            #input_dim = 6 #+6+7 #6
+            #input_dim = 6 #+6+7 #6
+            output_dim = 7
+            if orientation_type == "RPY":  
+                input_dim = 6 #6 
+            elif orientation_type == "Quaternion": 
+                input_dim = 7 
+            elif orientation_type == "DualQuaternion": 
+                input_dim = 8 
+            elif orientation_type == "Rotation": 
+                input_dim = 12 
+            elif orientation_type == "Rotation6d": 
+                input_dim = 9 
         elif dataset_type == "seq":
             n_DoF = 7
             input_dim = 6+6+7 #6
@@ -106,21 +120,41 @@ if __name__ == '__main__':
 
         pose_header = ["x", "y", "z","R","P","Y"]
         joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7"]
+    
+    if robot_choice == "8DoF-P8":
+        if dataset_type == "1_to_1":
+            n_DoF = 8
+            output_dim = 8
+            if orientation_type == "RPY":  
+                input_dim = 6 
+            elif orientation_type == "Quaternion": 
+                input_dim = 7 
+            elif orientation_type == "DualQuaternion": 
+                input_dim = 8 
+            elif orientation_type == "Rotation": 
+                input_dim = 12 
+            elif orientation_type == "Rotation6d": 
+                input_dim = 9 
+        elif dataset_type == "seq":
+            n_DoF = 8
+            input_dim = 6+6+8 #6
+            output_dim = 8
+
+        pose_header = ["x", "y", "z","R","P","Y"]
+        joint_header = ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"]
         
     # load dataset from file
-    """
     if load_option == "cloud":
         if dataset_type == "1_to_1":
-            data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+            data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
         elif dataset_type == "seq":
             data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
     elif load_option == "local":
         if dataset_type == "1_to_1":
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_const.csv')
+            #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_const.csv')
+            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv') #+'_'+orientation_type+'.csv')
         elif dataset_type == "seq":
             data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
-    """
-    data = pd.read_csv("data_Panda_100000.csv", header=None)
     data_a = np.array(data) 
 
 
@@ -158,28 +192,45 @@ if __name__ == '__main__':
         torch.backends.cudnn.deterministic = True
     ## train and validate
     # load the dataset
-    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset_sobolev(data_a, n_DoF, batch_size, robot_choice, dataset_type, device)
-
-   
+    train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test = load_dataset(data_a, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim)
 
     #print(input_dim)
     #print(hidden_layer_sizes)
     #print(output_dim)
-    #print(len(train_data_loader))
-    
 
     
     # get network architecture
     if network_type == "MLP":
-        model = MLP(input_dim, hidden_layer_sizes, output_dim)
-        save_layers_str = "layers_"+ str(layers)
+
+        ik_model = MLP(input_dim, hidden_layer_sizes, output_dim)
+        fk_model = MLP(output_dim, hidden_layer_sizes, input_dim)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
         #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim)
+
     elif network_type == "ResMLP":
+
         model = ResMLPSum(input_dim, neurons, output_dim, num_blocks)
-        save_layers_str = "blocks_"+ str(num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
+    elif network_type == "DenseMLP":
+
+        model = DenseMLP(input_dim, neurons, output_dim, num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
     elif network_type == "DenseMLP2":
+
         model = DenseMLP2(input_dim, neurons, output_dim, num_blocks)
-        save_layers_str = "blocks_"+ str(num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
+    elif network_type == "DenseMLP3":
+
+        block_config = np.zeros((1,num_blocks))   
+        block_config[:,:] = layers
+        block_config = block_config.squeeze(0).astype(int).tolist()
+        model = DenseNet(input_dim, neurons, block_config, output_dim)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
+
     elif network_type == "FourierMLP":
         fourier_dim = 16
         scale = 10
@@ -199,17 +250,24 @@ if __name__ == '__main__':
     elif init_type == "kaiming_normal":
         model.apply(weights_init_kaiming_normal_rule)
         
-    model = model.to(device)
-    print("==> Architecture: {}\n{}".format(model.name, model))
-    print("==> Trainable parameters: {}".format(count_parameters(model)))
+    ik_model = ik_model.to(device)
+    fk_model = fk_model.to(device)
+    print("==> Architecture: {}\n{}".format(ik_model.name, ik_model))
+    print("==> Trainable parameters: {}".format(count_parameters(ik_model)))
     
     # set optimizer
     if optimizer_choice == "SGD":
-        optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True)
+        ik_optimizer = optim.SGD(ik_model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True)
+        #fk_optimizer = optim.SGD(fk_model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True)
+
     elif optimizer_choice == "Adam":
-        optimizer = optim.Adam(model.parameters())
+        ik_optimizer = optim.Adam(list(ik_model.parameters())+list(fk_model.parameters()), lr=learning_rate)
+        #ik_optimizer = optim.Adam(ik_model.parameters(), lr=learning_rate)
+        #fk_optimizer = optim.Adam(fk_model.parameters(), lr=learning_rate)
+
     elif optimizer_choice == "Adadelta":
         optimizer = optim.Adadelta(model.parameters())
+
     elif optimizer_choice == "RMSprop":
         optimizer = optim.RMSprop(model.parameters())
     
@@ -219,12 +277,13 @@ if __name__ == '__main__':
     elif loss_choice == "l1":
         criterion = nn.L1Loss(reduction="mean")
     elif loss_choice == "ld":
-        criterion = FKLoss(robot_choice=robot_choice, device=device)
+        fk_criterion = FKLoss(robot_choice=robot_choice, device=device)
+        ik_criterion = IKLoss(robot_choice=robot_choice, device=device)
     
     
 
 
-    print("\n==> Experiment {} Training network: {}".format(experiment_number, model.name))
+    print("\n==> Experiment {} Training network: {}".format(experiment_number, ik_model.name))
     print("==> Training device: {}".format(device))
     
 
@@ -233,10 +292,10 @@ if __name__ == '__main__':
     #            +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
     #            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
     
-    
-    save_path = "results/"+robot_choice+"/"+network_type+"_sobolev2_"+robot_choice+"_" \
+    # results_fkloss
+    save_path = "results_two_stages/"+robot_choice+"/"+network_type+"_2_stages_"+robot_choice+"_" \
                 + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
-                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
+                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+dataset_type+"_"+orientation_type+"_"+str(learning_rate)
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -256,18 +315,18 @@ if __name__ == '__main__':
         header=joint_header)
     """
 
-    # Modif_Err   Biternion    Modif_Err_2_
+    # Modif_Err   Biternion    Modif_Err_2_  fkloss_Dataset_
 
 
     if save_option == "cloud":
         run = wandb.init(
             entity="jacketdembys",
-            project = "ik-1",                
-            group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
+            project = "ik-two-stages",                
+            group = network_type+"_"+"Two_Stages_Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
-            name = "Sobolev2_Model_"+robot_choice+"_" \
+            name = "Two_Stages_Model_"+robot_choice+"_" \
                     + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
-                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)  #+'_non_traj_split', '_traj_split'   
+                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+orientation_type+"_"+str(learning_rate)   #+'_non_traj_split', '_traj_split'   
             #name = "Model_"+robot_choice+"_" \
             #        +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
             #        +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -280,60 +339,135 @@ if __name__ == '__main__':
     # Training and Validation
     ############################################################################################################## 
     scaler = torch.cuda.amp.GradScaler()
-    scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=learning_rate, steps_per_epoch=len(train_data_loader), epochs=EPOCHS)  
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(ik_optimizer, mode='min', factor=0.1, patience=10, threshold=0.0001, threshold_mode='rel', cooldown=0, min_lr=0, eps=1e-08, verbose=True)
+    #scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=learning_rate, steps_per_epoch=len(train_data_loader), epochs=EPOCHS)  
     #patience = 0.1*EPOCHS
     patience = 100
-    train_losses = []
-    valid_losses = []
+    train_losses_fk = []
+    valid_losses_fk = []
+    train_losses_ik = []
+    valid_losses_ik = []
     all_losses = []
     best_valid_loss = float('inf')
+    best_valid_loss_fk = float('inf')
+    best_valid_loss_ik = float('inf')
     start_time_train = time.monotonic()
     start_time = time.monotonic()
-    for epoch in range(EPOCHS):
 
+    for epoch in range(EPOCHS):        
         
-        
-        train_loss, train_loss_q, train_loss_J = train_sobolev(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS, scheduler, scaler)        
-        valid_loss = evaluate_sobolev(model, test_data_loader, criterion, loss_choice, device, epoch, EPOCHS)
+        combined_train_loss, train_loss_fk, train_loss_ik = train_two_stages(fk_model, 
+                                                                            ik_model, 
+                                                                            train_data_loader, 
+                                                                            #fk_optimizer,  
+                                                                            ik_optimizer, 
+                                                                            fk_criterion, 
+                                                                            ik_criterion, 
+                                                                            batch_size, 
+                                                                            device, 
+                                                                            epoch, 
+                                                                            EPOCHS, 
+                                                                            scheduler, 
+                                                                            scaler,
+                                                                            robot_choice)
+
+        combined_valid_loss, valid_loss_fk, valid_loss_ik = evaluate_two_stages(fk_model, 
+                                                                                ik_model,  
+                                                                                test_data_loader, 
+                                                                                fk_criterion, 
+                                                                                ik_criterion, 
+                                                                                device, 
+                                                                                epoch, 
+                                                                                EPOCHS, 
+                                                                                robot_choice)
     
-        train_losses.append(train_loss)
-        valid_losses.append(valid_loss)
-        all_losses.append([train_loss, valid_loss])
+        #print(train_loss)
+        #print(valid_loss)
+        #sys.exit()
+
+        #scheduler.step(valid_loss)
+
+        train_losses_fk.append(train_loss_fk)
+        valid_losses_fk.append(valid_loss_fk)
+        train_losses_ik.append(train_loss_ik)
+        valid_losses_ik.append(valid_loss_ik)
+        all_losses.append([train_loss_fk, valid_loss_fk, train_loss_ik, valid_loss_ik])
 
 
         if save_option == "cloud":
             train_metrics= {
                 "train/epoch": epoch,
-                "train/train_loss": train_loss_q,
+                "train/train_loss": combined_train_loss,
+                "train/train_loss_fk": train_loss_fk,
+                "train/train_loss_ik": train_loss_ik
             }
         
             val_metrics = {
-                "val/val_loss": valid_loss,
+                "val/val_loss_fk": valid_loss_fk,
+                "val/val_loss_ik": valid_loss_ik,
+                "val/valid_loss": combined_valid_loss,
+                "val/best_valid_loss_fk": best_valid_loss_fk,
+                "val/best_valid_loss_ik": best_valid_loss_ik
             }
             wandb.log({**train_metrics, **val_metrics})
             #wandb.watch(model, criterion, log="all")
         
-    
-        if valid_loss < best_valid_loss:
-            best_valid_loss = valid_loss
-            best_epoch = epoch
-            counter = 0
-
-
+        #print(valid_loss)
+        if valid_loss_fk < best_valid_loss_fk:
+            best_valid_loss_fk = valid_loss_fk
 
             #torch.save(model.state_dict(), save_path+'/best_epoch.pth')
             if save_option == "local":
-                torch.save(model.state_dict(), save_path+'/best_epoch.pth')
-            
-            elif save_option == "cloud":
-                torch.save(model.state_dict(), save_path+'/best_epoch.pth')
+                
+                torch.save(fk_model.state_dict(), save_path+'/best_epoch_fk.pth')
                 """
-                artifact = wandb.Artifact(name="Model_"+robot_choice+"_" \
-                                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
-                                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
-                                            type='model')
-                artifact.add_file(save_path+'/best_epoch.pth')
-                run.log_artifact(artifact)
+                torch.save({
+                    'epoch': epoch,
+                    'model_state_dict': fk_model.state_dict(),
+                    'optimizer_state_dict': fk_optimizer.state_dict(),
+                    'loss': train_loss_fk,
+                    }, save_path+'/best_epoch_fk.pt')
+                """  
+            elif save_option == "cloud":
+            
+                torch.save(fk_model.state_dict(), save_path+'/best_epoch_fk.pth')
+                """
+                torch.save({
+                    'epoch': epoch,
+                    'model_state_dict': fk_model.state_dict(),
+                    'optimizer_state_dict': fk_optimizer.state_dict(),
+                    'loss': train_loss_fk,
+                    }, save_path+'/best_epoch_fk.pt')
+                """
+
+
+        if valid_loss_ik < best_valid_loss_ik:
+            best_valid_loss_ik = valid_loss_ik       
+            best_epoch = epoch
+            counter = 0
+
+            #torch.save(model.state_dict(), save_path+'/best_epoch.pth')
+            if save_option == "local":
+                
+                torch.save(ik_model.state_dict(), save_path+'/best_epoch_ik.pth')
+                """
+                torch.save({
+                    'epoch': epoch,
+                    'model_state_dict': ik_model.state_dict(),
+                    'optimizer_state_dict': ik_optimizer.state_dict(),
+                    'loss': train_loss_ik,
+                    }, save_path+'/best_epoch_ik.pt')
+                """    
+            elif save_option == "cloud":
+
+                torch.save(ik_model.state_dict(), save_path+'/best_epoch_ik.pth')
+                """
+                torch.save({
+                    'epoch': epoch,
+                    'model_state_dict': ik_model.state_dict(),
+                    'optimizer_state_dict': ik_optimizer.state_dict(),
+                    'loss': train_loss_ik,
+                    }, save_path+'/best_epoch_ik.pt')
                 """
                 
 
@@ -352,16 +486,31 @@ if __name__ == '__main__':
                 end_time = time.monotonic()
                 epoch_mins, epoch_secs = epoch_time(start_time, end_time)
                 print('\nEpoch: {}/{} | Epoch Time: {}m {}s'.format(epoch, EPOCHS, epoch_mins, epoch_secs))
-                print('\tTrain Loss: {}'.format(train_loss))
-                print('\tTrain Loss q: {}'.format(train_loss_q))
-                print('\tTrain Loss J: {}'.format(train_loss_J))
-                print('\tValid Loss q: {}'.format(valid_loss))
+                print('\tTrain Loss: {}'.format(combined_train_loss))
+                print('\tValid Loss: {}\n'.format(combined_valid_loss))
+                print('\tTrain Loss IK: {}'.format(train_loss_ik))
+                print('\tValid Loss IK: {}\n'.format(valid_loss_ik))
+                print('\tTrain Loss FK: {}'.format(train_loss_fk))
+                print('\tValid Loss FK: {}\n'.format(valid_loss_fk))
                 print("\tBest Epoch Occurred [{}/{}]".format(best_epoch, EPOCHS)) 
             
+            """
             if save_option == "local":   
                 torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
+                torch.save({
+                    'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                    'loss': train_loss,
+                    }, save_path+'/currebt_epoch_model.pt')
             elif save_option == "cloud":
                 torch.save(model.state_dict(), save_path+'/epoch_'+str(epoch)+'.pth')
+                torch.save({
+                    'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                    'loss': train_loss,
+                    }, save_path+'/current_epoch_model.pt')
                 #artifact2 = wandb.Artifact(name="Model_"+robot_choice+"_" \
                 #                                +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
                 #                                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number+1)+'_qlim_scale_'+str(int(scale)), 
@@ -369,9 +518,10 @@ if __name__ == '__main__':
                 #artifact2.add_file(save_path+'/epoch_'+str(epoch)+'.pth')
                 #run.log_artifact(artifact2)
                 #torch.save(model.state_dict(), os.path.join(wandb.run.dir, "epoch_"+str(epoch)+".pth"))
+            """
 
             # save the histories of losses
-            header = ["train loss", "valid loss"]
+            header = ["train loss fk", "valid loss fk", "train loss ik", "valid loss ik"]
             
             df = pd.DataFrame(np.array(all_losses))
             df.to_csv(save_path+"/losses_"+robot_choice+"_"+str(dataset_samples)+".csv",
@@ -383,7 +533,7 @@ if __name__ == '__main__':
     epoch_mins, epoch_secs = epoch_time(start_time_train, end_time_train)
     
     if print_epoch:
-        print('\nEnd of Training for {} - Elapsed Time: {}m {}s'.format(model.name, epoch_mins, epoch_secs))    
+        print('\nEnd of Training for {} - Elapsed Time: {}m {}s'.format(ik_model.name, epoch_mins, epoch_secs))    
 
     
 
@@ -392,28 +542,84 @@ if __name__ == '__main__':
     # Inference
     ##############################################################################################################
     # training is done, let's run inferences and record the evaluation metrics
-    print("\n\n==>Testing the trained model ...\n")
-    test_data_loader = load_test_dataset(X_test, y_test, device)
-    weights_file = save_path+"/best_epoch.pth"
+    print("\n\n==>Testing the trained model ...\n\n")
+
     if network_type == "MLP":
-        model = MLP(input_dim, hidden_layer_sizes, output_dim).to(device)
-        #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim).to(device)
+
+        ik_model = MLP(input_dim, hidden_layer_sizes, output_dim).to(device)
+        fk_model = MLP(output_dim, hidden_layer_sizes, input_dim).to(device)
+
     elif network_type == "ResMLP":
+
         model = ResMLPSum(input_dim, neurons, output_dim, num_blocks).to(device)
+    
+    elif network_type == "DenseMLP":
+
+        model = DenseMLP(input_dim, neurons, output_dim, num_blocks).to(device)
+    
     elif network_type == "DenseMLP2":
+
         model = DenseMLP2(input_dim, neurons, output_dim, num_blocks).to(device)
     
-    state_dict = model.state_dict()
-    for n, p in torch.load(weights_file, map_location=lambda storage, loc: storage).items():
-        if n in state_dict.keys():
-            state_dict[n].copy_(p)
+    elif network_type == "DenseMLP3":
+
+        block_config = np.zeros((1,num_blocks))   
+        block_config[:,:] = layers
+        block_config = block_config.squeeze(0).astype(int).tolist()
+        model = DenseNet(input_dim, neurons, block_config, output_dim).to(device)
+
+
+
+
+
+    print("==> Load FK Test Data")
+    test_data_loader_fk = load_test_dataset(y_test, X_test, device)
+    weights_file_fk = save_path+"/best_epoch_fk.pth"
+
+    state_dict_fk = fk_model.state_dict()
+    for n, p in torch.load(weights_file_fk, map_location=lambda storage, loc: storage).items():
+        if n in state_dict_fk.keys():
+            state_dict_fk[n].copy_(p)
         else:
             raise KeyError(n)
+
+
     
-    # get the results from training    
+    # get the results from fk training     
     with torch.no_grad():
-        results = inference_FK_sobolev(model, test_data_loader, criterion, device, robot_choice)
-    X_errors = results["y_errors_report"]
+        results = forward_inference_modified(fk_model, test_data_loader_fk, fk_criterion, device, robot_choice)
+    y_errors = results["y_errors_report"]
+    
+    #print(X_errors.shape)
+
+    # get some inference stats
+    y_errors_r = y_errors
+    y_errors_r[:,:3] =y_errors_r[:,:3] * 1000
+    y_errors_r[:,3:] = np.rad2deg(y_errors_r[:,3:]) 
+    avg_position_error = y_errors_r[1,:3].mean()
+    avg_orientation_error = y_errors_r[1,3:].mean()
+
+    print("FK avg_position_error (mm): {}".format(avg_position_error))
+    print("FK avg_orientation_error (deg): {}".format(avg_orientation_error))
+
+
+
+    print("\n==> Load IK Test Data")
+    test_data_loader_ik = load_test_dataset(X_test, y_test, device)
+    weights_file_ik = save_path+"/best_epoch_ik.pth"
+
+    state_dict_ik = ik_model.state_dict()
+    for n, p in torch.load(weights_file_ik, map_location=lambda storage, loc: storage).items():
+        if n in state_dict_ik.keys():
+            state_dict_ik[n].copy_(p)
+        else:
+            raise KeyError(n)
+
+
+    # get the results from training  
+    with torch.no_grad():
+        results = inference_modified(ik_model, test_data_loader_ik, ik_criterion, device, robot_choice)
+    X_errors = results["X_errors_report"]
     
     #print(X_errors.shape)
 
@@ -424,16 +630,16 @@ if __name__ == '__main__':
     avg_position_error = X_errors_r[1,:3].mean()
     avg_orientation_error = X_errors_r[1,3:].mean()
 
-    print("avg_position_error (mm): {}".format(avg_position_error))
-    print("avg_orientation_error (deg): {}".format(avg_orientation_error))
+    print("IK avg_position_error (mm): {}".format(avg_position_error))
+    print("IK avg_orientation_error (deg): {}\n".format(avg_orientation_error))
 
 
 
 
-    X_preds = results["y_preds"]
-    X_desireds = results["y_desireds"]
+    X_preds = results["X_preds"]
+    X_desireds = results["X_desireds"]
     #X_errors_p = np.abs(X_preds - X_desireds)
-    X_errors_p = results["y_errors"]
+    X_errors_p = results["X_errors"]
     X_errors_p[:,:3] = X_errors_p[:,:3] * 1000
     X_errors_p[:,3:] = np.rad2deg(X_errors_p[:,3:]) 
     X_percentile = stats.percentileofscore(X_errors_p[:,0], [1,5,10,15,20], kind='rank')
@@ -459,7 +665,7 @@ if __name__ == '__main__':
             "device_name": device_name,
             "data_size": dataset_samples,
             "joints_scale": scale,
-            "architecture": model.name,
+            "architecture": ik_model.name,
             "network": network_type,
             "layers": layers,
             "neurons": neurons,
@@ -467,6 +673,7 @@ if __name__ == '__main__':
             "loss": loss_choice,
             "completed_epochs": epoch,
             "best_epoch": best_epoch,
+            "best_valid_loss": best_valid_loss_ik,
             "elapsed_time": "{}m {}s".format(epoch_mins, epoch_secs),
             "average_position_error(mm)": avg_position_error,
             "average_orientation_error(deg)": avg_orientation_error,
@@ -525,34 +732,36 @@ if __name__ == '__main__':
             "ya_percent_4(deg)": Ya_percentile[3],
             "ya_percent_5(deg)": Ya_percentile[4],
         }
+
+    
         inference_results = pd.DataFrame(inference_results, index=[0])
         inference_results_table = wandb.Table(data=inference_results)
         wandb.log({"inferences": inference_results_table})
 
 
 
-        """
-        inference_metrics = {
-            "avg_x(mm)": X_errors_r[1,0],
-            "avg_y(mm)": X_errors_r[1,1],
-            "avg_z(mm)": X_errors_r[1,2],
-            "avg_ro(deg)": X_errors_r[1,3],
-            "avg_pi(deg)": X_errors_r[1,4],
-            "avg_ya(deg)": X_errors_r[1,5]
-        }
+    """
+    inference_metrics = {
+        "avg_x(mm)": X_errors_r[1,0],
+        "avg_y(mm)": X_errors_r[1,1],
+        "avg_z(mm)": X_errors_r[1,2],
+        "avg_ro(deg)": X_errors_r[1,3],
+        "avg_pi(deg)": X_errors_r[1,4],
+        "avg_ya(deg)": X_errors_r[1,5]
+    }
 
-        # visualize some errors
-        wandb.log({**inference_metrics})
-        """
-        
+    # visualize some errors
+    wandb.log({**inference_metrics})
+    """
+    
 
-        #df2 = np.array(all_losses)
-        #print(df2[0,0], df2[0,1])
-        #test_metrics_table = wandb.Table(columns=columns)
-        #test_metrics_table.add_data(df2[0,0], df2[0,1])
+    #df2 = np.array(all_losses)
+    #print(df2[0,0], df2[0,1])
+    #test_metrics_table = wandb.Table(columns=columns)
+    #test_metrics_table.add_data(df2[0,0], df2[0,1])
 
-        if save_option == "cloud":
-            wandb.finish()
+    if save_option == "cloud":
+        wandb.finish()
 
 
             

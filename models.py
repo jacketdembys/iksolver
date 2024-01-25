@@ -271,10 +271,10 @@ class DenseBlock(nn.Module):
     
 
 
-class DenseNet(nn.Module):
+class DenseNetOld(nn.Module):
     def __init__(self, depth, output_dim, growth_rate=12,
                  reduction=0.5, bottleneck=True, dropRate=0.0):
-        super(DenseNet, self).__init__()
+        super(DenseNetOld, self).__init__()
         in_planes = 2 * growth_rate
         n = (depth - 4) / 3
         if bottleneck == True:
@@ -386,7 +386,9 @@ class DenseMLP(nn.Module):
         self.transition23 = nn.Linear(3*hidden_size, hidden_size)
         self.transition34 = nn.Linear(4*hidden_size, hidden_size)
         self.transition45 = nn.Linear(5*hidden_size, hidden_size)
+        self.transition56 = nn.Linear(6*hidden_size, hidden_size)
         self.transition5out = nn.Linear(6*hidden_size, hidden_size)
+        self.transition6out = nn.Linear(7*hidden_size, hidden_size)
         self.out = nn.Linear(hidden_size, output_dim)
         self.relu = nn.ReLU(inplace=True)
 
@@ -422,18 +424,35 @@ class DenseMLP(nn.Module):
         out4 = self.fc(out4)
         out01234 = torch.cat([out0,out1,out2,out3,out4],1)
         out01234 = self.transition45(out01234)
-
+        
+        
         # layer block 5
         out5 = self.fc(out01234)
-        out5 = self.relu(out4)
-        out5 = self.fc(out4)
+        out5 = self.relu(out5)  # out4
+        out5 = self.fc(out5)    # out4
         out012345 = torch.cat([out0,out1,out2,out3,out4,out5],1)
+        #out012345 = self.transition56(out012345)
+
+        #out = self.out(out012345)
+        
+
+        
         out012345 = self.transition5out(out012345)
+        out = self.out(out012345)
+        """
+        # layer block 6
+        out6 = self.fc(out012345)
+        out6 = self.relu(out6)
+        out6 = self.fc(out6)
+        out0123456 = torch.cat([out0,out1,out2,out3,out4,out5,out6],1)
+        out0123456 = self.transition6out(out0123456)
 
         # output layer
-        out = self.out(out012345)
+        out = self.out(out0123456)
+        """
 
         #print(x.shape)
+        
 
         x_temp = out
 
@@ -509,6 +528,9 @@ class DenseMLP2(nn.Module):
         x_temp = out
 
         return out, x_temp
+
+
+
 
 
 

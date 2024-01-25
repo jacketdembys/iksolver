@@ -1,7 +1,7 @@
-data = readmatrix("../docker/datasets/7DoF-7R-Panda/data_7DoF-7R-Panda_1000000_qlim_scale_10.csv");
+data = readmatrix("../docker/datasets/7DoF-7R-Panda/data_7DoF-7R-Panda_100000000_qlim_scale_10.csv");
                       %docker/datasets/7DoF-7R-Panda/data_7DoF-7R-Panda_1000000_qlim_scale_10.csv
 
-threshold_position = 0.05; %0.1;
+threshold_position = 0.1; %0.1;
 threshold_orientation = deg2rad(5);
 [total_samples, ~] = size(data);
 
@@ -106,7 +106,12 @@ while(1)
     if i >= total_samples
         disp("Stopping")
         break
-    end    
+    end 
+    
+    if i == 1000000
+        disp("Stopping ... Reached 1 million points")
+        break
+    end
     
     i = i + 1;
     
@@ -159,6 +164,13 @@ title({strcat("Constrained Dataset with threshold = ", num2str(threshold_positio
 %dataToSave = 
 
 
-writematrix(data_save,'data_save_7DoF.csv','Delimiter','tab')
+writematrix(data_save,'data_save_7DoF_from_samples_1000000_true.csv','Delimiter',',')
 
 
+
+
+%%
+R = [ 0.0164, -0.7457, -1.0086;
+     -0.0521,  0.6646, -0.7382;
+      0.9985,  0.0469, -0.0558]
+  rpy

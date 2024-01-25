@@ -1,0 +1,12 @@
+%% load data
+%data = readmatrix("../docker/datasets/7DoF-7R-Panda/data_7DoF-7R-Panda_1000000_qlim_scale_10_seq.csv");
+
+for i 
+data = readmatrix("../docker/datasets/7DoF-7R-Panda-Steps/data_7DoF-7R-Panda_1000000_qlim_scale_10_seq_2.csv");
+
+%% get mean RPY
+mean_xyzRPY = mean(abs(data(:,1:6) - data(:,14:19)), 1);
+mean_xyzRPY(1:3) = mean_xyzRPY(1:3)*1000;
+mean_xyzRPY(4:6) = rad2deg(mean_xyzRPY(4:6));
+
+mean_xyzRPY  %#ok<NOPTS>

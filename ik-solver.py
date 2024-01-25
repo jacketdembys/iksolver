@@ -30,6 +30,7 @@ from scipy import stats
 #from torchviz import make_dot
 from utils import *
 from models import *
+from models_2 import DenseNet
 
 
 if __name__ == '__main__':
@@ -68,6 +69,7 @@ if __name__ == '__main__':
     save_option = config["TRAIN"]["CHECKPOINT"]["SAVE_OPTIONS"]                                # local or cloud
     load_option = config["TRAIN"]["CHECKPOINT"]["LOAD_OPTIONS"]  
     dataset_type = config["TRAIN"]["DATASET"]["TYPE"]
+    joint_steps = config["TRAIN"]["DATASET"]["JOINT_VARIATION"]
     orientation_type = config["TRAIN"]["DATASET"]["ORIENTATION"]
 
     scale = config["TRAIN"]["DATASET"]["JOINT_LIMIT_SCALE"]
@@ -103,7 +105,7 @@ if __name__ == '__main__':
             #input_dim = 6 #+6+7 #6
             output_dim = 7
             if orientation_type == "RPY":  
-                input_dim = 6 
+                input_dim = 6 #6 
             elif orientation_type == "Quaternion": 
                 input_dim = 7 
             elif orientation_type == "DualQuaternion": 
@@ -145,15 +147,16 @@ if __name__ == '__main__':
     # load dataset from file
     if load_option == "cloud":
         if dataset_type == "1_to_1":
-            data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv')
+            data = pd.read_csv('/home/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
         elif dataset_type == "seq":
-            data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
+            data = pd.read_csv('/home/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
     elif load_option == "local":
+        
         if dataset_type == "1_to_1":
             #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_const.csv')
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'.csv') #+'_'+orientation_type+'.csv')
+            data = pd.read_csv('../docker/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv') #+'_'+orientation_type+'.csv')
         elif dataset_type == "seq":
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
+            data = pd.read_csv('../docker/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
     data_a = np.array(data) 
 
 
@@ -200,18 +203,35 @@ if __name__ == '__main__':
     
     # get network architecture
     if network_type == "MLP":
+
         model = MLP(input_dim, hidden_layer_sizes, output_dim)
-        save_layers_str = "layers_"+ str(layers)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
         #model = MLP(mapping_size*2, hidden_layer_sizes, output_dim)
+
     elif network_type == "ResMLP":
+
         model = ResMLPSum(input_dim, neurons, output_dim, num_blocks)
-        save_layers_str = "blocks_"+ str(num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
     elif network_type == "DenseMLP":
+
         model = DenseMLP(input_dim, neurons, output_dim, num_blocks)
-        save_layers_str = "blocks_"+ str(num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
     elif network_type == "DenseMLP2":
+
         model = DenseMLP2(input_dim, neurons, output_dim, num_blocks)
-        save_layers_str = "blocks_"+ str(num_blocks)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
+    elif network_type == "DenseMLP3":
+
+        block_config = np.zeros((1,num_blocks))   
+        block_config[:,:] = layers
+        block_config = block_config.squeeze(0).astype(int).tolist()
+        model = DenseNet(input_dim, neurons, block_config, output_dim)
+        save_layers_str = "blocks_"+ str(num_blocks)+"_layers_"+ str(layers)
+
+
     elif network_type == "FourierMLP":
         fourier_dim = 16
         scale = 10
@@ -257,7 +277,7 @@ if __name__ == '__main__':
 
 
     print("\n==> Experiment {} Training network: {}".format(experiment_number, model.name))
-    print("==> Training device: {}".format(device))
+    print("==> Training for joint step {} on device: {}".format(joint_steps, device))
     
 
     # create a directory to save weights
@@ -265,10 +285,10 @@ if __name__ == '__main__':
     #            +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
     #            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
     
-    
-    save_path = "results/"+robot_choice+"/"+network_type+"_"+robot_choice+"_" \
+    # results_fkloss
+    save_path = "results_final_steps/"+robot_choice+"/"+network_type+"_"+robot_choice+"_" \
                 + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
-                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+dataset_type+"_"+orientation_type
+                +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+dataset_type+"_"+orientation_type+"_"+str(learning_rate)+"_js_"+str(joint_steps)
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -288,18 +308,18 @@ if __name__ == '__main__':
         header=joint_header)
     """
 
-    # Modif_Err   Biternion    Modif_Err_2_
+    # Modif_Err   Biternion    Modif_Err_2_  fkloss_Dataset_
 
 
     if save_option == "cloud":
         run = wandb.init(
             entity="jacketdembys",
-            project = "ik-1",                
+            project = "ik-steps",                
             group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
                     + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size) +"_" \
-                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+orientation_type  #+'_non_traj_split', '_traj_split'   
+                    +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+orientation_type+"_"+str(learning_rate)+"_js_"+str(joint_steps)   #+'_non_traj_split', '_traj_split'   
             #name = "Model_"+robot_choice+"_" \
             #        +model.name.replace(" ","").replace("[","_").replace("]","_").replace(",","-") \
             #        +optimizer_choice+"_"+loss_choice+"_run_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
@@ -322,13 +342,16 @@ if __name__ == '__main__':
     best_valid_loss = float('inf')
     start_time_train = time.monotonic()
     start_time = time.monotonic()
-    for epoch in range(EPOCHS):
 
-        
+    for epoch in range(EPOCHS):        
         
         train_loss = train(model, train_data_loader, optimizer, criterion, loss_choice, batch_size, device, epoch, EPOCHS, scheduler, scaler)        
         valid_loss = evaluate(model, test_data_loader, criterion, loss_choice, device, epoch, EPOCHS)
     
+        #print(train_loss)
+        #print(valid_loss)
+        #sys.exit()
+
         #scheduler.step(valid_loss)
 
         train_losses.append(train_loss)
@@ -336,19 +359,21 @@ if __name__ == '__main__':
         all_losses.append([train_loss, valid_loss])
 
 
-        #if save_option == "cloud":
-        train_metrics= {
-            "train/epoch": epoch,
-            "train/train_loss": train_loss,
-        }
-    
-        val_metrics = {
-            "val/val_loss": valid_loss,
-        }
-        wandb.log({**train_metrics, **val_metrics})
-        #wandb.watch(model, criterion, log="all")
+        if save_option == "cloud":
+            train_metrics= {
+                "train/epoch": epoch,
+                "train/train_loss": train_loss,
+            }
         
-    
+            val_metrics = {
+                "val/val_loss": valid_loss,
+                "val/best_valid_loss": best_valid_loss
+            }
+            wandb.log({**train_metrics, **val_metrics})
+            #wandb.watch(model, criterion, log="all")
+        
+        #print(valid_loss)
+
         if valid_loss < best_valid_loss:
             best_valid_loss = valid_loss
             best_epoch = epoch
@@ -461,7 +486,13 @@ if __name__ == '__main__':
         model = DenseMLP(input_dim, neurons, output_dim, num_blocks).to(device)
     elif network_type == "DenseMLP2":
         model = DenseMLP2(input_dim, neurons, output_dim, num_blocks).to(device)
-    
+    elif network_type == "DenseMLP3":
+        block_config = np.zeros((1,num_blocks))   
+        block_config[:,:] = layers
+        block_config = block_config.squeeze(0).astype(int).tolist()
+        model = DenseNet(input_dim, neurons, block_config, output_dim).to(device)
+
+
     state_dict = model.state_dict()
     for n, p in torch.load(weights_file, map_location=lambda storage, loc: storage).items():
         if n in state_dict.keys():
@@ -513,80 +544,83 @@ if __name__ == '__main__':
     # log this dataframe to wandb
     #columns = ["trainLoss", "validLoss"]
     #df2 = pd.DataFrame(np.array(all_losses))
-    inference_results = {
-        "device_name": device_name,
-        "data_size": dataset_samples,
-        "joints_scale": scale,
-        "architecture": model.name,
-        "network": network_type,
-        "layers": layers,
-        "neurons": neurons,
-        "optimizer": optimizer_choice,
-        "loss": loss_choice,
-        "completed_epochs": epoch,
-        "best_epoch": best_epoch,
-        "best_valid_loss": best_valid_loss,
-        "elapsed_time": "{}m {}s".format(epoch_mins, epoch_secs),
-        "average_position_error(mm)": avg_position_error,
-        "average_orientation_error(deg)": avg_orientation_error,
-        "min_x(mm)": X_errors_r[0,0],
-        "avg_x(mm)": X_errors_r[1,0],
-        "max_x(mm)": X_errors_r[2,0],
-        "std_x(mm)": X_errors_r[3,0],
-        "x_percent_1(mm)": X_percentile[0],
-        "x_percent_5(mm)": X_percentile[1],
-        "x_percent_10(mm)": X_percentile[2],
-        "x_percent_15(mm)": X_percentile[3],
-        "x_percent_20(mm)": X_percentile[4],
-        "min_y(mm)": X_errors_r[0,1],
-        "avg_y(mm)": X_errors_r[1,1],
-        "max_y(mm)": X_errors_r[2,1],
-        "std_y(mm)": X_errors_r[3,1],
-        "y_percent_1(mm)": Y_percentile[0],
-        "y_percent_5(mm)": Y_percentile[1],
-        "y_percent_10(mm)": Y_percentile[2],
-        "y_percent_15(mm)": Y_percentile[3],
-        "y_percent_20(mm)": Y_percentile[4],
-        "min_z(mm)": X_errors_r[0,2],
-        "avg_z(mm)": X_errors_r[1,2],
-        "max_z(mm)": X_errors_r[2,2],
-        "std_z(mm)": X_errors_r[3,2],
-        "Z_percent_1(mm)": Z_percentile[0],
-        "Z_percent_5(mm)": Z_percentile[1],
-        "Z_percent_10(mm)": Z_percentile[2],
-        "Z_percent_15(mm)": Z_percentile[3],
-        "Z_percent_20(mm)": Z_percentile[4],
-        "min_ro(deg)": X_errors_r[0,3],
-        "avg_ro(deg)": X_errors_r[1,3],
-        "max_ro(deg)": X_errors_r[2,3],
-        "std_ro(deg)": X_errors_r[3,3],
-        "ro_percent_1(deg)": Ro_percentile[0],
-        "ro_percent_2(deg)": Ro_percentile[1],
-        "ro_percent_3(deg)": Ro_percentile[2],
-        "ro_percent_4(deg)": Ro_percentile[3],
-        "ro_percent_5(deg)": Ro_percentile[4],
-        "min_pi(deg)": X_errors_r[0,4],
-        "avg_pi(deg)": X_errors_r[1,4],
-        "max_pi(deg)": X_errors_r[2,4],
-        "std_pi(deg)": X_errors_r[3,4],
-        "pi_percent_1(deg)": Pi_percentile[0],
-        "pi_percent_2(deg)": Pi_percentile[1],
-        "pi_percent_3(deg)": Pi_percentile[2],
-        "pi_percent_4(deg)": Pi_percentile[3],
-        "pi_percent_5(deg)": Pi_percentile[4],
-        "min_ya(deg)": X_errors_r[0,5],
-        "avg_ya(deg)": X_errors_r[1,5],
-        "max_ya(deg)": X_errors_r[2,5],
-        "std_ya(deg)": X_errors_r[3,5],
-        "ya_percent_1(deg)": Ya_percentile[0],
-        "ya_percent_2(deg)": Ya_percentile[1],
-        "ya_percent_3(deg)": Ya_percentile[2],
-        "ya_percent_4(deg)": Ya_percentile[3],
-        "ya_percent_5(deg)": Ya_percentile[4],
-    }
-    inference_results = pd.DataFrame(inference_results, index=[0])
-    inference_results_table = wandb.Table(data=inference_results)
-    wandb.log({"inferences": inference_results_table})
+    if save_option == "cloud":
+        inference_results = {
+            "device_name": device_name,
+            "data_size": dataset_samples,
+            "joints_scale": scale,
+            "architecture": model.name,
+            "network": network_type,
+            "layers": layers,
+            "neurons": neurons,
+            "optimizer": optimizer_choice,
+            "loss": loss_choice,
+            "completed_epochs": epoch,
+            "best_epoch": best_epoch,
+            "best_valid_loss": best_valid_loss,
+            "elapsed_time": "{}m {}s".format(epoch_mins, epoch_secs),
+            "average_position_error(mm)": avg_position_error,
+            "average_orientation_error(deg)": avg_orientation_error,
+            "min_x(mm)": X_errors_r[0,0],
+            "avg_x(mm)": X_errors_r[1,0],
+            "max_x(mm)": X_errors_r[2,0],
+            "std_x(mm)": X_errors_r[3,0],
+            "x_percent_1(mm)": X_percentile[0],
+            "x_percent_5(mm)": X_percentile[1],
+            "x_percent_10(mm)": X_percentile[2],
+            "x_percent_15(mm)": X_percentile[3],
+            "x_percent_20(mm)": X_percentile[4],
+            "min_y(mm)": X_errors_r[0,1],
+            "avg_y(mm)": X_errors_r[1,1],
+            "max_y(mm)": X_errors_r[2,1],
+            "std_y(mm)": X_errors_r[3,1],
+            "y_percent_1(mm)": Y_percentile[0],
+            "y_percent_5(mm)": Y_percentile[1],
+            "y_percent_10(mm)": Y_percentile[2],
+            "y_percent_15(mm)": Y_percentile[3],
+            "y_percent_20(mm)": Y_percentile[4],
+            "min_z(mm)": X_errors_r[0,2],
+            "avg_z(mm)": X_errors_r[1,2],
+            "max_z(mm)": X_errors_r[2,2],
+            "std_z(mm)": X_errors_r[3,2],
+            "Z_percent_1(mm)": Z_percentile[0],
+            "Z_percent_5(mm)": Z_percentile[1],
+            "Z_percent_10(mm)": Z_percentile[2],
+            "Z_percent_15(mm)": Z_percentile[3],
+            "Z_percent_20(mm)": Z_percentile[4],
+            "min_ro(deg)": X_errors_r[0,3],
+            "avg_ro(deg)": X_errors_r[1,3],
+            "max_ro(deg)": X_errors_r[2,3],
+            "std_ro(deg)": X_errors_r[3,3],
+            "ro_percent_1(deg)": Ro_percentile[0],
+            "ro_percent_2(deg)": Ro_percentile[1],
+            "ro_percent_3(deg)": Ro_percentile[2],
+            "ro_percent_4(deg)": Ro_percentile[3],
+            "ro_percent_5(deg)": Ro_percentile[4],
+            "min_pi(deg)": X_errors_r[0,4],
+            "avg_pi(deg)": X_errors_r[1,4],
+            "max_pi(deg)": X_errors_r[2,4],
+            "std_pi(deg)": X_errors_r[3,4],
+            "pi_percent_1(deg)": Pi_percentile[0],
+            "pi_percent_2(deg)": Pi_percentile[1],
+            "pi_percent_3(deg)": Pi_percentile[2],
+            "pi_percent_4(deg)": Pi_percentile[3],
+            "pi_percent_5(deg)": Pi_percentile[4],
+            "min_ya(deg)": X_errors_r[0,5],
+            "avg_ya(deg)": X_errors_r[1,5],
+            "max_ya(deg)": X_errors_r[2,5],
+            "std_ya(deg)": X_errors_r[3,5],
+            "ya_percent_1(deg)": Ya_percentile[0],
+            "ya_percent_2(deg)": Ya_percentile[1],
+            "ya_percent_3(deg)": Ya_percentile[2],
+            "ya_percent_4(deg)": Ya_percentile[3],
+            "ya_percent_5(deg)": Ya_percentile[4],
+        }
+
+    
+        inference_results = pd.DataFrame(inference_results, index=[0])
+        inference_results_table = wandb.Table(data=inference_results)
+        wandb.log({"inferences": inference_results_table})
 
 
 

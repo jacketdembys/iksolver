@@ -167,3 +167,12 @@ title({strcat("Constrained Dataset with threshold = ", num2str(threshold_positio
 writematrix(data_save,'data_save_7DoF_from_samples_1000000_true.csv','Delimiter',',')
 
 
+
+
+%%
+R = [ 0.0164, -0.7457, -1.0086;
+     -0.0521,  0.6646, -0.7382;
+      0.9985,  0.0469, -0.0558]
+rpy = rotm2eul(R, "ZYX")
+
+det(R)

@@ -62,8 +62,8 @@ if seed_choice:
 data = pd.read_csv('/home/retina/dembysj/Dropbox/WCCI2024/docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
 #data = pd.read_csv('/home/retina/dembysj/Dropbox/WCCI2024/docker/datasets/7DoF-7R-Panda/data_7DoF-7R-Panda_1000000_qlim_scale_10_seq.csv')
 data_a = np.array(data)
-train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test, sc_in = load_dataset(data_a, n_DoF, batch_size, robot_choice, dataset_type, device)
-save_path = "results/7DoF-7R-Panda/keep_results/DenseMLP_7DoF-7R-Panda_blocks_5_neurons_1024_batch_100000_Adam_lq_1_qlim_scale_10_samples_1000000"
+train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test, sc_in = load_dataset_2(data_a, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim)
+save_path = "results_final/7DoF-7R-Panda/DenseMLP_7DoF-7R-Panda_blocks_6_layers_2_neurons_1024_batch_100000_Adam_lq_1_qlim_scale_10_samples_1000000_seq_RPY_0.001"
 
 criterion = nn.MSELoss(reduction="mean")
 
@@ -85,6 +85,21 @@ for n, p in torch.load(weights_file, map_location=lambda storage, loc: storage).
         state_dict[n].copy_(p)
     else:
         raise KeyError(n)
+
+input_weight = model.state_dict()["input.weight"]
+print(input_weight.shape)
+input_weight = input_weight.flatten().cpu().numpy()
+print(input_weight.shape)
+
+plt.figure(figsize=(10, 5))
+plt.bar(range(len(input_weight)), input_weight)
+plt.title('MLP Weights (Hidden Layer 1)')
+plt.xlabel('Weight Index')
+plt.ylabel('Weight Value')
+plt.show()
+
+sys.exit()
+
 
 # get the results from testing  
 """
@@ -121,6 +136,13 @@ data_a = np.concatenate((traj_1,
 #X_test = data_a[:vis_traj*100,:19]
 #y_test = data_a[:vis_traj*100,19:]
 X_test = data_a[:,:19]
+#print(X_test[0,:])
+X_test[:,:13] = 0 # set the other ones to 0
+
+
+#print(X_test[0,:])
+#sys.exit()
+
 y_test = data_a[:,19:]
 test_data_loader = load_test_dataset_2(X_test, y_test, device, sc_in)
 with torch.no_grad():

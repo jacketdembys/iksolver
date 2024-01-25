@@ -43,13 +43,62 @@ def get_DH(robot_choice, t):
                            [t[1],        0, 150/1000, torch.pi],
                            [   0,     t[2],        0, 0],
                            [t[3], 150/1000,        0, 0]])
-    elif robot_choice == "6DoF-6R-Puma260":
+    elif robot_choice == "6DoF-Puma260":
         DH = torch.tensor([[t[0],           0,          0,        -torch.pi/2],
-                           [t[1],  125.4/1000, 203.2/1000,                  0],
-                           [t[2],           0,  -7.9/1000,         torch.pi/2],
-                           [t[3],  203.2/1000,          0,        -torch.pi/2],
+                           [t[1],      0.1254,     0.2032,                  0],
+                           [t[2],           0,    -0.0079,         torch.pi/2],
+                           [t[3],      0.2032,          0,        -torch.pi/2],
                            [t[4],           0,          0,         torch.pi/2],
-                           [t[5],   63.5/1000,          0,                  0]])
+                           [t[5],      0.0635,          0,                  0]])
+    elif robot_choice == "6DoF-Puma560":
+        DH = torch.tensor([[t[0],           0,          0,        -torch.pi/2],
+                           [t[1],     0.14909,     0.4318,                  0],
+                           [t[2],           0,    -0.0203,         torch.pi/2],
+                           [t[3],     0.43307,          0,        -torch.pi/2],
+                           [t[4],           0,          0,         torch.pi/2],
+                           [t[5],     0.05625,          0,                  0]])
+    elif robot_choice == "6DoF-IRB140":
+        DH = torch.tensor([[t[0],       0.352,       0.07,        -torch.pi/2],
+                           [t[1],           0,       0.36,                  0],
+                           [t[2],           0,          0,        -torch.pi/2],
+                           [t[3],        0.38,          0,         torch.pi/2],
+                           [t[4],           0,          0,        -torch.pi/2],
+                           [t[5],       0.065,          0,                  0]])
+    elif robot_choice == "6DoF-KR5":
+        DH = torch.tensor([[t[0],         0.4,       0.18,        -torch.pi/2],
+                           [t[1],           0,        0.6,                  0],
+                           [t[2],           0,       0.12,         torch.pi/2],
+                           [t[3],       -0.62,          0,        -torch.pi/2],
+                           [t[4],           0,          0,         torch.pi/2],
+                           [t[5],      -0.115,          0,           torch.pi]])
+    elif robot_choice == "6DoF-UR10":
+        DH = torch.tensor([[t[0],     0.08946,          0,         torch.pi/2],
+                           [t[1],           0,      0.425,                  0],
+                           [t[2],           0,    -0.3922,                  0],
+                           [t[3],      0.1091,          0,         torch.pi/2],
+                           [t[4],     0.09465,          0,        -torch.pi/2],
+                           [t[5],      0.0823,          0,                  0]])
+    elif robot_choice == "6DoF-Jaco":
+        DH = torch.tensor([[                                 -t[0],      0.2755,          0,         torch.pi/2],
+                           [                     t[1]-(torch.pi/2),         0.0,       0.41,           torch.pi],
+                           [                     t[2]+(torch.pi/2),     -0.0098,          0,         torch.pi/2],
+                           [                                  t[3],     -0.2502,          0,         torch.pi/3],
+                           [                       t[4]-(torch.pi),    -0.08579,          0,         torch.pi/3],
+                           [t[5]+torch.deg2rad(torch.tensor(-100)),     -0.2116,          0,           torch.pi]])
+    elif robot_choice == "6DoF-Mico":
+        DH = torch.tensor([[                                 -t[0],      0.2755,          0,         torch.pi/2],
+                           [                     t[1]-(torch.pi/2),         0.0,       0.29,           torch.pi],
+                           [                     t[2]+(torch.pi/2),      -0.007,          0,         torch.pi/2],
+                           [                                  t[3],     -0.1661,          0,         torch.pi/3],
+                           [                       t[4]-(torch.pi),    -0.08556,          0,         torch.pi/3],
+                           [t[5]+torch.deg2rad(torch.tensor(-100)),     -0.2028,          0,           torch.pi]])
+    elif robot_choice == "6DoF-Stanford":
+        DH = torch.tensor([[ t[0],  0.412,      0.0, -torch.pi/2],
+                           [ t[1],  0.154,      0.0,  torch.pi/2],
+                           [-90.0,   t[2],   0.0203,         0.0],
+                           [ t[3],    0.0,      0.0, -torch.pi/2],
+                           [ t[4],    0.0,      0.0,  torch.pi/2],
+                           [ t[5],    0.0,      0.0,         0.0]])
     elif robot_choice == "7DoF-7R-Panda":
         DH = torch.tensor([[t[0],    0.333,      0.0,           0],
                            [t[1],      0.0,      0.0, -torch.pi/2],
@@ -58,6 +107,15 @@ def get_DH(robot_choice, t):
                            [t[4],    0.384,  -0.0825, -torch.pi/2],
                            [t[5],      0.0,      0.0,  torch.pi/2],
                            [t[6],    0.107,    0.088,  torch.pi/2]])
+    elif robot_choice == "7DoF-Kuka-LWR":
+        # https://www.researchgate.net/publication/351149270_Exoscarne_Assistive_Strategies_for_an_Industrial_Meat_Cutting_System_Based_on_Physical_Human-Robot_Interaction
+        DH = torch.tensor([[t[0],   0.3105,      0.0,  torch.pi/2],
+                           [t[1],      0.0,      0.0, -torch.pi/2],
+                           [t[2],      0.4,      0.0, -torch.pi/2],
+                           [t[3],      0.0,      0.0,  torch.pi/2],
+                           [t[4],     0.39,      0.0,  torch.pi/2],
+                           [t[5],      0.0,      0.0, -torch.pi/2],
+                           [t[6],    0.078,      0.0,         0.0]])
     elif robot_choice == "7DoF-GP66":
         DH = torch.tensor([[t[0],    0.0,      0.0,  torch.pi/2],
                            [t[1],    0.0,     0.25,  torch.pi/2],
@@ -234,12 +292,19 @@ def matrix_to_euler_angles(matrix: torch.Tensor, convention: str) -> torch.Tenso
     i0 = _index_from_letter(convention[0])
     i2 = _index_from_letter(convention[2])
     tait_bryan = i0 != i2
+
+    #print(tait_bryan)
+
     if tait_bryan:
         central_angle = torch.asin(
             matrix[..., i0, i2] * (-1.0 if i0 - i2 in [-1, 2] else 1.0)
         )
     else:
         central_angle = torch.acos(matrix[..., i0, i0])
+
+    #print(central_angle.isnan().nonzero())
+    #print(central_angle.shape)
+    #sys.exit()
 
     o = (
         _angle_from_tan(
@@ -250,7 +315,74 @@ def matrix_to_euler_angles(matrix: torch.Tensor, convention: str) -> torch.Tenso
             convention[2], convention[1], matrix[..., i0, :], True, tait_bryan
         ),
     )
+
+    #print(_angle_from_tan(
+    #        convention[0], convention[1], matrix[..., i2], False, tait_bryan
+    #    ))
+    #print(torch.stack(o, -1))
+    #print("UpUp")
     return torch.stack(o, -1)
+
+
+
+def euler_angles_to_matrix(euler_angles: torch.Tensor, convention: str) -> torch.Tensor:
+    """
+    Convert rotations given as Euler angles in radians to rotation matrices.
+
+    Args:
+        euler_angles: Euler angles in radians as tensor of shape (..., 3).
+        convention: Convention string of three uppercase letters from
+            {"X", "Y", and "Z"}.
+
+    Returns:
+        Rotation matrices as tensor of shape (..., 3, 3).
+    """
+    if euler_angles.dim() == 0 or euler_angles.shape[-1] != 3:
+        raise ValueError("Invalid input euler angles.")
+    if len(convention) != 3:
+        raise ValueError("Convention must have 3 letters.")
+    if convention[1] in (convention[0], convention[2]):
+        raise ValueError(f"Invalid convention {convention}.")
+    for letter in convention:
+        if letter not in ("X", "Y", "Z"):
+            raise ValueError(f"Invalid letter {letter} in convention string.")
+    matrices = [
+        _axis_angle_rotation(c, e)
+        for c, e in zip(convention, torch.unbind(euler_angles, -1))
+    ]
+    # return functools.reduce(torch.matmul, matrices)
+    return torch.matmul(torch.matmul(matrices[0], matrices[1]), matrices[2])
+
+
+
+def _axis_angle_rotation(axis: str, angle: torch.Tensor) -> torch.Tensor:
+    """
+    Return the rotation matrices for one of the rotations about an axis
+    of which Euler angles describe, for each value of the angle given.
+
+    Args:
+        axis: Axis label "X" or "Y or "Z".
+        angle: any shape tensor of Euler angles in radians
+
+    Returns:
+        Rotation matrices as tensor of shape (..., 3, 3).
+    """
+
+    cos = torch.cos(angle)
+    sin = torch.sin(angle)
+    one = torch.ones_like(angle)
+    zero = torch.zeros_like(angle)
+
+    if axis == "X":
+        R_flat = (one, zero, zero, zero, cos, -sin, zero, sin, cos)
+    elif axis == "Y":
+        R_flat = (cos, zero, sin, zero, one, zero, -sin, zero, cos)
+    elif axis == "Z":
+        R_flat = (cos, -sin, zero, sin, cos, zero, zero, zero, one)
+    else:
+        raise ValueError("letter must be either X, Y or Z.")
+
+    return torch.stack(R_flat, -1).reshape(angle.shape + (3, 3))
 
 
 
@@ -323,7 +455,8 @@ class MLP(nn.Module):
         x = self.output_fc(x)
         x_temp = x
 
-        return x, x_temp 
+        #return x, x_temp 
+        return x 
 
 
 class ResMLP_2(nn.Module):
@@ -368,7 +501,7 @@ class ResMLP_2(nn.Module):
         return o, x_temp 
 
 
-class DenseMLP(nn.Module):
+class DenseMLP_old(nn.Module):
     def __init__(self, input_dim, h_sizes, output_dim):
         super().__init__()
 
@@ -454,14 +587,20 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device, in
         y = data[:,6:]
     if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66" or robot_choice == "8DoF-P8":
         if dataset_type == "seq":
-            print("==> Sequence dataset ...")
+            print("\n==> Sequence dataset ...")
             X = data[:,:input_dim]
             y = data[:,input_dim:]
         elif dataset_type == "1_to_1": 
-            print("==> 1 to 1 dataset ...")
+            print("\n==> 1 to 1 dataset ...")
             #X = data[:,:6]
-            X = data[:,:input_dim]
+            #X = data[:,:input_dim]
+            #y = data[:,input_dim:] #13]
+
+            
+            input_dim = input_dim*2+n_DoF
+            X = data[:,(input_dim-6):input_dim]
             y = data[:,input_dim:] #13]
+            
     if robot_choice == "3DoF-3R":
         if dataset_type == "seq":
             print("==> Sequence dataset ...")
@@ -569,11 +708,356 @@ def load_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device, in
 
 
 # function to load the dataset
+def load_all_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim, robot_list):
+
+
+    X_train, y_train = [], []
+    X_test, y_test = [], []
+    X_validate, y_validate = [], []
+
+    train_test_val_all = {}
+
+    for i in range(len(robot_list)):
+        if dataset_type == "combine":
+            print("\n==> Sequence dataset for {}...".format(robot_list[i]))
+            # get the input
+            X = data[:,:input_dim,i]
+
+            # get the output
+            y = data[:,input_dim:,i]
+
+            # get the train and validate sets
+            X_train_each, X_validate_each, y_train_each, y_validate_each = train_test_split(X, 
+                                                                                            y, 
+                                                                                            test_size = 0.1,
+                                                                                            random_state = 1)
+
+            # get the train and test sets
+            X_train_each, X_test_each, y_train_each, y_test_each = train_test_split(X_train_each, 
+                                                                                    y_train_each, 
+                                                                                    test_size = 0.1,
+                                                                                    random_state = 1)
+
+
+            X_train.append(X_train_each)
+            y_train.append(y_train_each)
+
+            X_validate.append(X_validate_each)
+            y_validate.append(y_validate_each)
+            
+            X_test.append(X_test_each)
+            y_test.append(y_test_each)
+
+            train_test_val_all[robot_list[i]] = {"X_test": np.array(X_test_each),
+                                                 "y_test": np.array(y_test_each)}
+
+
+    
+
+    # convert lists to arrays
+    X_train, y_train = np.array(X_train), np.array(y_train)
+    X_test, y_test = np.array(X_test), np.array(y_test)
+    X_validate, y_validate = np.array(X_validate), np.array(y_validate)
+
+
+    X_train = np.reshape(X_train, newshape=(X_train.shape[0]*X_train.shape[1], X_train.shape[2]) , order="F")
+    X_validate = np.reshape(X_validate, newshape=(X_validate.shape[0]*X_validate.shape[1], X_validate.shape[2]) , order="F")
+    X_test = np.reshape(X_test, newshape=(X_test.shape[0]*X_test.shape[1], X_test.shape[2]) , order="F")
+   
+    y_train = np.reshape(y_train, newshape=(y_train.shape[0]*y_train.shape[1], y_train.shape[2]) , order="F")
+    y_validate = np.reshape(y_validate, newshape=(y_validate.shape[0]*y_validate.shape[1], y_validate.shape[2]) , order="F")
+    y_test = np.reshape(y_test, newshape=(y_test.shape[0]*y_test.shape[1], y_test.shape[2]) , order="F")
+
+   
+
+
+    """
+    print(X_train.shape)
+
+    print(np.reshape(X_train, newshape=(X_train.shape[0]*X_train.shape[1], X_train.shape[2]) , order="F"))
+    
+    
+    print(X_train[0,0,:])
+    print(X_train[0,1,:])
+    print(np.reshape(X_train[0,:2,:], newshape=(2, X_train.shape[2]) , order="F"))
+    
+
+    sys.exit()
+    """
+
+
+
+    sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
+    sc_out = MinMaxScaler(copy=True, feature_range=(0, 1))
+    
+    X_train = sc_in.fit_transform(X_train)
+    X_validate = sc_in.transform(X_validate) 
+    X_test = sc_in.transform(X_test) 
+
+    #print("Here")
+   
+
+    print("==> Shape X_train: ", X_train.shape)
+    print("==> Shape y_train: ", y_train.shape)
+
+    print("==> Shape X_validate: ", X_validate.shape)
+    print("==> Shape y_validate: ", y_validate.shape)
+
+    print("==> Shape X_test: ", X_test.shape)
+    print("==> Shape y_test: ", y_test.shape)
+
+    train_data = LoadIKDataset(X_train, y_train, device)
+    test_data = LoadIKDataset(X_validate, y_validate, device)
+
+    train_data_loader = DataLoader(dataset=train_data,
+                                   batch_size=batch_size,
+                                   shuffle=True,
+                                   drop_last=True,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    test_data_loader = DataLoader(dataset=test_data,
+                                   batch_size=batch_size,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    return train_data_loader, test_data_loader, train_test_val_all
+
+
+
+def load_dataset_2(data, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim):
+
+    # file data_4DoF
+    #X = data[:,:3]
+    #y = data[:,6:]
+
+    # file data_4DOF_2
+    if robot_choice == "6DoF-6R-Puma260":
+        X = data[:,:6]
+        y = data[:,6:]
+    if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66" or robot_choice == "8DoF-P8":
+        if dataset_type == "seq":
+            print("\n==> Sequence dataset ...")
+            X = data[:,:input_dim]
+            y = data[:,input_dim:]
+        elif dataset_type == "1_to_1": 
+            print("\n==> 1 to 1 dataset ...")
+            #X = data[:,:6]
+            #X = data[:,:input_dim]
+            #y = data[:,input_dim:] #13]
+
+            
+            input_dim = input_dim*2+n_DoF
+            X = data[:,(input_dim-6):input_dim]
+            y = data[:,input_dim:] #13]
+            
+    if robot_choice == "3DoF-3R":
+        if dataset_type == "seq":
+            print("==> Sequence dataset ...")
+            X = data[:,:7]
+            y = data[:,7:]
+        elif dataset_type == "1_to_1": 
+            print("==> 1 to 1 dataset ...")
+            X = data[:,:2]
+            y = data[:,2:5] #13]
+
+        
+    #y = data[:,:2]
+    #X = data[:,2:]
+        
+    # split in train and test sets
+    
+    X_train, X_validate, y_train, y_validate = train_test_split(X, 
+                                                                y, 
+                                                                test_size = 0.1,
+                                                                random_state = 1)
+
+    X_train, X_test, y_train, y_test = train_test_split(X_train, 
+                                                        y_train, 
+                                                        test_size = 0.1,
+                                                        random_state = 1)
+    
+    
+    """
+    n_samples = len(data[:,0])
+    X_train = X[:int(0.8*n_samples),:]
+    X_validate = X[int(0.8*n_samples):int(0.9*n_samples),:]
+    X_test = X[int(0.9*n_samples):,:]
+
+    y_train = y[:int(0.8*n_samples),:]
+    y_validate = y[int(0.8*n_samples):int(0.9*n_samples),:]
+    y_test = y[int(0.9*n_samples):,:]
+    """
+    
+    
+    sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
+    sc_out = MinMaxScaler(copy=True, feature_range=(0, 1))
+    
+    X_train = sc_in.fit_transform(X_train)
+    X_validate = sc_in.transform(X_validate) 
+    X_test = sc_in.transform(X_test) 
+
+    #print("Here")
+   
+
+    """
+    min_value = np.min(X_train)
+    max_value = np.max.max(X_train)
+    range = max_value - min_value
+    X_train = (X_train - min_value) / range
+    X_validate = (X_validate - min_value) / range
+    X_test = (X_test - min_value) / range
+
+    print(X_train.min(), X_train.max())
+    print(X_validate.min(), X_validate.max())
+    print(X_test.min(), X_test.max())
+    """
+
+    
+    
+    #xx = torch.from_numpy(X_train)
+    #xx = xx
+    #print(xx)
+    #print(B.to(torch.float64))
+    #X_train = input_mapping(torch.from_numpy(X_train),B.to(torch.float64))
+    #X_test = input_mapping(torch.from_numpy(X_test),B.to(torch.float64))
+    #X_train = X_train.numpy()
+    #X_test = X_test.numpy()
+    
+    #X_train = X_train_i
+    #X_test = X_test_i
+
+    #y_train = sc_out.fit_transform(y_train)
+    #y_test = sc_out.transform(y_test) 
+
+    print("==> Shape X_train: ", X_train.shape)
+    print("==> Shape y_train: ", y_train.shape)
+
+    train_data = LoadIKDataset(X_train, y_train, device)
+    test_data = LoadIKDataset(X_validate, y_validate, device)
+
+    train_data_loader = DataLoader(dataset=train_data,
+                                   batch_size=batch_size,
+                                   shuffle=True,
+                                   drop_last=True,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    test_data_loader = DataLoader(dataset=test_data,
+                                   batch_size=batch_size,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test, sc_in
+
+
+
+# function to load the dataset
+def load_dataset_forward(data, n_DoF, batch_size, robot_choice, dataset_type, device, output_dim):
+
+    # file data_4DoF
+    #X = data[:,:3]
+    #y = data[:,6:]
+
+    # file data_4DOF_2
+    if robot_choice == "6DoF-6R-Puma260":
+        X = data[:,:6]
+        y = data[:,6:]
+    if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66" or robot_choice == "8DoF-P8":
+        if dataset_type == "seq":
+            print("\n==> Sequence dataset ...")
+            X = data[:,:input_dim]
+            y = data[:,input_dim:]
+        elif dataset_type == "1_to_1": 
+            print("\n==> 1 to 1 dataset ...")
+            #X = data[:,:6]
+            #X = data[:,:input_dim]
+            #y = data[:,input_dim:] #13]
+
+            
+            input_dim = output_dim*2+n_DoF
+            y = data[:,(input_dim-6):input_dim]
+            X = data[:,input_dim:] #13]
+            
+    if robot_choice == "3DoF-3R":
+        if dataset_type == "seq":
+            print("==> Sequence dataset ...")
+            X = data[:,:7]
+            y = data[:,7:]
+        elif dataset_type == "1_to_1": 
+            print("==> 1 to 1 dataset ...")
+            X = data[:,:2]
+            y = data[:,2:5] #13]
+
+ 
+        
+    # split in train and test sets    
+    X_train, X_validate, y_train, y_validate = train_test_split(X, 
+                                                                y, 
+                                                                test_size = 0.1,
+                                                                random_state = 1)
+
+    X_train, X_test, y_train, y_test = train_test_split(X_train, 
+                                                        y_train, 
+                                                        test_size = 0.1,
+                                                        random_state = 1)
+    
+
+    
+    """
+    sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
+    sc_out = MinMaxScaler(copy=True, feature_range=(0, 1))
+    
+    X_train = sc_in.fit_transform(X_train)
+    X_validate = sc_in.transform(X_validate) 
+    X_test = sc_in.transform(X_test) 
+    """
+
+    print("==> Shape X_train: ", X_train.shape)
+    print("==> Shape y_train: ", y_train.shape)
+
+    train_data = LoadIKDataset(X_train, y_train, device)
+    test_data = LoadIKDataset(X_validate, y_validate, device)
+
+    train_data_loader = DataLoader(dataset=train_data,
+                                   batch_size=batch_size,
+                                   shuffle=True,
+                                   drop_last=True,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    test_data_loader = DataLoader(dataset=test_data,
+                                   batch_size=batch_size,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    return train_data_loader, test_data_loader, X_validate, y_validate, X_train, y_train, X_test, y_test
+
+
+
+
+
+# function to load the dataset
 def load_dataset_sobolev(data, n_DoF, batch_size, robot_choice, dataset_type, device):
 
     if robot_choice == "7DoF-7R-Panda":
-        X = data[:,:6]
-        y = data[:,6:]
+        #X = data[:,:6]
+        #y = data[:,6:]
+        
+        X = data[:,6:13]
+        y = np.concatenate((data[:,:6], data[:,13:]), axis=1)
 
     #print(X.shape)
     #print(y.shape)
@@ -599,7 +1083,8 @@ def load_dataset_sobolev(data, n_DoF, batch_size, robot_choice, dataset_type, de
        
     print("==> Shape X_train: ", X_train.shape)
     print("==> Shape y_train: ", y_train.shape)
-    batch_size = 10
+    #print(batch_size)
+    #batch_size = 10
 
     train_data = LoadIKDataset(X_train, y_train, device)
     test_data = LoadIKDataset(X_validate, y_validate, device)
@@ -784,18 +1269,43 @@ def load_test_dataset_2(X_test, y_test, device, sc_in):
 
 
 
+def load_test_all_dataset(X_test, y_test, device):
+
+    print("==> Shape X_test: ", X_test.shape)
+    print("==> Shape y_test: ", y_test.shape)
+
+    sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
+
+    X_test = sc_in.fit_transform(X_test) 
+
+    test_data = LoadIKDataset(X_test, y_test, device)
+
+    test_data_loader = DataLoader(dataset=test_data,
+                                   batch_size=1,
+                                   drop_last=False,
+                                   shuffle=False,
+                                   pin_memory=False,
+                                   num_workers=8,
+                                   persistent_workers=True)
+
+    return test_data_loader
+
+
+
 
 
 # train function
 def train(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
     epoch_loss = 0
     model.train()    
+    #print("... FKloss Minimization ...")
    
     with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
         for data in iterator:
             optimizer.zero_grad()
             x, y = data['input'], data['output']
-            x.requires_grad = True
+            #x.requires_grad = True
+            
 
             x = x.to(device)
             y = y.to(device)           
@@ -804,6 +1314,14 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
             y_pred, _ = model(x)
             loss = criterion(y_pred, y)
 
+
+            
+            if criterion_type == "ld":
+                criterion_2 = nn.MSELoss(reduction="mean")
+                loss_2 = criterion_2(y_pred, y)
+                loss = loss + loss_2
+            
+
             loss.backward()
             #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
             optimizer.step()
@@ -811,11 +1329,81 @@ def train(model, iterator, optimizer, criterion, criterion_type, batch_size, dev
            
             epoch_loss += loss.item()
             t.set_postfix_str('Train loss: {:.6f}'.format(epoch_loss/len(iterator)))
-            t.update()        
+            t.update()   
+
+
+            #print(y_pred.isnan().nonzero())
+            #print(y.isnan().nonzero())
+            #print(loss)
+            #print(epoch_loss)
+
+        #print(len(iterator))
+        #sys.exit()
+
+            
+            
+            #print("Here")
+            #sys.exit()     
 
     return epoch_loss/len(iterator)
 
 
+
+
+# train function
+def train_two_stages(fk_model, ik_model, iterator, optimizer, fk_criterion, ik_criterion, batch_size, device, epoch, EPOCHS, scheduler, scaler, robot_choice):
+    epoch_loss = 0
+    epoch_loss_ik = 0
+    epoch_loss_fk = 0
+    fk_model.train()    
+    ik_model.train()
+
+    #print("... FKloss Minimization ...")
+   
+    with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+        for data in iterator:
+            optimizer.zero_grad()
+            x, y = data['input'], data['output']
+            #x.requires_grad = True            
+
+            x = x.to(device)
+            y = y.to(device)           
+ 
+            
+            y_pred, _ = ik_model(x)
+            x_pred, _ = fk_model(y_pred)
+
+            #r_x_pred = reconstruct_FK_pose(y_pred, robot_choice, device)
+            
+            loss_ik = ik_criterion(y_pred, y)
+            loss_fk = fk_criterion(x_pred, x)
+            loss = loss_ik + loss_fk  
+            #loss = loss_fk  
+            loss.backward()
+            optimizer.step()
+            #scheduler.step()           
+           
+            epoch_loss += loss.item()
+            epoch_loss_ik += loss_ik.item()
+            epoch_loss_fk += loss_fk.item()
+            t.set_postfix_str('Train loss: {:.6f}'.format(epoch_loss/len(iterator)))
+            t.update()   
+
+
+            #print(y_pred.isnan().nonzero())
+            #print(y.isnan().nonzero())
+            #print(loss)
+            #print(epoch_loss)
+
+        #print(len(iterator))
+        #sys.exit()
+
+            
+            
+            #print("Here")
+            #sys.exit()     
+
+    return epoch_loss/len(iterator), epoch_loss_fk/len(iterator), epoch_loss_ik/len(iterator)
 
 
 def train_keep(model, iterator, optimizer, criterion, criterion_type, batch_size, device, epoch, EPOCHS, scheduler, scaler):
@@ -952,72 +1540,88 @@ def train_sobolev(model, iterator, optimizer, criterion, criterion_type, batch_s
             
             #x = input_mapping(x,B)
             
-            with torch.autocast(device_type='cuda', dtype=torch.float16):
-                y_pred = model(x)
+            #with torch.autocast(device_type='cuda', dtype=torch.float16):
+            y_pred = model(x)
 
-                # compute the Network jacobian
-                """
-                #y_pred_J = get_network_jacobian(x, y_pred, device)
-                #y_pred_J = torch.flatten(y_pred_J, start_dim = 1).to(device)
+            #print("Here 1:")
+        
 
-                #y_pred_J = torch.autograd.functional.jacobian(model, x[0,:])
-                #y_pred_J = y_pred_J.permute(1, 0)
-                #print(y_pred_J)
-                #print(y_pred_J.shape)
-                """
-                reshape_size = x.shape[0]
+            # compute the Network jacobian
+            """
+            y_pred_J = get_network_jacobian(x, y_pred, device)
+            #print(y_pred_J.shape)
+            #sys.exit()
+            y_pred_J = torch.flatten(y_pred_J, start_dim = 1).to(device)
 
-                """
-                # Method 2 to compute the Jacobian
-                y_pred_J = torch.autograd.functional.jacobian(model, x)                
-                y_pred_J = y_pred_J[y_pred_J.sum(dim=3) != 0]                
-                y_pred_J = torch.reshape(y_pred_J, (reshape_size, 7, 6))
-                y_pred_J = y_pred_J.permute(0,2,1)             
-                print(y_pred_J[0])
-                print(y_pred_J.shape)
-                y_pred_J = torch.flatten(y_pred_J, start_dim = 1).to(device)
-                """
+            #y_pred_J = torch.autograd.functional.jacobian(model, x[0,:])
+            #y_pred_J = y_pred_J.permute(1, 0)
+            #print(y_pred_J)
+            #print(y_pred_J.shape)
+            """
+            reshape_size = x.shape[0]
+            #print(reshape_size)
+
+            """
+            # Method 2 to compute the Jacobian
+            y_pred_J = torch.autograd.functional.jacobian(model, x)                
+            y_pred_J = y_pred_J[y_pred_J.sum(dim=3) != 0]                
+            y_pred_J = torch.reshape(y_pred_J, (reshape_size, 7, 6))
+            y_pred_J = y_pred_J.permute(0,2,1)             
+            print(y_pred_J[0])
+            print(y_pred_J.shape)
+            y_pred_J = torch.flatten(y_pred_J, start_dim = 1).to(device)
+            """
+            
+            
+            
+            """
+            # Method 3 to compute the Jacobian
+            y_pred_J = torch.autograd.functional.jacobian(model, x)
+            y_pred_J_True = torch.zeros(reshape_size, 7, 6)
+            for i in range(reshape_size):
+                y_pred_J_True[i,:,:] = y_pred_J[i,:,i,:].permute(1,0)
+
+            #print(y_pred_J_True[0])
+            #print(y_pred_J_True.shape)
+            #sys.exit()  
                 
-                
-                
-                # Method 3 to compute the Jacobian
-                y_pred_J = torch.autograd.functional.jacobian(model, x)
-                y_pred_J_True = torch.zeros(reshape_size, 6, 7)
-                for i in range(reshape_size):
-                    y_pred_J_True[i,:,:] = y_pred_J[i,:,i,:].permute(1,0)
 
-                #print(y_pred_J_True[0])
-                #print(y_pred_J_True.shape)
+            y_pred_J = torch.flatten(y_pred_J_True, start_dim = 1).to(device)
+            
 
-                y_pred_J = torch.flatten(y_pred_J_True, start_dim = 1).to(device)
-                
+            #print("Here 2:")
+            
+            
+            
+            # compare the joints    
+            loss_q = criterion(y_pred, y[:,:6])
 
-             
-                
-               
-                # compare the joints    
-                loss_q = criterion(y_pred, y[:,:7])
+            # compare the jacobians
+            loss_J = criterion(y_pred_J, y[:,6:])
 
-                # compare the jacobians
-                loss_J = criterion(y_pred_J, y[:,7:])
+            # total loss
+            loss = loss_q + loss_J
+            """
 
-                # total loss
-                loss = loss_q + loss_J
+            loss_q = criterion(y_pred, y[:,:6])
+            loss_J = loss_q
+            loss = loss_q
+            
 
                 
            
             #make_dot(loss, params=dict(list(model.named_parameters()))).render("loss", format="png")
             
-            #loss.backward()
+            loss.backward()
             #torch.nn.utils.clip_grad_norm_(model.parameters(), 10)
-            #optimizer.step()
+            optimizer.step()
             #scheduler.step()
 
 
-            scaler.scale(loss).backward()
-            scaler.step(optimizer)
+            #scaler.scale(loss).backward()
+            #scaler.step(optimizer)
             #scheduler.step()
-            scaler.update()
+            #scaler.update()
 
             epoch_loss += loss.item()
             epoch_loss_q += loss_q.item()
@@ -1289,6 +1893,15 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
                 
                 y_pred, _ = model(x)
                 loss = criterion(y_pred, y)
+
+                
+                if criterion_type == "ld":
+                    criterion_2 = nn.MSELoss(reduction="mean")
+                    loss_2 = criterion_2(y_pred, y)
+                    loss = loss + loss_2
+                
+                
+
                 #loss = criterion(y_pred, x)  
                 
                 #loss = criterion(torch.sin(y_pred), torch.sin(y)) + criterion(torch.cos(y_pred), torch.cos(y))
@@ -1313,6 +1926,43 @@ def evaluate(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
 
 
 
+def evaluate_two_stages(fk_model, ik_model, iterator, fk_criterion, ik_criterion, device, epoch, EPOCHS, robot_choice):
+    epoch_loss = 0
+    epoch_loss_ik = 0
+    epoch_loss_fk = 0
+    fk_model.eval()
+    ik_model.eval()
+
+    
+    with torch.no_grad():
+        #for data in tqdm(iterator, desc="Evaluating", leave=False):        
+        with tqdm(total=len(iterator), desc='Epoch: [{}/{}]'.format(epoch+1, EPOCHS), disable=True) as t:
+            for data in iterator:
+                x = data['input'].to(device)
+                y = data['output'].to(device)          
+ 
+            
+                y_pred, _ = ik_model(x)
+                x_pred, _ = fk_model(y_pred)
+
+                #r_x_pred = reconstruct_FK_pose(y_pred, robot_choice, device)
+                
+                loss_ik = ik_criterion(y_pred, y)
+                loss_fk = fk_criterion(x_pred, x)
+                loss = loss_ik + loss_fk  
+                #loss = loss_fk 
+            
+                epoch_loss += loss.item()
+                epoch_loss_ik += loss_ik.item()
+                epoch_loss_fk += loss_fk.item()
+                   
+                t.set_postfix_str('Valid loss: {:.6f}'.format(epoch_loss/len(iterator)))
+                t.update()
+
+    return epoch_loss/len(iterator), epoch_loss_fk/len(iterator), epoch_loss_ik/len(iterator)
+
+
+
 def evaluate_sobolev(model, iterator, criterion, criterion_type, device, epoch, EPOCHS):
     epoch_loss = 0
     epoch_loss_q = 0
@@ -1328,7 +1978,7 @@ def evaluate_sobolev(model, iterator, criterion, criterion_type, device, epoch, 
                 
                 y_pred = model(x)   
                 
-                loss = criterion(y_pred, y[:,:7])
+                loss = criterion(y_pred, y[:,:6])
                 
                 epoch_loss += loss.item()
                 #if criterion_type == "ld":
@@ -1426,6 +2076,44 @@ def inference_modified(model, iterator, criterion, device, robot_choice):
     return results
 
 
+
+def forward_inference_modified(model, iterator, criterion, device, robot_choice):
+    model.eval()
+    y_preds = []
+    y_desireds = []
+    X_desireds = []
+    
+    for data in iterator:
+        x = data['input'].to(device)
+        y = data['output'].to(device)
+
+        #x = input_mapping(x,B)
+        
+        y_pred, _ = model(x)
+        y_preds.append(y_pred.detach().cpu().numpy().squeeze())
+        y_desireds.append(y.detach().cpu().numpy().squeeze())
+        #X_desireds.append(x.detach().cpu().numpy().squeeze())
+
+
+    y_desireds = np.array(y_desireds)
+    y_preds = np.array(y_preds)
+    #X_desireds = np.array(X_desireds)
+    y_errors = forward_reconstruct_pose_modified(y_desireds, y_preds, robot_choice)
+    
+    y_errors_report = np.array([[y_errors.min(axis=0)],
+                                [y_errors.mean(axis=0)],
+                                [y_errors.max(axis=0)],
+                                [y_errors.std(axis=0)]]).squeeze()
+    
+    results = {
+        "y_preds": y_preds,
+        "y_desireds": y_desireds,
+        "y_errors": y_errors,
+        "y_errors_report": y_errors_report
+    }
+    return results
+
+
 def inference_sobolev(model, iterator, criterion, device, robot_choice):
     model.eval()
     y_preds = []
@@ -1501,6 +2189,44 @@ def inference_FK(model, iterator, criterion, device):
     }
     return results
 
+
+def inference_FK_sobolev(model, iterator, criterion, device, robot_choice):
+    model.eval()
+    y_preds = []
+    y_desireds = []
+    X_desireds = []
+    for data in iterator:
+        x = data['input'].to(device)
+        yt = data['output'].to(device)
+        y = yt[:,:6]
+        y_pred = model(x)
+        y_preds.append(y_pred.detach().cpu().numpy().squeeze())
+        y_desireds.append(y.detach().cpu().numpy().squeeze())
+        X_desireds.append(x.detach().cpu().numpy().squeeze())
+
+    y_desireds = np.array(y_desireds)
+    X_desireds = np.array(X_desireds)
+    y_preds = np.array(y_preds)
+
+    y_errors = forward_reconstruct_pose_modified(y_desireds, y_preds, robot_choice)
+    #y_errors = np.abs(y_preds - y_desireds)
+
+    y_errors_report = np.array([[y_errors.min(axis=0)],
+                                [y_errors.mean(axis=0)],
+                                [y_errors.max(axis=0)],
+                                [y_errors.std(axis=0)]]).squeeze()
+    
+    results = {
+        "y_preds": y_preds,
+        "y_desireds": y_desireds,
+        "y_errors": y_errors,
+        "y_errors_report": y_errors_report
+    }
+    return results
+
+
+
+
 # reconstruct positions in cartesian space from predictions
 def reconstruct_pose(y_preds, robot_choice):
     y_preds = torch.from_numpy(y_preds)
@@ -1534,6 +2260,25 @@ def reconstruct_pose(y_preds, robot_choice):
     return X_pred
 
 
+
+def reconstruct_FK_pose(joints_pred, robot_choice, device):
+    #y_preds = torch.from_numpy(y_preds)
+    n_samples = joints_pred.shape[0]
+
+    DH = get_DH_2(robot_choice).to(device)
+    DH_preds = get_DH_batch(robot_choice, joints_pred, DH, device)      
+    _, T_preds = forward_kinematics_batch(DH_preds, device)
+    position = T_preds[:,:3,3]
+    orientation = matrix_to_euler_angles(T_preds[:,:3,:3], "XYZ")
+    X_preds = torch.cat([position, orientation], dim=1)
+
+    #print(X_preds.shape)
+    #sys.exit()
+
+    return X_preds
+
+
+
 def reconstruct_pose_modified(y_desireds, y_preds, robot_choice):
     y_desireds = torch.from_numpy(y_desireds)
     y_preds = torch.from_numpy(y_preds)
@@ -1556,27 +2301,30 @@ def reconstruct_pose_modified(y_desireds, y_preds, robot_choice):
         DH_preds = get_DH(robot_choice, t_preds)
         T_preds = forward_kinematics(DH_preds)       
         
-        if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66":
-            R_desireds = T_desireds[:3,:3]
-            R_preds = T_preds[:3,:3] 
+        #if robot_choice == "7DoF-7R-Panda" or robot_choice == "7DoF-GP66":
+        R_desireds = T_desireds[:3,:3]
+        R_preds = T_preds[:3,:3] 
 
-            rpy_desireds = matrix_to_euler_angles(R_desireds, "XYZ")
-            rpy_preds = matrix_to_euler_angles(R_preds, "XYZ")
+        rpy_desireds = matrix_to_euler_angles(R_desireds, "XYZ")
+        rpy_preds = matrix_to_euler_angles(R_preds, "XYZ")
+        #rpy_desireds = matrix_to_rpy_angles(R_desireds)
+        #rpy_preds = matrix_to_rpy_angles(R_preds)
 
-            R_errors = torch.matmul(R_desireds, torch.inverse(R_preds))
-            #T_errors = torch.matmul(T_desireds, torch.inverse(T_preds))
-            #R_errors = T_errors[:3,:3] 
-            rpy_errors = matrix_to_euler_angles(R_errors, "XYZ")   
-            rpy_errors = torch.abs(rpy_errors)         
-            #position_errors = T_errors[:3,-1]
-            position_errors = torch.abs(T_desireds[:3,-1]-T_preds[:3,-1])
-            
-            # x,y,z,R,P,Y,t1,t2,t3,t4,t5,t6,t7 where x,y,z (m) and t (rad)
-            #print(T[:3,-1])
-            #print(rpy)
-            pose_desireds.append(torch.cat([T_desireds[:3,-1], rpy_desireds, t_desireds]).numpy())
-            pose_preds.append(torch.cat([T_preds[:3,-1], rpy_preds, t_preds]).numpy())
-            pose_errors.append(torch.cat([position_errors, rpy_errors]).numpy())
+        R_errors = torch.matmul(R_desireds, torch.inverse(R_preds))
+        #T_errors = torch.matmul(T_desireds, torch.inverse(T_preds))
+        #R_errors = T_errors[:3,:3] 
+        rpy_errors = matrix_to_euler_angles(R_errors, "XYZ")
+        #rpy_errors = matrix_to_rpy_angles(R_errors)  
+        rpy_errors = torch.abs(rpy_errors)         
+        #position_errors = T_errors[:3,-1]
+        position_errors = torch.abs(T_desireds[:3,-1]-T_preds[:3,-1])
+        
+        # x,y,z,R,P,Y,t1,t2,t3,t4,t5,t6,t7 where x,y,z (m) and t (rad)
+        #print(T[:3,-1])
+        #print(rpy)
+        pose_desireds.append(torch.cat([T_desireds[:3,-1], rpy_desireds, t_desireds]).numpy())
+        pose_preds.append(torch.cat([T_preds[:3,-1], rpy_preds, t_preds]).numpy())
+        pose_errors.append(torch.cat([position_errors, rpy_errors]).numpy())
 
 
 
@@ -1585,6 +2333,37 @@ def reconstruct_pose_modified(y_desireds, y_preds, robot_choice):
     X_errors = np.array(pose_errors)
     return X_desireds, X_preds, X_errors
     
+
+
+
+def forward_reconstruct_pose_modified(y_desireds, y_preds, robot_choice):
+    y_desireds = torch.from_numpy(y_desireds)
+    y_preds = torch.from_numpy(y_preds)
+    n_samples = y_preds.shape[0]
+
+    pose_errors = []
+    
+    for i in range(n_samples):
+
+        # set the joints
+        d_desireds = y_desireds[i,:]
+        d_preds = y_preds[i,:]
+
+        # compute the forward kinematics
+        R_desireds = euler_angles_to_matrix(d_desireds[3:], "XYZ")
+        R_preds = euler_angles_to_matrix(d_preds[3:], "XYZ")
+
+        R_errors = torch.matmul(R_desireds, torch.inverse(R_preds))
+        
+        rpy_errors = torch.abs(matrix_to_euler_angles(R_errors, "XYZ")) 
+        position_errors = torch.abs(d_desireds[:3]-d_preds[:3])
+
+        pose_errors.append(torch.cat([position_errors, rpy_errors]).numpy())
+
+    X_errors = np.array(pose_errors)
+    return X_errors
+
+
 
 # compute epoch time
 def epoch_time(start_time, end_time):
@@ -1669,13 +2448,21 @@ def get_DH_2(robot_choice):
     # columns: t, d, a, alpha
 
     if robot_choice == "7DoF-7R-Panda":
-        DH = torch.tensor([[0,    0.333,      0.0,           0],
-                            [0,      0.0,      0.0, -torch.pi/2],
-                            [0,    0.316,      0.0,  torch.pi/2],
-                            [0,      0.0,   0.0825,  torch.pi/2],
-                            [0,    0.384,  -0.0825, -torch.pi/2],
-                            [0,      0.0,      0.0,  torch.pi/2],
-                            [0,    0.107,    0.088,  torch.pi/2]])
+        DH = torch.tensor([[0.0,    0.333,      0.0,           0],
+                           [0.0,      0.0,      0.0, -torch.pi/2],
+                           [0.0,    0.316,      0.0,  torch.pi/2],
+                           [0.0,      0.0,   0.0825,  torch.pi/2],
+                           [0.0,    0.384,  -0.0825, -torch.pi/2],
+                           [0.0,      0.0,      0.0,  torch.pi/2],
+                           [0.0,    0.107,    0.088,  torch.pi/2]])
+    elif robot_choice == "7DoF-GP66":
+        DH = torch.tensor([[t[0],    0.0,      0.0,  torch.pi/2],
+                           [t[1],    0.0,     0.25,  torch.pi/2],
+                           [ 0.0,   t[2],      0.0,         0.0],
+                           [t[3],    0.0,      0.0,  torch.pi/2],
+                           [t[4],   0.14,      0.0,  torch.pi/2],
+                           [t[5],    0.0,      0.0,  torch.pi/2],
+                           [t[6],    0.0,      0.0,  torch.pi/2]])
 
     return DH
 
@@ -1697,8 +2484,17 @@ def joint_angle_to_transformation_matrix(theta_ndh, DH, device):
         # populate the DH with the thetas and have as many as the batch size
         #print("DH.shape: {}".format(self.DH.shape))
         DH = DH.to(device)
+        #print(DH)
         DH = DH.repeat(batch, 1).view(batch, joint_number, 4)
+        #print(DH[0,:,0])
+        
         DH[:,:,0] = theta_ndh
+        #print(theta_ndh[0,:])
+        #print("Inside JFK ||")
+        #print(DH[0,:,0])
+        #sys.exit()
+
+
         #DH[:,2,2] = theta_ndh[:,0,2]
         #DH[:,:2,3] = theta_ndh[:,0,:2]
         #print("DH.shape: {}".format(DH.shape))
@@ -1732,6 +2528,8 @@ def joint_angle_to_transformation_matrix(theta_ndh, DH, device):
         row_1 = torch.cat( (torch.cos(theta), -torch.sin(theta)*torch.cos(alpha),  torch.sin(theta)*torch.sin(alpha), a*torch.cos(theta)), 1 )    
         row_2 = torch.cat( (torch.sin(theta),  torch.cos(theta)*torch.cos(alpha), -torch.cos(theta)*torch.sin(alpha), a*torch.sin(theta)), 1 )   
             
+        #print("row_1: ", row_1.shape)
+
         zeros = torch.autograd.Variable(torch.zeros(joint_number,1).to(device))
         zeros = zeros.repeat(batch,1).view(-1, 1)         
         ones = torch.autograd.Variable(torch.ones(joint_number,1).to(device))
@@ -1746,9 +2544,14 @@ def joint_angle_to_transformation_matrix(theta_ndh, DH, device):
         row_4 = torch.cat( (zeros, zeros, zeros, ones), 1 )
         T_successive = torch.cat((row_1, row_2, row_3, row_4), 1).view(batch, joint_number, 4, 4)  
 
+        #print(T_successive.shape)
+        #print(T_successive[0,:,:])
+        #print()
+
         T_total = T_successive[:,0,:,:].view(batch,1,4,4)
         #print("T_successive.shape): {}".format(T_successive.shape))
-        #print("T_total.shape): {}".format(T_total.shape))      
+        #print("T_total.shape): {}".format(T_total.shape))  
+            
 
         for i in range(1, joint_number):
             temp_total_transformation = torch.matmul(T_total, T_successive[:,i,:,:].view(batch,1,4,4))
@@ -1757,8 +2560,516 @@ def joint_angle_to_transformation_matrix(theta_ndh, DH, device):
         return T_successive, T_total.view(batch,4,4)
 
 
+
+
+
+
+def get_DH_batch(robot_choice, t, DH, device):
+    batch_size = t.shape[0]  # Get the batch size
+    zeros = torch.zeros(batch_size, device=device)
+    ones = torch.ones(batch_size, device=device)
+    #print("Inside")
+    #print(DH)
+    #print(t[0,:])
+    
+    if robot_choice == "7DoF-7R-Panda":
+        """
+        DH = torch.stack([
+            torch.stack([t[:, 0],   torch.ones(batch_size)*0.333,        torch.zeros(batch_size),                 torch.zeros(batch_size)], dim=1),
+            torch.stack([t[:, 1],        torch.zeros(batch_size),        torch.zeros(batch_size),  -torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 2],   torch.ones(batch_size)*0.316,        torch.zeros(batch_size),    torch.ones(batch_size)* torch.pi / 2], dim=1),
+            torch.stack([t[:, 3],        torch.zeros(batch_size),  torch.ones(batch_size)*0.0825,   torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 4], torch.ones(batch_size) * 0.384, -torch.ones(batch_size)*0.0825,  -torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 5],        torch.zeros(batch_size),        torch.zeros(batch_size),   torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 6],   torch.ones(batch_size)*0.107,   torch.ones(batch_size)*0.088,   torch.ones(batch_size) * torch.pi / 2], dim=1)
+        ], dim=1) 
+        """
+        DH = torch.stack([
+            torch.stack([t[:, 0],    ones*DH[0,1],    zeros*DH[0,2],    zeros*DH[0,3]], dim=1),
+            torch.stack([t[:, 1],   zeros*DH[1,1],    zeros*DH[1,2],     ones*DH[1,3]], dim=1),
+            torch.stack([t[:, 2],    ones*DH[2,1],    zeros*DH[2,2],     ones*DH[2,3]], dim=1),
+            torch.stack([t[:, 3],   zeros*DH[3,1],     ones*DH[3,2],     ones*DH[3,3]], dim=1),
+            torch.stack([t[:, 4],    ones*DH[4,1],     ones*DH[4,2],     ones*DH[4,3]], dim=1),
+            torch.stack([t[:, 5],   zeros*DH[5,1],    zeros*DH[5,2],     ones*DH[5,3]], dim=1),
+            torch.stack([t[:, 6],    ones*DH[6,1],     ones*DH[6,2],     ones*DH[6,3]], dim=1)
+        ], dim=1)
+
+    elif robot_choice == "7DoF-GP66":
+        DH = torch.stack([
+            torch.stack([t[:, 0], torch.zeros(batch_size), torch.zeros(batch_size), torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 1], torch.zeros(batch_size), torch.ones(batch_size) * 0.25, torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([torch.zeros(batch_size), t[:, 2], torch.zeros(batch_size), torch.zeros(batch_size)], dim=1),
+            torch.stack([t[:, 3], torch.zeros(batch_size), torch.zeros(batch_size), torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 4], torch.ones(batch_size) * 0.14, torch.zeros(batch_size), torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 5], torch.zeros(batch_size), torch.zeros(batch_size), torch.ones(batch_size) * torch.pi / 2], dim=1),
+            torch.stack([t[:, 6], torch.zeros(batch_size), torch.zeros(batch_size), torch.ones(batch_size) * torch.pi / 2], dim=1)
+        ], dim=1)
+    else:
+        raise ValueError("robot DH not yet implemented, current possible choices are: 7DoF-7R-Panda, 7DoF-GP66")
+    
+    return DH
+
+
+# A matrix using DH parameters with batch support
+def A_matrix_batch(t, d, a, al):
+    # the inputs of torch.sin and torch.cos are expressed in rad
+    cos_t = torch.cos(t)
+    sin_t = torch.sin(t)
+    cos_al = torch.cos(al)
+    sin_al = torch.sin(al)
+
+    zeros = torch.zeros_like(t)
+    ones = torch.ones_like(t)
+
+    A = torch.stack([
+        torch.stack([cos_t, -sin_t * cos_al,  sin_t * sin_al,     a * cos_t], dim=1),
+        torch.stack([sin_t,  cos_t * cos_al, -cos_t * sin_al,     a * sin_t], dim=1),
+        torch.stack([zeros,          sin_al,          cos_al,             d], dim=1),
+        torch.stack([zeros,           zeros,           zeros,          ones], dim=1)
+    ], dim=1)
+
+    return A
+                         
+# Forward Kinematics with DH parameters and batch support
+def forward_kinematics_batch(DH, device):
+    n_DoF = DH.shape[1]
+    batch_size = DH.shape[0]
+    #print(DH[0,:,0])
+
+    T = torch.eye(4, device=device).unsqueeze(0).repeat(batch_size, 1, 1)  # Initialize as identity matrix for batch operations
+
+    for i in range(n_DoF):
+        A = A_matrix_batch(*DH[:, i].unbind(dim=1))  # Extract DH parameters for each joint in the batch
+        T = torch.matmul(T, A)  # Batch matrix multiplication
+        #print(A[0,:,:])
+
+    #print("Inside FK batch ||")
+    T_successive = T
+
+    return T_successive, T #.squeeze()  # Remove the batch dimension if not needed
+
+
+
+def matrix_to_axis_angle(matrix: torch.Tensor) -> torch.Tensor:
+    """
+    Convert rotations given as rotation matrices to axis/angle.
+
+    Args:
+        matrix: Rotation matrices as tensor of shape (..., 3, 3).
+
+    Returns:
+        Rotations given as a vector in axis angle form, as a tensor
+            of shape (..., 3), where the magnitude is the angle
+            turned anticlockwise in radians around the vector's
+            direction.
+    """
+    return quaternion_to_axis_angle(matrix_to_quaternion(matrix))
+
+
+def standardize_quaternion(quaternions: torch.Tensor) -> torch.Tensor:
+    """
+    Convert a unit quaternion to a standard form: one in which the real
+    part is non negative.
+
+    Args:
+        quaternions: Quaternions with real part first,
+            as tensor of shape (..., 4).
+
+    Returns:
+        Standardized quaternions as tensor of shape (..., 4).
+    """
+    return torch.where(quaternions[..., 0:1] < 0, -quaternions, quaternions)
+
+
+def _sqrt_positive_part(x: torch.Tensor) -> torch.Tensor:
+    """
+    Returns torch.sqrt(torch.max(0, x))
+    but with a zero subgradient where x is 0.
+    """
+    ret = torch.zeros_like(x)
+    positive_mask = x > 0
+    ret[positive_mask] = torch.sqrt(x[positive_mask])
+    return ret
+
+
+def matrix_to_quaternion(matrix: torch.Tensor) -> torch.Tensor:
+    """
+    Convert rotations given as rotation matrices to quaternions.
+
+    Args:
+        matrix: Rotation matrices as tensor of shape (..., 3, 3).
+
+    Returns:
+        quaternions with real part first, as tensor of shape (..., 4).
+    """
+    if matrix.size(-1) != 3 or matrix.size(-2) != 3:
+        raise ValueError(f"Invalid rotation matrix shape {matrix.shape}.")
+
+    batch_dim = matrix.shape[:-2]
+    m00, m01, m02, m10, m11, m12, m20, m21, m22 = torch.unbind(
+        matrix.reshape(batch_dim + (9,)), dim=-1
+    )
+
+    q_abs = _sqrt_positive_part(
+        torch.stack(
+            [
+                1.0 + m00 + m11 + m22,
+                1.0 + m00 - m11 - m22,
+                1.0 - m00 + m11 - m22,
+                1.0 - m00 - m11 + m22,
+            ],
+            dim=-1,
+        )
+    )
+
+    # we produce the desired quaternion multiplied by each of r, i, j, k
+    quat_by_rijk = torch.stack(
+        [
+            # pyre-fixme[58]: `**` is not supported for operand types `Tensor` and
+            #  `int`.
+            torch.stack([q_abs[..., 0] ** 2, m21 - m12, m02 - m20, m10 - m01], dim=-1),
+            # pyre-fixme[58]: `**` is not supported for operand types `Tensor` and
+            #  `int`.
+            torch.stack([m21 - m12, q_abs[..., 1] ** 2, m10 + m01, m02 + m20], dim=-1),
+            # pyre-fixme[58]: `**` is not supported for operand types `Tensor` and
+            #  `int`.
+            torch.stack([m02 - m20, m10 + m01, q_abs[..., 2] ** 2, m12 + m21], dim=-1),
+            # pyre-fixme[58]: `**` is not supported for operand types `Tensor` and
+            #  `int`.
+            torch.stack([m10 - m01, m20 + m02, m21 + m12, q_abs[..., 3] ** 2], dim=-1),
+        ],
+        dim=-2,
+    )
+
+    # We floor here at 0.1 but the exact level is not important; if q_abs is small,
+    # the candidate won't be picked.
+    flr = torch.tensor(0.1).to(dtype=q_abs.dtype, device=q_abs.device)
+    quat_candidates = quat_by_rijk / (2.0 * q_abs[..., None].max(flr))
+
+    # if not for numerical problems, quat_candidates[i] should be same (up to a sign),
+    # forall i; we pick the best-conditioned one (with the largest denominator)
+    out = quat_candidates[
+        F.one_hot(q_abs.argmax(dim=-1), num_classes=4) > 0.5, :
+    ].reshape(batch_dim + (4,))
+    return standardize_quaternion(out)
+
+
+def quaternion_to_axis_angle(quaternions: torch.Tensor) -> torch.Tensor:
+    """
+    Convert rotations given as quaternions to axis/angle.
+
+    Args:
+        quaternions: quaternions with real part first,
+            as tensor of shape (..., 4).
+
+    Returns:
+        Rotations given as a vector in axis angle form, as a tensor
+            of shape (..., 3), where the magnitude is the angle
+            turned anticlockwise in radians around the vector's
+            direction.
+    """
+    norms = torch.norm(quaternions[..., 1:], p=2, dim=-1, keepdim=True)
+    half_angles = torch.atan2(norms, quaternions[..., :1])
+    angles = 2 * half_angles
+    eps = 1e-6
+    small_angles = angles.abs() < eps
+    sin_half_angles_over_angles = torch.empty_like(angles)
+    sin_half_angles_over_angles[~small_angles] = (
+        torch.sin(half_angles[~small_angles]) / angles[~small_angles]
+    )
+    # for x small, sin(x/2) is about x/2 - (x/2)^3/6
+    # so sin(x/2)/x is about 1/2 - (x*x)/48
+    sin_half_angles_over_angles[small_angles] = (
+        0.5 - (angles[small_angles] * angles[small_angles]) / 48
+    )
+    return quaternions[..., 1:] / sin_half_angles_over_angles
+
+
+
+
 # compute loss function by employing the FK 
+class IKLoss(nn.Module):
+    def __init__(self, robot_choice, device):
+        #super(FKLoss, self).__init__()
+        super().__init__()
+        self.criterion = nn.MSELoss(reduction="mean")
+        #self.criterion = nn.L1Loss(reduction="mean")
+        self.robot_choice = robot_choice
+        self.device = device
+
+    def forward(self, joints_pred, joints_des):
+        
+        # get the DH
+        DH = get_DH_2(self.robot_choice).to(self.device)
+
+        # get the FK from the predicted joints
+        DH_preds = get_DH_batch(self.robot_choice, joints_pred, DH, self.device)      
+        _, T_preds = forward_kinematics_batch(DH_preds, self.device)
+
+        # get the FK from the desired joints
+        DH_des = get_DH_batch(self.robot_choice, joints_des, DH, self.device)
+        _, T_des = forward_kinematics_batch(DH_des, self.device)
+
+        # get the inverse of the desired HTMs
+        T_des_inv = T_des.clone()
+        T_des_inv[:,:3,:3] = torch.transpose(T_des_inv[:,:3,:3], 1, 2)
+        T_des_inv[:,:3,3] = torch.matmul(-T_des_inv[:,:3,:3], T_des_inv[:,:3,3].unsqueeze(-1)).squeeze(-1)
+
+        # get the errors
+        T_errors = torch.matmul(T_preds, T_des_inv)
+
+        R_errors = T_errors[:,:3,:3]
+        axis_angle_errors = matrix_to_axis_angle(R_errors)
+        axis_angle_errors = torch.norm(axis_angle_errors, dim=1)
+        
+        #loss = self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]) + torch.mean((rpy_errors)**2)
+        loss = self.criterion(T_preds[:,:3,-1], T_des[:,:3,-1]) + torch.mean((axis_angle_errors)**2)
+        
+
+        return loss
+
+
 class FKLoss(nn.Module):
+    def __init__(self, robot_choice, device):
+        #super(FKLoss, self).__init__()
+        super().__init__()
+        self.criterion = nn.MSELoss(reduction="mean")
+        #self.criterion = nn.L1Loss(reduction="mean")
+        self.robot_choice = robot_choice
+        self.device = device
+
+    def forward(self, pose_pred, pose_des):
+
+        #print(pose_pred.shape)
+
+        R_preds = euler_angles_to_matrix(pose_pred[:,3:], "XYZ")
+        R_desireds = euler_angles_to_matrix(pose_des[:,3:], "XYZ")
+        R_errors = torch.matmul(R_desireds, torch.inverse(R_preds))
+
+        axis_angle_errors = matrix_to_axis_angle(R_errors)
+        axis_angle_errors = torch.norm(axis_angle_errors, dim=1)
+        
+        #loss = self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]) + torch.mean((rpy_errors)**2)
+        loss = self.criterion(pose_pred[:,:3], pose_des[:,:3]) + torch.mean((axis_angle_errors)**2)
+        
+
+        return loss
+
+
+
+
+# compute loss function by employing the FK 
+class FKLossOld(nn.Module):
+    def __init__(self, robot_choice, device):
+        #super(FKLoss, self).__init__()
+        super().__init__()
+        self.criterion = nn.MSELoss(reduction="mean")
+        #self.criterion = nn.L1Loss(reduction="mean")
+        self.robot_choice = robot_choice
+        self.device = device
+
+    def forward(self, joints_pred, joints_des):
+        
+        DH = get_DH_2(self.robot_choice)
+        #print(joints_pred[0,:])
+        #print("Inside FK Loss")
+        T_successive_pred, T_total_pred = joint_angle_to_transformation_matrix(joints_pred, DH, self.device)
+        R_pred = T_total_pred[:,:3,:3]
+        #rpy_pred = matrix_to_euler_angles(R_pred, "XYZ")
+        #pose_pred = torch.cat([T_total_pred[:,:3,-1], rpy_pred[:,:]], axis=1)
+
+        """
+        T_successive_des, T_total_des = joint_angle_to_transformation_matrix(joints_des, DH, self.device)
+        R_des = T_total_des[:,:3,:3]
+        #rpy_des = matrix_to_euler_angles(R_des, "XYZ")
+        #pose_des = torch.cat([T_total_des[:,:3,-1], rpy_des[:,:]], axis=1)
+
+        R_errors = torch.matmul(R_pred, torch.inverse(R_des))
+        rpy_errors = matrix_to_euler_angles(R_errors, "XYZ")
+        """
+
+        ################################################
+        # get the DH
+        DH = get_DH_2(self.robot_choice).to(self.device)
+
+        # get the FK from the predicted joints
+        DH_preds = get_DH_batch(self.robot_choice, joints_pred, DH, self.device)     
+        #print("DH_batch: ", DH_preds[0,:,0])  
+        _, T_preds = forward_kinematics_batch(DH_preds, self.device)
+
+        #print("End ||")
+        #print(T_preds[0,:,:])
+        #print(T_total_pred[0,:,:])
+        #sys.exit()
+
+        # get the FK from the desired joints
+        DH_des = get_DH_batch(self.robot_choice, joints_des, DH, self.device)
+        _, T_des = forward_kinematics_batch(DH_des, self.device)
+
+        # get the inverse of the desired HTMs
+        T_des_inv = T_des.clone()
+        T_des_inv[:,:3,:3] = torch.transpose(T_des_inv[:,:3,:3], 1, 2)
+        T_des_inv[:,:3,3] = torch.matmul(-T_des_inv[:,:3,:3], T_des_inv[:,:3,3].unsqueeze(-1)).squeeze(-1)
+
+        # get the errors
+        T_errors = torch.matmul(T_preds, T_des_inv)
+
+
+        
+
+        """
+        print("T_errors:\n", T_errors.isnan().nonzero())
+
+        # get the pose loss 
+        xyz_errors = T_errors[:,:3,3]
+        rpy_errors = matrix_to_euler_angles(T_errors[:,:3,:3].round(decimals=3), "ZYX")
+        #rpy_errors = matrix_to_rpy_angles(T_errors[:,:3,:3])
+
+        #print(xyz_errors)
+        #print(rpy_errors)
+        xyz_errors_index = xyz_errors.isnan().nonzero()
+        rpy_errors_index = rpy_errors.isnan().nonzero()
+
+        print("xyz_errors:\n", xyz_errors_index)
+        print("rpy_errors:\n", rpy_errors_index)
+
+        print()
+        idx = rpy_errors_index[0,0]
+        print(T_errors[idx,:3,:3])
+        print(matrix_to_euler_angles(T_errors[idx,:3,:3], "ZYX"))
+
+
+        axis_angle_errors = matrix_to_axis_angle(T_errors[idx,:3,:3])
+        print(axis_angle_errors.shape)
+        print(axis_angle_errors[0,])
+        axis_angle_errors_index = axis_angle_errors.isnan().nonzero()
+        print("axis_angle_errors:\n", axis_angle_errors_index)
+
+
+        loss = torch.mean(torch.sum((xyz_errors**2), dim=1)) + torch.mean(torch.sum((rpy_errors**2), dim=1))
+        print(loss)  
+        sys.exit()    
+
+        #T_errors = torch.matmul(T_desireds, torch.inverse(T_preds))
+        #R_errors = T_errors[:3,:3] 
+        #print(R_errors.shape)
+        #print(rpy_errors.shape)
+
+
+        #print(torch.mean(torch.square(rpy_errors)))
+        #print(torch.mean((rpy_errors)**2))
+        #print(self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]))
+
+        #print("T_total:")
+        #print(T_total)
+        #print("Joints_fk:")
+        #print(pose_pred)
+        #print("poses")
+        #print(pose_des)
+        #print()
+        
+        #loss = self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]) + torch.mean((rpy_errors)**2)
+        """
+        R_errors = T_errors[:,:3,:3]
+        axis_angle_errors = matrix_to_axis_angle(R_errors)
+        axis_angle_errors = torch.norm(axis_angle_errors, dim=1)
+        
+        #loss = self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]) + torch.mean((rpy_errors)**2)
+        loss = self.criterion(T_preds[:,:3,-1], T_des[:,:3,-1]) + torch.mean((axis_angle_errors)**2)
+        
+
+        return loss
+
+
+
+def matrix_to_rpy_angles(rotation_matrices):
+    # Ensure the input is a 3x3 matrix
+    if rotation_matrices.shape[-2:] != torch.Size([3, 3]):
+        raise ValueError("Input should be a 3x3 rotation matrix")
+
+    # Extract individual elements for clarity
+    nx, ox, ax = rotation_matrices[..., 0, 0], rotation_matrices[..., 0, 1], rotation_matrices[..., 0, 2]
+    ny, oy, ay = rotation_matrices[..., 1, 0], rotation_matrices[..., 1, 1], rotation_matrices[..., 1, 2]
+    nz, oz, az = rotation_matrices[..., 2, 0], rotation_matrices[..., 2, 1], rotation_matrices[..., 2, 2]
+   
+
+    # Calculate roll (x-axis rotation)
+    roll = torch.atan2(ny, nx) 
+    pitch = torch.atan2(-nz, (nx*torch.cos(roll) + ny*torch.sin(roll)))  
+    yaw = torch.atan2((-ay*torch.cos(roll) + ax*torch.sin(roll)),(oy*torch.cos(roll) - ox*torch.sin(roll)))
+    
+    return torch.stack((roll, pitch, yaw),dim=-1)
+
+
+
+# compute loss function by employing the FK 
+class FKLossD(nn.Module):
+    def __init__(self, robot_choice, device):
+        #super(FKLoss, self).__init__()
+        super().__init__()
+        self.criterion = nn.MSELoss(reduction="mean")
+        #self.criterion = nn.L1Loss(reduction="mean")
+        self.robot_choice = robot_choice
+        self.device = device
+
+    def forward(self, joints_pred, joints_des):
+        #inputs_fk = torch.zeros_like(targets)
+        #joints_fk = torch.clone(poses)
+        #joints_fk.retain_grad()
+
+        
+        DH = get_DH_2(self.robot_choice)
+        T_successive_pred, T_total_pred = joint_angle_to_transformation_matrix(joints_pred, DH, self.device)
+        R_pred = T_total_pred[:,:3,:3]
+        #rpy_pred = matrix_to_euler_angles(R_pred, "XYZ")
+        #pose_pred = torch.cat([T_total_pred[:,:3,-1], rpy_pred[:,:]], axis=1)
+
+
+        T_successive_des, T_total_des = joint_angle_to_transformation_matrix(joints_des, DH, self.device)
+        R_des = T_total_des[:,:3,:3]
+        #rpy_des = matrix_to_euler_angles(R_des, "XYZ")
+        #pose_des = torch.cat([T_total_des[:,:3,-1], rpy_des[:,:]], axis=1)
+
+        R_errors = torch.matmul(R_pred, torch.inverse(R_des))
+        #rpy_errors = matrix_to_euler_angles(R_errors, "XYZ")
+        axis_angle_errors = matrix_to_axis_angle(R_errors)
+        #print(axis_angle_errors.shape)
+        #print(axis_angle_errors[0,])
+
+        axis_angle_errors = torch.norm(axis_angle_errors, dim=1)
+        #print(axis_angle_errors)
+        #print(axis_angle_errors.shape)
+        #print()
+        #axis_angle_errors_index = axis_angle_errors.isnan().nonzero()
+        #print("axis_angle_errors:\n", axis_angle_errors_index)
+        #sys.exit()
+
+        #T_errors = torch.matmul(T_desireds, torch.inverse(T_preds))
+        #R_errors = T_errors[:3,:3] 
+        #print(R_errors.shape)
+        #print(rpy_errors.shape)
+
+
+        #print(torch.mean(torch.square(rpy_errors)))
+        #print(torch.mean((rpy_errors)**2))
+        #print(self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]))
+
+        #print("T_total:")
+        #print(T_total)
+        #print("Joints_fk:")
+        #print(pose_pred)
+        #print("poses")
+        #print(pose_des)
+        #print()
+        
+        #loss = self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]) + torch.mean((rpy_errors)**2)
+        loss = self.criterion(T_total_pred[:,:3,-1], T_total_des[:,:3,-1]) + torch.mean((axis_angle_errors)**2)
+        
+
+        return loss
+        
+
+class FKLossC(nn.Module):
     def __init__(self, robot_choice, device):
         #super(FKLoss, self).__init__()
         super().__init__()
@@ -1797,7 +3108,8 @@ class FKLoss(nn.Module):
         loss = self.criterion(pose_pred, pose_des)
         
         return loss
-    
+
+
 
 class FKLossB(nn.Module):
     def __init__(self, robot_choice):

@@ -27,6 +27,10 @@ parser.add_argument("--scale",
                     type=int,
                     default=2,
                     help="Scale of the joints limits.")
+parser.add_argument("--jvar",
+                    type=int,
+                    default=1,
+                    help="Joint variation when generating dataset.")
 parser.add_argument("--blocks",
                     type=int,
                     default=2,
@@ -52,7 +56,8 @@ neurons = args.neurons
 scale = args.scale # 2 - 10
 load_option = args.load
 num_blocks = args.blocks
-robot_choice = '7DoF-GP66'    # '7DoF-7R-Panda', "7DoF-GP66", "8DoF-8R"
+joint_variation = args.jvar
+robot_choice = '7DoF-7R-Panda'    # All-6DoF, '7DoF-7R-Panda', "7DoF-GP66", "8DoF-P8"
 
 # read from path script
 #for scale in range(2,12,2):
@@ -66,7 +71,7 @@ config_info = {
         'SEED_NUMBER': 0,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'ResMLP',      # MLP, ResMLP, DenseMLP
+            'NAME': 'DenseMLP',      # MLP, ResMLP, DenseMLP, DenseMLP3
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
@@ -75,6 +80,7 @@ config_info = {
             'DATASET': {
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
+                'JOINT_VARIATION': int(joint_variation),
                 'TYPE':'seq', # 1_to_1, seq
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
@@ -86,13 +92,13 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 1000,
-                'BATCH_SIZE': 100000,
+                'BATCH_SIZE': 50000, #100000
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': False,
                 'PERSISTENT_WORKERS': True,
                 'OPTIMIZER_NAME': 'Adam', # Adam, SGD
-                'LEARNING_RATE': 0.0001, # 0.0001
+                'LEARNING_RATE': 1e-3, #0.0001, # MLP / RMLP -> 0.001 and DMLP -> 0.0001
                 'BETAS': [0.9, 0.999],
                 'EPS': 0.00001,
                 'WEIGHT_DECAY': 0.0,

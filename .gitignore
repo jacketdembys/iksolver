@@ -1,5 +1,9 @@
-results/
+results*
 wandb/
 data*
 percentage*
 __pycache__/
+*.csv
+*.mat
+*.pdf
+7DoF*
