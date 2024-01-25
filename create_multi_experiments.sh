@@ -15,7 +15,7 @@
 
 python ik-solver.py --config-path train_8.yaml &
 python ik-solver.py --config-path train_9.yaml &
-python ik-solver.py --config-path train_10.yaml &
+#python ik-solver.py --config-path train_10.yaml &
 #python ik-solver.py --config-path train_8.yaml &
 #python ik-solver.py --config-path train_10.yaml &
 wait
