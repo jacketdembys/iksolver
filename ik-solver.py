@@ -548,7 +548,7 @@ if __name__ == '__main__':
         inference_results = {
             "device_name": device_name,
             "data_size": dataset_samples,
-            "joints_scale": scale,
+            "joints_scale": joint_steps,   #scale,
             "architecture": model.name,
             "network": network_type,
             "layers": layers,
