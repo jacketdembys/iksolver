@@ -827,7 +827,7 @@ def load_all_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device
                                    num_workers=8,
                                    persistent_workers=True)
 
-    return train_data_loader, test_data_loader, train_test_val_all
+    return train_data_loader, test_data_loader, train_test_val_all, sc_in
 
 
 
@@ -1271,14 +1271,14 @@ def load_test_dataset_2(X_test, y_test, device, sc_in):
 
 
 
-def load_test_all_dataset(X_test, y_test, device):
+def load_test_all_dataset(X_test, y_test, device, sc_in):
 
     print("==> Shape X_test: ", X_test.shape)
     print("==> Shape y_test: ", y_test.shape)
 
-    sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
+    #sc_in = MinMaxScaler(copy=True, feature_range=(0, 1))
 
-    X_test = sc_in.fit_transform(X_test) 
+    X_test = sc_in.transform(X_test) 
 
     test_data = LoadIKDataset(X_test, y_test, device)
 
