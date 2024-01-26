@@ -60,7 +60,7 @@ joint_variation = args.jvar
 robot_choice = '7DoF-7R-Panda'
 
 # read from path script
-for joint_variation in range(1,20):
+for joint_variation in range(1,21):
 #for scale in range(2,12,2):
     neuron = 1024
 #for neuron in range(128, neurons+128, 128):
