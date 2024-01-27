@@ -21,7 +21,7 @@ TRAIN:
     ORIENTATION: RPY
     TYPE: seq
   HYPERPARAMETERS:
-    BATCH_SIZE: 128
+    BATCH_SIZE: 50000
     BETAS:
     - 0.9
     - 0.999
