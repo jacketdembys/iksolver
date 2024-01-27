@@ -57,7 +57,7 @@ scale = args.scale # 2 - 10
 load_option = args.load
 num_blocks = args.blocks
 joint_variation = args.jvar
-robot_choice = '7DoF-7R-Panda'
+robot_choice = '7DoF-GP66'   #'7DoF-7R-Panda'
 
 # read from path script
 for joint_variation in range(1,21):
