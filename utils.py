@@ -455,8 +455,8 @@ class MLP(nn.Module):
         x = self.output_fc(x)
         x_temp = x
 
-        #return x, x_temp 
-        return x 
+        return x, x_temp 
+        #return x 
 
 
 class ResMLP_2(nn.Module):
