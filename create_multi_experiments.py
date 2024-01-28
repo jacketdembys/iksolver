@@ -74,7 +74,7 @@ for joint_variation in range(1,21):
         'SEED_NUMBER': 0,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'ResMLP',      # MLP, ResMLP, DenseMLP, DenseMLP3
+            'NAME': 'DenseMLP',      # MLP, ResMLP, DenseMLP, DenseMLP3
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
