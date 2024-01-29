@@ -71,7 +71,7 @@ config_info = {
         'SEED_NUMBER': 0,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'DenseMLP',      # MLP, ResMLP, DenseMLP, DenseMLP3
+            'NAME': 'MLP',      # MLP, ResMLP, DenseMLP, DenseMLP3
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
@@ -81,7 +81,7 @@ config_info = {
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
                 'JOINT_VARIATION': int(joint_variation),
-                'TYPE':'seq', # 1_to_1, seq, combine
+                'TYPE':'1_to_1', # 1_to_1, seq, combine
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
             'CHECKPOINT': {
@@ -92,13 +92,13 @@ config_info = {
             },
             'HYPERPARAMETERS': {
                 'EPOCHS': 1000,
-                'BATCH_SIZE': 50000, #100000
+                'BATCH_SIZE': 128, #100000
                 'SHUFFLE': True,
                 'NUM_WORKERS': 4,
                 'PIN_MEMORY': False,
                 'PERSISTENT_WORKERS': True,
                 'OPTIMIZER_NAME': 'Adam', # Adam, SGD
-                'LEARNING_RATE': 1e-3, #0.0001, # MLP / RMLP -> 0.001 and DMLP -> 0.0001
+                'LEARNING_RATE': 1e-4, #0.0001, # MLP / RMLP -> 0.001 and DMLP -> 0.0001
                 'BETAS': [0.9, 0.999],
                 'EPS': 0.00001,
                 'WEIGHT_DECAY': 0.0,
