@@ -2,8 +2,11 @@
 %data = readmatrix("../docker/datasets/7DoF-7R-Panda/data_7DoF-7R-Panda_1000000_qlim_scale_10_seq.csv");
 
 total = 20;
+mean_xyzRPY_save = zeros(total,6);
+robot_choice = "7DoF-GP66"; % 7DoF-7R-Panda
 for i=1:total
-    data = readmatrix(strcat("../docker/datasets/7DoF-7R-Panda-Steps/data_7DoF-7R-Panda_1000000_qlim_scale_10_seq_",num2str(i),".csv"));
+    
+    data = readmatrix(strcat("../docker/datasets/",robot_choice,"-Steps/data_",robot_choice,"_1000000_qlim_scale_10_seq_",num2str(i),".csv"));
 
     %% get mean RPY
     mean_xyzRPY = mean(abs(data(:,1:6) - data(:,14:19)), 1);
@@ -12,4 +15,9 @@ for i=1:total
 
     fprintf("Joint variation: %f", i)
     mean_xyzRPY  %#ok<NOPTS>
+    mean_xyzRPY_save(i,:) = mean_xyzRPY;
+    
 end
+
+filename = strcat("mean_xyzRPY_", robot_choice, ".csv");
+writematrix(mean_xyzRPY_save,filename)

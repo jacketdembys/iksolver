@@ -77,7 +77,8 @@ if __name__ == '__main__':
     # Example usage:
     in_features = 6  # Input features for a flattened image
     growth_rate = 1024
-    block_config = [2,2,2,2,2,2] # [2, 2, 2, 2]  # Number of layers in each dense block
+    #block_config = [2,2,2,2] # [2, 2, 2, 2]  # Number of layers in each dense block
+    block_config = [5,5]
     out_features = 7  # Number of output classes
 
     model = DenseNet(in_features, growth_rate, block_config, out_features)

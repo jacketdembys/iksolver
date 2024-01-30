@@ -71,7 +71,7 @@ config_info = {
         'SEED_NUMBER': 0,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'MLP',      # MLP, ResMLP, DenseMLP, DenseMLP3
+            'NAME': 'DenseMLP3',      # MLP, ResMLP, DenseMLP, DenseMLP3
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
@@ -81,7 +81,7 @@ config_info = {
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
                 'JOINT_VARIATION': int(joint_variation),
-                'TYPE':'1_to_1', # 1_to_1, seq, combine
+                'TYPE':'seq', # 1_to_1, seq, combine
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
             'CHECKPOINT': {
