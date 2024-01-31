@@ -13,8 +13,8 @@
 #    python ik-solver.py --config-path "$script" &
 #done
 
-python ik-solver.py --config-path train_18.yaml &
-python ik-solver.py --config-path train_19.yaml &
+python ik-solver.py --config-path train_20.yaml &
+#python ik-solver.py --config-path train_19.yaml &
 #python ik-solver.py --config-path train_3.yaml &
 #python ik-solver.py --config-path train_4.yaml &
 #python ik-solver.py --config-path train_5.yaml &
