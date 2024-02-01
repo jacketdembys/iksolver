@@ -213,7 +213,7 @@ if __name__ == '__main__':
         torch.backends.cudnn.deterministic = True
     ## train and validate
     # load the dataset
-    train_data_loader, test_data_loader, train_test_val_all = load_all_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim, robot_list)
+    train_data_loader, test_data_loader, train_test_val_all, sc_in = load_all_dataset(data, n_DoF, batch_size, robot_choice, dataset_type, device, input_dim, robot_list)
 
 
 
@@ -536,7 +536,7 @@ if __name__ == '__main__':
 
 
         print("\n\n==> Testing the trained model on  {} ...".format(r))
-        test_data_loader = load_test_all_dataset(X_test, y_test, device)
+        test_data_loader = load_test_all_dataset(X_test, y_test, device, sc_in)
         
 
         
