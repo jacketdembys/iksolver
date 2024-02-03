@@ -157,22 +157,22 @@ if __name__ == '__main__':
     
     if load_option == "cloud":
         if dataset_type == "1_to_1":
-            data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
+            data = pd.read_csv('/home/other-datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
         elif dataset_type == "seq":
-            data = pd.read_csv('/home/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
+            data = pd.read_csv('/home/other-datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq.csv')
     elif load_option == "local":
         if dataset_type == "1_to_1":
             #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_const.csv')
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_3.csv') #+'_'+orientation_type+'.csv')
+            data = pd.read_csv('../docker/other-datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_3.csv') #+'_'+orientation_type+'.csv')
         elif dataset_type == "seq":
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_3.csv')
+            data = pd.read_csv('../docker/other-datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_3.csv')
         elif dataset_type == "combine":
             
             robot_list = ["6DoF-Puma260", "6DoF-Puma560", "6DoF-IRB140", "6DoF-KR5", "6DoF-UR10"]
 
             data = np.zeros((dataset_samples, 24, len(robot_list)))           
             for i in range(len(robot_list)):
-                df = pd.read_csv('../docker/datasets/Combined/data_'+robot_list[i]+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_combine.csv')
+                df = pd.read_csv('../docker/other-datasets/Combined/data_'+robot_list[i]+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_combine.csv')
                 data[:,:,i] = np.array(df)
 
                 
@@ -312,7 +312,7 @@ if __name__ == '__main__':
     #            +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)
     
     # results_fkloss
-    save_path = "results_final_2/"+robot_choice+"/"+network_type+"_"+robot_choice+"_" \
+    save_path = "results_final_combine/"+robot_choice+"/"+network_type+"_"+robot_choice+"_" \
                 + save_layers_str + "_neurons_" + str(neurons) + "_batch_" + str(batch_size)  +"_" \
                 +optimizer_choice+"_"+loss_choice+"_"+str(experiment_number)+'_qlim_scale_'+str(int(scale))+'_samples_'+str(dataset_samples)+"_"+dataset_type+"_"+orientation_type+"_"+str(learning_rate)
 
@@ -340,7 +340,7 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             entity="jacketdembys",
-            project = "ik-2",                
+            project = "ik-steps",                
             group = network_type+"_"+"Combined_Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \
