@@ -68,10 +68,10 @@ for joint_variation in range(1,21):
     # batch sizes: 4096, 65536
     # build the content of the config file in a dictionary
     config_info = {
-        'NUM_EXPERIMENT_REPETITIONS': 2,
+        'NUM_EXPERIMENT_REPETITIONS': 1,
         'ROBOT_CHOICE': robot_choice,
         'SEED_CHOICE': True,
-        'SEED_NUMBER': 2,
+        'SEED_NUMBER': 1,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
             'NAME': 'DenseMLP3',      # MLP, ResMLP, DenseMLP, DenseMLP3
@@ -84,7 +84,7 @@ for joint_variation in range(1,21):
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
                 'JOINT_VARIATION': int(joint_variation),
-                'TYPE':'seq', # 1_to_1, seq
+                'TYPE':'1_to_1', # 1_to_1, seq
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
             'CHECKPOINT': {
