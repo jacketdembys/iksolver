@@ -39,6 +39,10 @@ parser.add_argument("--load",
                     type=str,
                     default='cloud',
                     help="local or cloud loading.")
+parser.add_argument("--seed",
+                    type=int,
+                    default=1,
+                    help="seed choice.")
 
 
 if not len(sys.argv) > 1:
@@ -57,6 +61,7 @@ scale = args.scale # 2 - 10
 load_option = args.load
 num_blocks = args.blocks
 joint_variation = args.jvar
+seed_choice = args.seed
 robot_choice = '7DoF-7R-Panda'   #'7DoF-7R-Panda' '7DoF-GP66' 
 
 # read from path script
@@ -68,10 +73,10 @@ for joint_variation in range(1,21):
     # batch sizes: 4096, 65536
     # build the content of the config file in a dictionary
     config_info = {
-        'NUM_EXPERIMENT_REPETITIONS': 3,
+        'NUM_EXPERIMENT_REPETITIONS': int(seed_choice),
         'ROBOT_CHOICE': robot_choice,
         'SEED_CHOICE': True,
-        'SEED_NUMBER': 3,
+        'SEED_NUMBER': int(seed_choice),
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
             'NAME': 'DenseMLP3',      # MLP, ResMLP, DenseMLP, DenseMLP3
