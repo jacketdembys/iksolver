@@ -57,7 +57,7 @@ scale = args.scale # 2 - 10
 load_option = args.load
 num_blocks = args.blocks
 joint_variation = args.jvar
-robot_choice = 'All-6DoF'    # All-6DoF, '7DoF-7R-Panda', "7DoF-GP66", "8DoF-P8"
+robot_choice = '7DoF-7R-Panda'    # All-6DoF, '7DoF-7R-Panda', "7DoF-GP66", "8DoF-P8"
 
 # read from path script
 #for scale in range(2,12,2):
@@ -65,10 +65,10 @@ robot_choice = 'All-6DoF'    # All-6DoF, '7DoF-7R-Panda', "7DoF-GP66", "8DoF-P8"
 # batch sizes: 4096, 65536
 # build the content of the config file in a dictionary
 config_info = {
-        'NUM_EXPERIMENT_REPETITIONS': 1,
+        'NUM_EXPERIMENT_REPETITIONS': 3,
         'ROBOT_CHOICE': robot_choice,
         'SEED_CHOICE': True,
-        'SEED_NUMBER': 0,
+        'SEED_NUMBER': 3,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
             'NAME': 'DenseMLP3',      # MLP, ResMLP, DenseMLP, DenseMLP3
@@ -78,10 +78,10 @@ config_info = {
         },             
         'TRAIN': {
             'DATASET': {
-                'NUM_SAMPLES': 100000,
+                'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
                 'JOINT_VARIATION': int(joint_variation),
-                'TYPE':'combine', # 1_to_1, seq, combine
+                'TYPE':'seq', # 1_to_1, seq, combine
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
             'CHECKPOINT': {

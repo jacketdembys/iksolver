@@ -124,6 +124,16 @@ def get_DH(robot_choice, t):
                            [t[4],   0.14,      0.0,  torch.pi/2],
                            [t[5],    0.0,      0.0,  torch.pi/2],
                            [t[6],    0.0,      0.0,  torch.pi/2]])
+    elif robot_choice == "7DoF-PR2-RightArm":
+        # https://www.semanticscholar.org/paper/Smooth-robot-motion-with-an-Optimal-Redundancy-for-Ramezani-Williams/741c1093c7567bdcd5772cab3e7b1b76f8de84a2/figure/5
+        # http://wiki.ros.org/pr2_calibration_estimation#DH_Chains
+        DH = torch.tensor([[t[0],      0.0,      0.1, -torch.pi/2],
+                           [t[1],      0.0,      0.0,  torch.pi/2],
+                           [t[2],      0.4,      0.0, -torch.pi/2],
+                           [t[3],      0.0,      0.0,  torch.pi/2],
+                           [t[4],    0.321,      0.0, -torch.pi/2],
+                           [t[5],      0.0,      0.0,  torch.pi/2],
+                           [t[6],      0.0,      0.0,         0.0]])
     elif robot_choice == "8DoF-P8":
         DH = torch.tensor([[        0.0,     t[0],      0.0, -torch.pi/2],
                            [-torch.pi/2,     t[1],      0.0,  torch.pi/2],
