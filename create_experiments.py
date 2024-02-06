@@ -65,10 +65,10 @@ robot_choice = '7DoF-7R-Panda'    # All-6DoF, '7DoF-7R-Panda', "7DoF-GP66", "8Do
 # batch sizes: 4096, 65536
 # build the content of the config file in a dictionary
 config_info = {
-        'NUM_EXPERIMENT_REPETITIONS': 3,
+        'NUM_EXPERIMENT_REPETITIONS': 2,
         'ROBOT_CHOICE': robot_choice,
         'SEED_CHOICE': True,
-        'SEED_NUMBER': 3,
+        'SEED_NUMBER': 2,
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
             'NAME': 'DenseMLP3',      # MLP, ResMLP, DenseMLP, DenseMLP3
