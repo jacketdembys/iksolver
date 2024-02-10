@@ -13,9 +13,9 @@
 #    python ik-solver.py --config-path "$script" &
 #done
 
-python ik-solver.py --config-path train_7.yaml &
-python ik-solver.py --config-path train_8.yaml &
-python ik-solver.py --config-path train_9.yaml &
+python ik-solver.py --config-path train_10.yaml &
+python ik-solver.py --config-path train_11.yaml &
+python ik-solver.py --config-path train_12.yaml &
 #python ik-solver.py --config-path train_4.yaml &
 #python ik-solver.py --config-path train_5.yaml &
 wait
