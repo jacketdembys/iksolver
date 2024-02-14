@@ -62,7 +62,7 @@ load_option = args.load
 num_blocks = args.blocks
 joint_variation = args.jvar
 seed_choice = args.seed
-robot_choice = '7DoF-7R-Panda'   #'7DoF-7R-Panda' '7DoF-GP66' 
+robot_choice = '7DoF-GP66'   #'7DoF-7R-Panda' '7DoF-GP66' 
 
 # read from path script
 for joint_variation in range(1,21):
@@ -79,7 +79,7 @@ for joint_variation in range(1,21):
         'SEED_NUMBER': int(seed_choice),
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'ResMLP',      # MLP, ResMLP, DenseMLP3, DenseMLP 
+            'NAME': 'DenseMLP3',      # MLP, ResMLP, DenseMLP3, DenseMLP 
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
