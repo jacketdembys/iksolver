@@ -49,5 +49,5 @@ python ik-solver.py --config-path train.yaml
 </details>
 
 </details>
-<details open><summary>Eval IK model (ToDo)</summary>
+<details open><summary>Test IK model (ToDo)</summary>
 </details>
