@@ -3,7 +3,11 @@ wandb/
 data*
 percentage*
 __pycache__/
+.ipynb_checkpoints/
 *.csv
 *.mat
 *.pdf
+*.png
+*.m
+*.asv
 7DoF*
