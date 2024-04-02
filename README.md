@@ -18,7 +18,7 @@
 
 </details>
 <details open><summary>Clone repository</summary>
-```shell script
+```shell
 git clone https://github.com/jacketdembys/iksolver.git
 cd iksolver
 ```
