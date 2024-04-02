@@ -5,6 +5,7 @@
 ## <div align="center">Usage</div>
 
 </details>
-<details open>
-<summary>Generate datasets</summary>
+<details open><summary>Generate datasets</summary>
+<details open><summary>Train IK model</summary>
+<details open><summary>Eval IK model</summary>
 </details>
