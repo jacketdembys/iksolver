@@ -1,1 +1,1 @@
-# Example-based Learning of the Inverse Kinematics of Robotic Manipulators
+# Inverse Kinematics of Robotic Manipulators Using a New Learning-by-Example Method
