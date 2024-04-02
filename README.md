@@ -17,6 +17,14 @@
 ## <div align="center">Usage</div>
 
 </details>
+<details open><summary>Clone repository</summary>
+```shell script
+git clone https://github.com/jacketdembys/iksolver.git
+cd iksolver
+```
+</details>
+
+</details>
 <details open><summary>Generate datasets</summary>
 </details>
 
