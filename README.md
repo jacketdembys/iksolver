@@ -2,6 +2,18 @@
 
 
 ## <div align="center">Prequisites</div>
+- pytorch:2.0.1
+- cuda11.7
+- cudnn8
+- wandb
+- scikit_learn
+- numpy
+- scipy
+- pandas
+- matplotlib
+- tqdm
+
+
 ## <div align="center">Usage</div>
 
 </details>
