@@ -29,7 +29,7 @@ cd iksolver
 
 
 </details>
-<details open><summary>Generate datasets (TODO)</summary>
+<details open><summary>Generate datasets (ToDo)</summary>
 </details>
 
 </details>
@@ -49,5 +49,5 @@ python ik-solver.py --config-path train.yaml
 </details>
 
 </details>
-<details open><summary>Eval IK model (TODO)</summary>
+<details open><summary>Eval IK model (ToDo)</summary>
 </details>
