@@ -18,11 +18,12 @@
 
 </details>
 <details open><summary>Clone repository</summary>
+</details>
+
 ```shell
 git clone https://github.com/jacketdembys/iksolver.git
 cd iksolver
 ```
-</details>
 
 </details>
 <details open><summary>Generate datasets</summary>
