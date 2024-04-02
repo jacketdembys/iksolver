@@ -1,4 +1,4 @@
-# Inverse Kinematics of Robotic Manipulators Using a New Learning-by-Example Method
+# Paper: "Inverse Kinematics of Robotic Manipulators Using a New Learning-by-Example Method"
 
 
 ## <div align="center">Requirements</div>
