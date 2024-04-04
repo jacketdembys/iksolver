@@ -30,6 +30,11 @@ cd iksolver
 
 </details>
 <details open><summary>Generate datasets (ToDo)</summary>
+
+```shell
+python generate_dataset.py
+```
+
 </details>
 
 </details>
