@@ -29,7 +29,8 @@ cd iksolver
 
 
 </details>
-<details open><summary>Generate datasets (ToDo)</summary>
+<details open><summary>Generate datasets </summary>
+Choose the robot type in the generate_dataset.py file and run it to generate the corresponding dataset:
 
 ```shell
 python generate_dataset.py
