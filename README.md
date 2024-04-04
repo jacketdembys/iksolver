@@ -17,7 +17,7 @@
 ## <div align="center">Usage</div>
 
 </details>
-<details open><summary>**Clone repository**</summary>
+<details open><summary>Clone repository</summary>
 
 ```shell
 git clone https://github.com/jacketdembys/iksolver.git
