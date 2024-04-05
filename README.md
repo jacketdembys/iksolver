@@ -52,8 +52,10 @@ Run the training script to train/eval/test the model:
 python ik-solver.py --config-path train.yaml
 ```
 
+<!---
 </details>
 
 </details>
 <details open><summary>Test IK model (ToDo)</summary>
 </details>
+-->
