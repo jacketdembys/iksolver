@@ -1,0 +1,20 @@
+function A=mappingmatrix(x,y)
+%returns a matrix verifying A*x=y
+n=size(x,1);
+nx=norm(x)
+for i=1:n
+   notfound=1;
+   j=1;
+   while notfound==1
+    k=[ones(1,j) zeros(1,7-j)];%rand(1,n)-ones(1,n)*0.5;
+    k=k/norm(k);
+    
+    if k*x>0.000001
+       A(i,:)=k*y(i,1)/nx;
+       notfound=0;
+    end
+    
+   end
+    
+
+end

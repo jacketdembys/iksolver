@@ -1,0 +1,14 @@
+function out = ncalcul(robot,u)
+
+q=u(1:6);
+dq=u(7:12);
+
+tau1=lwpr_predict(model1,v,0.001);
+tau2=lwpr_predict(model2,v,0.001);
+tau3=lwpr_predict(model3,v,0.001);
+tau4=lwpr_predict(model4,v,0.001);
+tau5=lwpr_predict(model5,v,0.001);
+tau6=lwpr_predict(model6,v,0.001);
+
+out=coriolis(robot,q',dq')'+gravload(robot,q')';%+friction(robot,dq')';
+

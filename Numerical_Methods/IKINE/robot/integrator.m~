@@ -1,0 +1,29 @@
+function [f]=integrator(u,input,h,q0,dq0)
+n=size(u,2);
+
+dy3=input(end,:)';
+if size(input,1)==1
+    f=h*
+elseif size(input,1)==2
+    dy2=input(end-1,:)';
+elseif size(input,1)==2
+        
+        
+else
+    
+end
+    
+    
+
+dy1=input(end-2,:)';
+dy0=input(end-3,:)';
+
+if (i==1)
+    f=h/2.0*(dy2+dy3);
+elseif(i==2)
+    f=h/3.0*(dy1+4*dy2+dy3);
+else
+    f=3.0*h/8.0*(dy0+3*dy1+3*dy2+dy3);
+end
+f1=f(1:n);
+f2=f(n+1:2*n);

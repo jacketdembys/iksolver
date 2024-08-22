@@ -241,7 +241,7 @@ if __name__ == "__main__":
                 Q_current = t0
             
                 #print(t0)
-                t = t0
+                t = t0.clone()
                 for i in range(n_traj_steps):
                     if robot_type == "C":
                         t += torch.deg2rad(torch.tensor(js)) # 0.5 

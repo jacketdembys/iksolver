@@ -1,0 +1,10 @@
+%function [G,de,Mide] = disturb(u)
+function out = ncalc(u)
+
+q=u(1:6);
+dq=u(7:12);
+puma560;
+
+
+Gaux=coriolis(p560,x1',x2')'+gravload(p560,q')'+friction(p560,dq')');
+

@@ -1,0 +1,14 @@
+function ue=uextgenerator(u,n)
+%umax=[2 2 2 1 1 0.5 0.1]*0.005;
+umax=[2 2 2 1 0.5 0.5 0.002]*0.1;
+tmax=1;
+%umax=[2 2 1 1 0.5 0.1]*0.05;
+%ue=umax;
+if u>0.3
+    ue=umax*;
+elseif u>0
+    ue=umax;
+else
+    ue=umax-(u-0.8)*5*umax/tmax;
+end
+   %ue=ue; %ue=2*umax/tmax*0;
