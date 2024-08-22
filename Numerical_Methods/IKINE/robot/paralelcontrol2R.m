@@ -1,0 +1,249 @@
+
+tic
+t=0;
+
+%close all
+%WAM;
+%robot=wam;
+
+%robot=perturb(p560,pro);
+%robot=wam;
+n=2%=robot.n;
+
+
+
+tfinal=1;
+niters=400;
+h=tfinal/niters;
+
+
+dy0=zeros(2*n,1);
+dy1=zeros(2*n,1);
+dy2=zeros(2*n,1);
+dy3=zeros(2*n,1);
+
+ddq0=zeros(n,1);
+ddq1=zeros(n,1);
+ddq2=zeros(n,1);
+ddq3=zeros(n,1);
+
+dq1=zeros(n,1);
+dq2=zeros(n,1);
+dq3=zeros(n,1);
+
+q0=ones(n,1)*0.2;%rand(n,1)%
+qa0=q0;
+qa1=q0;
+qa2=q0;
+qa3=q0;
+qf=ones(n,1)*0.4;%4;%rand(n,1)%
+
+%q0=zeros(n,1);
+x1e=q0;
+dx1e=zeros(n,1);
+dq0=zeros(n,1);
+xe0=[q0;dq0];
+xe1=zeros(2*n,1);
+xe2=zeros(2*n,1);
+xe3=zeros(2*n,1);
+
+x2old=dq0;
+x2e=dq0;
+dx2e=zeros(n,1);
+q=q0;
+dq=dq0;
+ddq=zeros(n,1);
+uest=zeros(n,1);
+[qd,dqd,ddqd] = jtraj(q0, qf, niters);
+%niters=niters*3;
+%qd=[qd;qf(1,1)*ones(size(qd));qf(1,1)*ones(size(qd))];
+%dqd=[dqd;zeros(size(dqd));zeros(size(dqd))];
+%ddqd=[ddqd;zeros(size(ddqd));zeros(size(ddqd))];
+
+
+dx1eold=dx1e;
+dx2old=dx2e;
+dx2old2=dx2e;
+uestold=uest;
+
+AUX=[];
+SX1e=[];
+SX2e=[];
+
+SdX1e=[];
+SdX2e=[];  
+    
+SQ=[];
+SQd=[];
+    
+SdQ=[];
+SdQd=[];  
+    
+SddQ=[];
+SddQd=[];
+
+Suext=[];
+Suext2=[];
+Sfext=[];
+time=[];
+e1=zeros(n,1);
+y=zeros(n,1);
+%x1next=x1e+h*(x2e+K11*(q-x1e)+K12*(dq-x2e));
+%x2next=2*x2e-x2old+h*(K21*(q-x1e)+K22*(dq-x2e)+dq2-x2old);
+        
+                %kp = diag([ 900  2500 600  500   50   50    8])/100;
+                %Kp=diag([ 900  1000 600  500   50   50 8])/50;
+%Ki = diag([2.5    5   2 0.5  0.5  0.5  0.1]);
+%Kd =Kp.^0.5*2;% diag([10   20    5    2  0.5  0.5 0.05]);
+%kd=Kd;
+%kp=Kp;
+control_signal_limit =[25 20 15 15 5 5 5]*10;
+interror=0;
+
+a1=1;a2=1; l1=0.5; l2=0.5;ml1=50;ml2=50;il1=10;il2=10;
+
+M=[il1+ml1*l1^2+il2+ml2*(a1^2+l2^2+2*a1*l2*cos(q(2))) il2+ml2*(l2^2+a1*l2*cos(q(2)));
+    il2+ml2*(l2^2+a1*l2*cos(q(2)))  il2+ml2*l2^2];
+haux=-ml2*a1*l2*sin(q(2));
+N=[h*dq(2) h*(dq(1)+dq(2));-h*dq(1) 0]*dq+[0;-(ml1+ml2)*9.81];
+uc=M*y+N;
+dqold=dq;
+qold=q;
+ddqold=ddq;
+                
+        
+fd=0.1*[1 1]';%[1 1 1 1 0 0 0]';
+xr=1.3;
+Kx=10000;
+Md=eye(n)*100;
+eFold=zeros(n,1);
+eF=zeros(n,1);
+qF=zeros(n,1);
+Kd=eye(n)*1000;
+Kp=eye(n)*2500;
+
+for i=1:niters
+    t0=t;
+    t=i*tfinal/niters;
+
+ 
+
+
+    %% ROBOT CONTROL 
+%KINEMATICS AND DYNAMICS
+        x=a1*cos(q(1))+l2*cos(q(2));
+        J=[-a1*sin(q(1))-l2*sin(q(1)+q(2)) -l2*sin(q(1)+q(2));
+        a1*cos(q(1))+l2*cos(q(1)+q(2)) l2*cos(q(1)+q(2))]; 
+        M=[il1+ml1*l1^2+il2+ml2*(a1^2+l2^2+2*a1*l2*cos(q(2))) il2+ml2*(l2^2+a1*l2*cos(q(2)));
+            il2+ml2*(l2^2+a1*l2*cos(q(2)))  il2+ml2*l2^2];
+        haux=-ml2*a1*l2*sin(q(2));
+        N=[h*dq(2) h*(dq(1)+dq(2));-h*dq(1) 0]*dq+[0;-(ml1+ml2)*9.81];
+        fe=Kx*[max(x-xr,0);0];%Kx*J(1,:)'*max(x-xr,0);
+%PID CONTROLLER for force error
+        eFold2=eFold;
+        eFold=eF;        
+        eF=fd*(sign(x-xr-0.1)+1)/2-fe;
+        Kfi=eye(n)*0.001;
+        Kfd=eye(n)*0.001;
+        Kfp=eye(n)*0.001;
+        qF=qF+Kfp*(eF-eFold)+Kfd/h*(eF-2*eFold+eFold2)+h*Kfi*eF;
+%Controller for position       
+
+        y=Md^(-1)*(-Kd*dq+Kp*(-q+qd(i,:)'+qF));
+        %y=ddqd(i,:)'+Kd*(dqd(i,:)'-dq)+Kp*(qd(i,:)'-q);
+        for iaux=1:n
+            if abs(y(iaux))>control_signal_limit(iaux)
+                y(iaux)=y(iaux)/abs(y(iaux))*control_signal_limit(iaux);
+            end
+        end
+        uc=M*y+N;
+    %end
+    
+    %% OBSERVER
+  
+
+
+
+    %% ROBOT UPDATE DYNAMICS
+    ddq0=ddq1;
+    ddq1=ddq2;
+    ddq2=ddq3;
+    ddq3=M\(uc-fe-N);
+    dq0=dq1;
+    dq1=dq2;
+    dq2=dq3;
+    dq3=integrator(ddq0,ddq1,ddq2,ddq3,h,10)+dq0;
+    qa0=qa1;
+    qa1=qa2;
+    qa2=qa3;
+    qa3=integrator(dq0,dq1,dq2,dq3,h,10)+qa0;
+    %qold=q;
+    %dqold=dq;
+    ddqold=ddq;
+    
+    qold=qa2;
+    dqold=dq2;
+    q=qa3;
+    dq=dq3;
+    ddq=ddq3;
+   
+
+
+    %% SAVE VALUES
+    AUX=[AUX;(M*(dx2e-ddq))'];
+    SX1e=[SX1e;x1e'];
+    SX2e=[SX2e;x2e'];
+    SQ=[SQ;q'];
+    SQd=[SQd;qd(i,:)];
+    SdQ=[SdQ;dq'];
+    SdQd=[SdQd;dqd(i,:)];    
+    SddQ=[SddQ;ddq'];
+    SddQd=[SddQd;ddqd(i,:)];   
+   
+    if size(Suext)>0
+         %Suext2=Suext;
+        jaux=size(Suext,1);
+        afilt=0.5;
+        nolder=2;
+        %Suext2=[Suext2;afilt*Suext(jaux,:)+(1-afilt)*Suext(jaux-1,:)];
+        %uaux=afilt*Suext(jaux,:);
+        uaux=bb(1)*Suext(jaux,:);
+        for auxi=2:size(bb,1)
+            if jaux-auxi+1>1
+                uaux=uaux+bb(auxi)*Suext(jaux-auxi+1,:);
+            end
+        end 
+        Suext2=[Suext2;uaux];
+        %Suext2=[Suext2;afilt*Suext2(jaux-1,:)+(1-afilt)*Suext2(jaux-2,:)];
+        %aixo funcionava i no se pq!!
+    else
+        Suext2=Suext;
+    end
+    
+    
+    %% PLOTS
+    Sfext=[Sfext;fe'];
+    time=[time;t];
+
+end
+
+T=1;
+%spectral;
+
+plot(SQ)
+titol=strcat('Kp=',num2str(Kp(1,1)),'Kd=',num2str(Kd(1,1)))
+title(titol)
+
+%figure(iaux+2)
+%plot(time,Suext)
+%hold on
+%plot(time,Sfext,'Linewidth',2)
+%title 'external force'
+
+%figure(iaux+3)
+%plot(time,SQ)
+%hold on
+%plot(time,SQd,'Linewidth',2)
+%title 'joint position'
+%close all;+
+toc

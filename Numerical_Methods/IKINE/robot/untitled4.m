@@ -1,0 +1,120 @@
+% augmentant Kd, disminueix l'amplitud d'oscil·lació
+n=6
+
+%ALLEST=[]
+%ALLEST=[ALLEST estimations]
+Q=estimations(:,1:n);
+DQ=estimations(:,n+1:2*n);
+X1e=estimations(:,2*n+1:3*n);
+DX1e=estimations(:,3*n+1:4*n);
+X2e=estimations(:,4*n+1:5*n);
+DX2e=estimations(:,5*n+1:6*n);
+DDQ=estimations(:,6*n+1:7*n);
+De=estimations(:,7*n+1:8*n);
+time=estimations(:,8*n+1);
+%y=estimations(:,50:55)
+
+%uc=comprovacio(:,7:12);
+%ut=simout(:,4);
+%X1eALL=[];
+%X1eALL=[X1eALL X1e];
+
+%DX1eALL=[];
+%DX1eALL=[DX1eALL DX1e];
+
+%DX2eALL=[];
+%DX2eALL=[DX2eALL DX2e];
+
+%X2eALL=[];
+%X2eALL=[X2eALL X2e];
+
+%DeALL=[];
+%DeALL=[DeALL De];
+
+figure(4+iaux)
+title('perturbation')
+hold on
+plot(time,De)
+legend('q1','q2','q3','q4','q5','q6')
+hola=1;
+if hola==1
+    %close all
+    figure(1+iaux)
+    plot(time,Q,'Linewidth',2)
+    title('joint position')
+    hold on
+    plot(time,X1e)
+    legend('q1','q2','q3','q4','q5','q6')
+
+    figure(2+iaux)
+    plot(time,DQ,'Linewidth',2)
+    title('joint velocity')
+    hold on
+    plot(time,X2e)
+    legend('q1','q2','q3','q4','q5','q6')
+
+    figure(3+iaux)
+    plot(time,DDQ,'Linewidth',2)
+    title('joint acceleration')
+    hold on
+    plot(time,DX2e)
+    legend('q1','q2','q3','q4','q5','q6')
+
+
+    De2=-De(1:2,:)
+    for i=3:size(De,1)
+       De2(i,:)=1/2*( De(i,:) + 1/2*(De(i-1,:)+De(i-2,:)));
+    end
+    De3=-De(1:2,:)
+    for i=3:size(De,1)
+       De3(i,:)=1/3*( De(i,:) +De(i-1,:)+De(i-2,:));
+    end
+    De4=-De(1:4,:)
+    for i=5:size(De,1)
+       De4(i,:)=1/5*( De(i,:) +De(i-1,:)+De(i-2,:)+De(i-3,:)+De(i-4,:));
+    end
+
+    figure(5+iaux)
+    %plot(time,-De(:,j),'r')
+    hold on
+    for i=1:7
+        if i==1
+            col='b';
+        elseif i==2
+
+            col='g';
+        elseif i==3
+
+            col='r';
+        elseif i==4
+
+            col='c';
+        elseif i==5
+
+            col='m';
+        elseif i==6
+
+            col='y';
+        elseif i==7
+            col='k';
+        end
+        T=6;
+        N=size(time,1);
+        if mod(N,2)==1
+            N=N-1;  
+        end
+        f=DDQ(1:N,i);
+        p=abs(fft(f))/(N/2);
+        p=p(1:N/2).^2;
+        freq=[0:N/2-1]/T;
+        semilogy(freq,p,'Color',col,'Linewidth',2);
+    end
+
+
+end
+qdes=trajd(:,1:7);
+dqdes=trajd(:,8:14);
+ddqdes=trajd(:,15:21);
+
+
+

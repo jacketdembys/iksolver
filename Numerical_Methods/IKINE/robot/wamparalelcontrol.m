@@ -1,0 +1,275 @@
+
+tic
+t=0;
+
+%close all
+%WAM;
+robot=wam;
+
+n=robot.n;
+
+
+
+tfinal=1;
+niters=400;
+h=tfinal/niters;
+
+
+%% ROBOT INTEGRATION VARIABLES
+ddq0=zeros(n,1);
+ddq1=zeros(n,1);
+ddq2=zeros(n,1);
+ddq3=zeros(n,1);
+dq1=zeros(n,1);
+dq2=zeros(n,1);
+dq3=zeros(n,1);
+
+
+
+%% INITIALIZE STATE VARIABLES FALTA DEFINIR BE INICI!!
+q0=ones(n,1)*0.2;%rand(n,1)%
+qa0=q0;
+qa1=q0;
+qa2=q0;
+qa3=q0;
+%qf=ones(n,1)*0.4;%4;%rand(n,1)%
+qf=[0.0938;
+    0.9150;
+    0.9298;
+   -0.6848;
+    0.9412;
+    0.9143;
+   -0.0292];
+dq0=zeros(n,1);
+q=q0;
+dq=dq0;
+ddq=zeros(n,1);
+uest=zeros(n,1);
+[qd,dqd,ddqd] = jtraj(q0, qf, niters);
+niters=niters*2;
+qd=[qd;[qf(1,1)*ones(size(qd),1) qf(2,1)*ones(size(qd),1) qf(3,1)*ones(size(qd),1) qf(4,1)*ones(size(qd),1) qf(5,1)*ones(size(qd),1) qf(6,1)*ones(size(qd),1) qf(7,1)*ones(size(qd),1)]];%;qf(1,1)*ones(size(qd))];
+dqd=[dqd;zeros(size(dqd))];%;zeros(size(dqd))];
+ddqd=[ddqd;zeros(size(ddqd))];%;zeros(size(ddqd))];
+
+
+
+uestold=uest;
+dqold=dq;
+qold=q;
+ddqold=ddq;
+fdmax=[10;0;0;0;0;0];
+
+%% STORING VARIABLES
+    SUE=[];
+    SUD=[];
+    SERR=[];
+    SFD=[];
+AUX=[];
+SX1e=[];
+SX2e=[];
+SdX1e=[];
+SdX2e=[];   
+SQ=[];
+SQd=[]; 
+SdQ=[];
+SdQd=[];  
+SddQ=[];
+SddQd=[];
+Suext=[];
+Suext2=[];
+Sfext=[];
+SX=[];
+time=[];
+SQE=[];
+
+
+%% CONTROL PARAMETERS
+Kd=eye(n)*5;
+Kp=eye(n)*20;
+Md=eye(n)*2;
+control_signal_limit =[25 20 15 15 5 5 5];
+
+
+%% PID parameters
+Kfp=eye(n)*2;
+Kfd=eye(n)*0;
+Kfi=eye(n)*0.5;
+
+
+%% CONTROL VARIABLES
+e1=zeros(n,1);
+y=zeros(n,1);
+xr=0.52;
+
+
+%% INITIAL CALCULATIONS        
+eFold=zeros(n,1);
+eF=zeros(n,1);
+qF=zeros(n,1);
+
+
+for i=1:niters
+    t0=t;
+    t=i*tfinal/niters;
+ 
+
+
+    %% ROBOT CONTROL 
+%KINEMATICS AND DYNAMICS
+    M=inertia(robot, q);
+    N= coriolis(robot, q', dq')'+gravload(robot,q')';
+    J=jacob0(wam,q);
+    T=fkine(wam,q);
+    xe=T(1,4);
+
+%PID CONTROLLER for force error
+
+
+eps=0.01;
+    if xe>xr
+        fd=fdmax;%max(x-xr)%(sign(xe-xr)+1)/2
+    elseif xe>xr-eps
+        fd=fdmax*(xe-(xr-eps))/eps;
+    else
+        fd=fdmax*0;
+    end
+
+    ud=J'*fd;
+    Kx=1000;
+    fe=Kx*[max(xe-xr,0);0;0;0;0;0];
+    ue=J'*fe;
+    eFold2=eFold;
+    eFold=eF;
+    
+    if norm(ue)>0
+        eF=ud-ue;
+    end
+    qF=qF+Kfp*(eF-eFold)+Kfd/h*(eF-2*eFold+eFold2)+h*Kfi*eF;
+
+
+%Controller for position       
+
+    y=Md^(-1)*(-Kd*dq+Kp*(-q+qd(i,:)'+qF));
+    for iaux=1:n
+        if abs(y(iaux))>control_signal_limit(iaux)
+            y(iaux)=y(iaux)/abs(y(iaux))*control_signal_limit(iaux);
+        end
+    end
+    uc=M*y+N;
+    %end
+    
+    %% OBSERVER
+  
+
+
+
+    %% ROBOT UPDATE DYNAMICS
+    ddq0=ddq1;
+    ddq1=ddq2;
+    ddq2=ddq3;
+    ddq3=M\(uc-ue-N);
+    dq0=dq1;
+    dq1=dq2;
+    dq2=dq3;
+    dq3=integrator(ddq0,ddq1,ddq2,ddq3,h,10)+dq0;
+    qa0=qa1;
+    qa1=qa2;
+    qa2=qa3;
+    qa3=integrator(dq0,dq1,dq2,dq3,h,10)+qa0;
+    %qold=q;
+    %dqold=dq;
+    ddqold=ddq;
+    qold=qa2;
+    dqold=dq2;
+    q=qa3;
+    dq=dq3;
+    ddq=ddq3;
+   
+
+
+    %% SAVE VALUES
+    %AUX=[AUX;(M*(dx2e-ddq))'];
+    %SX1e=[SX1e;x1e'];
+    %SX2e=[SX2e;x2e'];
+    SUE=[SUE;ue'];
+    SUD=[SUD;ud'];
+    SERR=[SERR;ue'-ud'];
+    SFD=[SFD;fd'];
+    SQE=[SQE;q'-qf'];
+    SX=[SX;xe];
+    SQ=[SQ;q'];
+    SQd=[SQd;qd(i,:)];
+    SdQ=[SdQ;dq'];
+    SdQd=[SdQd;dqd(i,:)];    
+    SddQ=[SddQ;ddq'];
+    SddQd=[SddQd;ddqd(i,:)];   
+   
+    if size(Suext)>0
+         %Suext2=Suext;
+        jaux=size(Suext,1);
+        afilt=0.5;
+        nolder=2;
+        %Suext2=[Suext2;afilt*Suext(jaux,:)+(1-afilt)*Suext(jaux-1,:)];
+        %uaux=afilt*Suext(jaux,:);
+        uaux=bb(1)*Suext(jaux,:);
+        for auxi=2:size(bb,1)
+            if jaux-auxi+1>1
+                uaux=uaux+bb(auxi)*Suext(jaux-auxi+1,:);
+            end
+        end 
+        Suext2=[Suext2;uaux];
+        %Suext2=[Suext2;afilt*Suext2(jaux-1,:)+(1-afilt)*Suext2(jaux-2,:)];
+        %aixo funcionava i no se pq!!
+    else
+        Suext2=Suext;
+    end
+    
+    
+    Sfext=[Sfext;fe'];
+    time=[time;t];
+
+end
+
+T=1;
+%spectral;
+figure
+plot(SQE)
+titol=strcat('joint position error')
+title(titol)
+
+figure
+plot(SX)
+titol=strcat('x position')
+title(titol)
+
+
+figure
+plot(Sfext)
+hold on
+plot(SFD,'Linewidth',2)
+titol=strcat('external wrench')
+title('fe,fd')
+
+
+figure
+plot(SUE)
+hold on
+plot(SUD,'Linewidth',2)
+titol=strcat('ue,ud')
+title(titol)
+
+
+
+%figure(iaux+2)
+%plot(time,Suext)
+%hold on
+%plot(time,Sfext,'Linewidth',2)
+%title 'external force'
+
+%figure(iaux+3)
+%plot(time,SQ)
+%hold on
+%plot(time,SQd,'Linewidth',2)
+%title 'joint position'
+%close all;+
+toc

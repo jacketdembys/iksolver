@@ -9,6 +9,6 @@ __pycache__/
 *.mat
 *.pdf
 *.png
-*.m
+*.mm
 *.asv
 7DoF*
