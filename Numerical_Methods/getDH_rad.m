@@ -42,14 +42,27 @@ function DH = getDH_rad(robot, Q_initial, unit_chosen)
         DH(:, 3) = DH(:, 3) * unit_chosen; 
         
     elseif (strcmp(robot, 'RRRRRRR'))
+
+
+        DH = [Q_initial(1),    0.333,      0.0,     0;
+              Q_initial(2),      0.0,      0.0,  pi/2;
+              Q_initial(3),    0.316,      0.0,  pi/2;
+              Q_initial(4),      0.0,   0.0825,  pi/2;
+              Q_initial(5),    0.384,  -0.0825,  pi/2;
+              Q_initial(6),      0.0,      0.0,  pi/2;
+              Q_initial(7),    0.107,    0.088,  pi/2];
+
+        %{
         
         DH = [Q_initial(1),             0.0,        0.0,        deg2rad(-90);
               Q_initial(2),             0.0,        0.0,        deg2rad(90);
-              Q_initial(3),             0.55,       0.045,    deg2rad(-90);
-              Q_initial(4),             0.0,       -0.045,   deg2rad(90);
+              Q_initial(3),             0.55,       0.045,      deg2rad(-90);
+              Q_initial(4),             0.0,       -0.045,      deg2rad(90);
               Q_initial(5),             0.3,        0.0,        deg2rad(-90);
               Q_initial(6),             0.0,        0.0,        deg2rad(90);
               Q_initial(7),             0.06,       0.0,        deg2rad(0)];
+
+        %}
         
         % convert the entries of the DH table
         DH(:, 2) = DH(:, 2) * unit_chosen;
@@ -57,6 +70,15 @@ function DH = getDH_rad(robot, Q_initial, unit_chosen)
         
     elseif (strcmp(robot, 'RRPRRRR'))
         
+
+        DH = [Q_iniitial(0),             0.0,      0.0,  pi/2;
+              Q_iniitial(1),             0.0,     0.25,  pi/2;
+                        0.0,   Q_iniitial(2),      0.0,   0.0;
+              Q_iniitial(3),             0.0,      0.0,  pi/2;
+              Q_iniitial(4),            0.14,      0.0,  pi/2;
+              Q_iniitial(5),             0.0,      0.0,  pi/2;
+              Q_iniitial(6),             0.0,      0.0,  pi/2]
+        %{
         DH = [Q_initial(1),                  0.0,       0.0,        deg2rad(90);
               Q_initial(2),                  0.0,       0.25,        deg2rad(90);
                        0.0,       Q_initial(3),         0.0,         deg2rad(0);
@@ -64,6 +86,7 @@ function DH = getDH_rad(robot, Q_initial, unit_chosen)
               Q_initial(5),                  0.14,      0.0,        deg2rad(90);
               Q_initial(6),                  0.0,       0.0,        deg2rad(90);
               Q_initial(7),                  0.0,       0.0,         deg2rad(0)];
+        %}
           
          
         % convert the entries of the DH table

@@ -29,14 +29,14 @@ end
 
 %% load the related sample points and initialize the summary matrices   
 if (strcmp(robot, 'RRRRRRR'))
-    native_data = readtable('data_7DoF-7R-Panda_1000000_qlim_scale_10_seq_1_test.csv');
+    native_data = readtable('review_data_7DoF-7R-Panda_1000000_qlim_scale_10_seq_1_test.csv');
     native_data = table2array(native_data);
-    dataPoints7DoFR = native_data(:,20:26);            % load poses (positions + orientations)
+    dataPoints7DoFR = native_data(:,20:26);            % load poses (positions + orientations) 14-19 for poses / 20-26 for joints
     dataPoints7DoFR_algo = native_data(:,7:13);       % load joint configurations
     samples = length(dataPoints7DoFR);
     summaryTable = zeros(samples,33);
 elseif (strcmp(robot, 'RRPRRRR'))
-    native_data = readtable('data_7DoF-GP66_1000000_qlim_scale_10_seq_1_test.csv');
+    native_data = readtable('review_data_7DoF-GP66_1000000_qlim_scale_10_seq_1_test.csv');
     native_data = table2array(native_data);
     dataPoints7DoFR = native_data(:,20:26);            % load poses (positions + orientations)
     dataPoints7DoFR_algo = native_data(:,7:13);       % load joint configurations
@@ -104,6 +104,7 @@ for j1=1:length(inverses)
                         s = 1;  
                         Q_initial = dataPoints7DoFR_algo(s,:)';  % Home Pose (Joint Configuration)                        
                         Q_final_d = dataPoints7DoFR(s,:)';       % Example Pose (Joint Configuration)
+                        Q_final_d(3) = Q_final_d(3)*unit_chosen;
                         dim = 6;      
                     elseif  strcmp(robot, 'RRPRRRR')  
                         s = 1;   
@@ -119,6 +120,7 @@ for j1=1:length(inverses)
                     if  strcmp(robot, 'RRRRRRR')                     
                         Q_initial = dataPoints7DoFR_algo(s,:)';                        
                         Q_final_d = dataPoints7DoFR(s,:)'; 
+                        Q_final_d(3) = Q_final_d(3)*unit_chosen;
                         dim = 6;                   
                     elseif  strcmp(robot, 'RRPRRRR')  
                         Q_initial = dataPoints7DoFP_algo(s,:)';  
@@ -152,12 +154,17 @@ for j1=1:length(inverses)
                 D_current = D_initial;
                 D_current_p = D_initial;
                                                 
+                % uncomment this if starting with a final joint configuration instead
+                
                 DH = getDH_rad(robot, Q_final_d, unit_chosen);
                 pc_robot_configuration = getRobotConfiguration(robot, unit_chosen, DH);
                 T_final = fkine(pc_robot_configuration, Q_final_d);  
                 D_final = getPose_rad(T_final, dim);
+                
+                %D_final = Q_final_d;
 
-
+                D_initial
+                D_final
                 error('Stopped here on purpose for debugging ...')
                 
                 if strcmp(mode_save_path, "True")

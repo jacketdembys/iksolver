@@ -2,6 +2,7 @@
 
 
 ## <div align="center">Requirements</div>
+```shell
 - pytorch:2.0.1
 - cuda11.7
 - cudnn8
@@ -12,6 +13,7 @@
 - pandas
 - matplotlib
 - tqdm
+```
 
 
 ## <div align="center">Usage</div>

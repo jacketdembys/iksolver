@@ -19,8 +19,8 @@ if __name__ == '__main__':
     # Experiment parameters
     seed_choice = True
     seed_number = 2
-    robot_choice = '7DoF-GP66'  # '7DoF-7R-Panda', '7DoF-GP66'
-    data_path = '../docker/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_1000000_qlim_scale_10_seq_1.csv'
+    robot_choice = '7DoF-7R-Panda'  # '7DoF-7R-Panda', '7DoF-GP66'
+    data_path = '../docker/datasets/'+robot_choice+'-Steps/review_data_'+robot_choice+'_1000000_qlim_scale_10_seq_1.csv'
     
     # Load data
     data = pd.read_csv(data_path)
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # save test sets 
     data_test_header = ["x_p", "y_p", "z_p", "R_p", "P_p", "Y_p", "t1_p", "t2_p", "t3_p", "t4_p", "t5_p", "t6_p", "t7_p","x_c", "y_c", "z_c", "R_c", "P_c", "Y_c", "t1_c", "t2_c", "t3_c", "t4_c", "t5_c", "t6_c", "t7_c"]
     df = pd.DataFrame(data_test)
-    df.to_csv("../docker/datasets/"+robot_choice+"-Steps/data_"+robot_choice+"_1000000_qlim_scale_10_seq_1_test.csv",
+    df.to_csv("../docker/datasets/"+robot_choice+"-Steps/review_data_"+robot_choice+"_1000000_qlim_scale_10_seq_1_test.csv",
         index=False,
         header=data_test_header)  
     
