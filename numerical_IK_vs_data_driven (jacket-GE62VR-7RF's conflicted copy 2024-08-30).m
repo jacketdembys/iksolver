@@ -8,13 +8,13 @@ addpath(genpath('Numerical_Methods/'))
 
 
 %% initialize global parameters and running modes
-robot_list = ["RRRRRRR"] %, "RRPRRRR"];
+robot_list = ["RRPRRRR"] %, "RRPRRRR"];
 
 for r=1:length(robot_list)
 
     robot = robot_list(r); %'RRRRRRR';   % RRRRRRR (7R-Panda), RRPRRRR (2RP4R-GP66+1)
     units  = ["m"];
-    inverses = ["SVF"] %, "SD", "SVF"]; % SD, SVF
+    inverses = ["SD"] %, "SD", "SVF"]; % SD, SVF
     jacobian_type = 'geometric';                % "numerical", "geometric", "analytical"
     motion = strcat('Comparative_Results_with_Numerical_Methods/',robot,'_Using_',jacobian_type,'_Jacobian');
     
@@ -31,7 +31,7 @@ for r=1:length(robot_list)
         mkdir(motion)
     end
     
-    for seq=17:20
+    for seq=1:20
     
         %% load the related sample points and initialize the summary matrices   
         if (strcmp(robot, 'RRRRRRR'))
@@ -120,9 +120,9 @@ for r=1:length(robot_list)
                                 dim = 6;      
                             elseif  strcmp(robot, 'RRPRRRR')  
                                 s = 1;   
-                                Q_initial = dataPoints7DoFP_algo(s,:)';  
+                                Q_initial = dataPoints7DoFR_algo(s,:)';  
                                 Q_initial(3) = Q_initial(3)*unit_chosen;                         
-                                Q_final_d = dataPoints7DoFP(s,:)'; 
+                                Q_final_d = dataPoints7DoFR(s,:)'; 
                                 Q_final_d(3) = Q_final_d(3)*unit_chosen;                         
                                 dim = 6;
                             end
@@ -135,9 +135,9 @@ for r=1:length(robot_list)
                                 Q_final_d(3) = Q_final_d(3)*unit_chosen;
                                 dim = 6;                   
                             elseif  strcmp(robot, 'RRPRRRR')  
-                                Q_initial = dataPoints7DoFP_algo(s,:)';  
+                                Q_initial = dataPoints7DoFR_algo(s,:)';  
                                 Q_initial(3) = Q_initial(3)*unit_chosen;                         
-                                Q_final_d = dataPoints7DoFP(s,:)'; 
+                                Q_final_d = dataPoints7DoFR(s,:)'; 
                                 Q_final_d(3) = Q_final_d(3)*unit_chosen;                         
                                 dim = 6; 
                             end

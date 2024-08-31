@@ -147,16 +147,16 @@ if __name__ == '__main__':
     # load dataset from file
     if load_option == "cloud":
         if dataset_type == "1_to_1":
-            data = pd.read_csv('/home/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
+            data = pd.read_csv('/home/datasets/review_data_'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
         elif dataset_type == "seq":
-            data = pd.read_csv('/home/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
+            data = pd.read_csv('/home/datasets/review_data_'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
     elif load_option == "local":
         
         if dataset_type == "1_to_1":
             #data = pd.read_csv('../docker/datasets/'+robot_choice+'/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_const.csv')
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv') #+'_'+orientation_type+'.csv')
+            data = pd.read_csv('../docker/datasets/review_data_'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv') #+'_'+orientation_type+'.csv')
         elif dataset_type == "seq":
-            data = pd.read_csv('../docker/datasets/'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
+            data = pd.read_csv('../docker/datasets/review_data_'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
     data_a = np.array(data) 
 
 
@@ -314,7 +314,7 @@ if __name__ == '__main__':
     if save_option == "cloud":
         run = wandb.init(
             entity="jacketdembys",
-            project = "ik-steps",                
+            project = "ik-steps-next",                
             group = network_type+"_"+"Dataset_"+str(dataset_samples)+"_Scale_"+str(int(scale))+"_"+dataset_type+"_"+loss_choice,  # "_seq", "_1_to_1"
             #group = "Dataset_Scale_"+str(int(scale)),
             name = "Model_"+robot_choice+"_" \

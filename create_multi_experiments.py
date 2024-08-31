@@ -33,12 +33,16 @@ parser.add_argument("--jvar",
                     help="Joint variation when generating dataset.")
 parser.add_argument("--blocks",
                     type=int,
-                    default=2,
+                    default=5,
                     help="Number of blocks if ResMLP or DenseMLP.")
 parser.add_argument("--load",
                     type=str,
                     default='cloud',
                     help="local or cloud loading.")
+parser.add_argument("--seed",
+                    type=int,
+                    default=1,
+                    help="seed choice.")
 
 
 if not len(sys.argv) > 1:
@@ -57,21 +61,25 @@ scale = args.scale # 2 - 10
 load_option = args.load
 num_blocks = args.blocks
 joint_variation = args.jvar
-robot_choice = '7DoF-7R-Panda'    # All-6DoF, '7DoF-7R-Panda', "7DoF-GP66", "8DoF-P8"
+seed_choice = args.seed
+robot_choice = '7DoF-7R-Panda'   #'7DoF-7R-Panda' '7DoF-GP66' 
 
 # read from path script
+for joint_variation in range(1,21):
 #for scale in range(2,12,2):
+    neuron = 1024
+#for neuron in range(128, neurons+128, 128):
 
-# batch sizes: 4096, 65536
-# build the content of the config file in a dictionary
-config_info = {
-        'NUM_EXPERIMENT_REPETITIONS': 2,
+    # batch sizes: 4096, 65536
+    # build the content of the config file in a dictionary
+    config_info = {
+        'NUM_EXPERIMENT_REPETITIONS': int(seed_choice),
         'ROBOT_CHOICE': robot_choice,
         'SEED_CHOICE': True,
-        'SEED_NUMBER': 2,
+        'SEED_NUMBER': int(seed_choice),
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'ResMLP',      # MLP, ResMLP, DenseMLP, DenseMLP3
+            'NAME': 'MLP',      # MLP, ResMLP, DenseMLP3, DenseMLP 
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
@@ -81,7 +89,7 @@ config_info = {
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
                 'JOINT_VARIATION': int(joint_variation),
-                'TYPE':'seq', # 1_to_1, seq, combine
+                'TYPE':'1_to_1', # 1_to_1, seq
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
             'CHECKPOINT': {
@@ -108,14 +116,14 @@ config_info = {
             'PRINT_EPOCHS': True,
             'PRINT_STEPS': 100
         },
-}
+    }
 
 
-#save_path = "configs/"+robot_choice+"/config_layers_"+str(int(layers))+"_neurons_"+str(int(neurons))+"_scale_"+str(int(scale))
-#if not os.path.exists(save_path):
-#            os.makedirs(save_path)
+    #save_path = "configs/"+robot_choice+"/config_layers_"+str(int(layers))+"_neurons_"+str(int(neurons))+"_scale_"+str(int(scale))
+    #if not os.path.exists(save_path):
+    #            os.makedirs(save_path)
 
-# open a yaml file and dump the content of the dictionary 
-with open("train.yaml", 'w') as yamlfile:
-    data = yaml.dump(config_info, yamlfile)
-    print("Successfully created the config file!")
+    # open a yaml file and dump the content of the dictionary 
+    with open("train_"+str(joint_variation)+".yaml", 'w') as yamlfile:
+        data = yaml.dump(config_info, yamlfile)
+        print("Successfully created the config file!")
