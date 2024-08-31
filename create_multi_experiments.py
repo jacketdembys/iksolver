@@ -65,7 +65,7 @@ seed_choice = args.seed
 robot_choice = '7DoF-7R-Panda'   #'7DoF-7R-Panda' '7DoF-GP66' 
 
 # read from path script
-for joint_variation in range(1,21):
+for joint_variation in range(1,2):
 #for scale in range(2,12,2):
     neuron = 1024
 #for neuron in range(128, neurons+128, 128):
@@ -79,7 +79,7 @@ for joint_variation in range(1,21):
         'SEED_NUMBER': int(seed_choice),
         'DEVICE_ID': int(gpu_id),
         'MODEL': {
-            'NAME': 'MLP',      # MLP, ResMLP, DenseMLP3, DenseMLP 
+            'NAME': 'ResMLP',      # MLP, ResMLP, DenseMLP3, DenseMLP 
             'NUM_HIDDEN_LAYERS': layers,          
             'NUM_HIDDEN_NEURONS': neurons,
             'NUM_BLOCKS': num_blocks
@@ -89,7 +89,7 @@ for joint_variation in range(1,21):
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
                 'JOINT_VARIATION': int(joint_variation),
-                'TYPE':'1_to_1', # 1_to_1, seq
+                'TYPE':'seq', # 1_to_1, seq
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
             'CHECKPOINT': {
