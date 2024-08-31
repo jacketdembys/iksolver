@@ -147,9 +147,9 @@ if __name__ == '__main__':
     # load dataset from file
     if load_option == "cloud":
         if dataset_type == "1_to_1":
-            data = pd.read_csv('/home/datasets/review_data_'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
+            data = pd.read_csv('/home/datasets/'+robot_choice+'-Steps/review_data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
         elif dataset_type == "seq":
-            data = pd.read_csv('/home/datasets/review_data_'+robot_choice+'-Steps/data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
+            data = pd.read_csv('/home/datasets/'+robot_choice+'-Steps/review_data_'+robot_choice+'_'+str(int(dataset_samples))+'_qlim_scale_'+str(int(scale))+'_seq_'+str(joint_steps)+'.csv')
     elif load_option == "local":
         
         if dataset_type == "1_to_1":
