@@ -81,7 +81,7 @@ config_info = {
                 'NUM_SAMPLES': 1000000,
                 'JOINT_LIMIT_SCALE': int(scale),
                 'JOINT_VARIATION': int(joint_variation),
-                'TYPE':'seq', # 1_to_1, seq, combine
+                'TYPE':'combine', # 1_to_1, seq, combine
                 'ORIENTATION': 'RPY' # RPY, Quaternion, DualQuaternion, Rotation, Rotation6d
             },
             'CHECKPOINT': {
